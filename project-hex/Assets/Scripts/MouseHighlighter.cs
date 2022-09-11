@@ -21,7 +21,6 @@ public class MouseHighlighter : MonoBehaviour
             mousePosition.y = hit.transform.position.y + 2;
             tilePosUnderMouse = gridLayout.WorldToCell(mousePosition);
             transform.position = gridLayout.CellToWorld(tilePosUnderMouse);
-            transform.position = transform.position;
 
             IHighlightable object_to_highlight = hit.transform.GetComponent<IHighlightable>();
             if (object_to_highlight != null)
@@ -30,10 +29,14 @@ public class MouseHighlighter : MonoBehaviour
                 object_to_highlight.Highlight();
             }
 
-            IHighlightable object_to_unlight = last_hit.transform.GetComponent<IHighlightable>();
-            if (hit.transform != last_hit.transform && object_to_unlight != null)
-            {
-                object_to_unlight.Unlight();
+            IHighlightable object_to_unlight;
+            if (last_hit.transform != null) 
+            { 
+                object_to_unlight = last_hit.transform.GetComponent<IHighlightable>();
+                if (hit.transform != last_hit.transform && object_to_unlight != null)
+                {
+                    object_to_unlight.Unlight();
+                }
             }
 
             DrawDebugLines();
