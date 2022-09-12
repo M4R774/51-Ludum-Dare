@@ -90,9 +90,9 @@ public class WorldTile
 
     public Vector3Int OffsetCoordinatesToAxial(Vector3Int offsetCoordinates)
     {
-        var x = offsetCoordinates.y;
-        var y = offsetCoordinates.x - (offsetCoordinates.y - (offsetCoordinates.y & 1)) / 2;
-        return new Vector3Int(x, y, 0);
+        var column = offsetCoordinates.y - (offsetCoordinates.x - (offsetCoordinates.x & 1)) / 2;
+        var row = offsetCoordinates.x;
+        return new Vector3Int(row, column, 0);
     }
 
     public Vector3Int axialSubtract(Vector3Int tileA, Vector3Int tileB)

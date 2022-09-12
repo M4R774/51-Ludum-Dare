@@ -129,7 +129,7 @@ public class Pathfinding : MonoBehaviour
                 {
                     if (previousTile != null)
                     {
-                        Debug.DrawLine(previousTile.WorldPosition, tile.WorldPosition, Color.magenta, 3);
+                        Debug.DrawLine(previousTile.WorldPosition, tile.WorldPosition, Color.magenta, 1);
                     }
                     previousTile = tile;
                     tile.SetColor(PathColor);
