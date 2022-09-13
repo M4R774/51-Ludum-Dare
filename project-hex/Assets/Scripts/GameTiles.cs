@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,8 +9,9 @@ public class GameTiles : MonoBehaviour
 	public Tilemap Tilemap;
 
 	public Dictionary<Vector3, WorldTile> tiles;
+    private System.Random random = new System.Random();
 
-	private void Awake()
+    private void Awake()
 	{
 		if (instance == null)
 		{
@@ -44,5 +46,23 @@ public class GameTiles : MonoBehaviour
 
 			tiles.Add(localPlace, tile);
 		}
+		MakeRandomTilesUnwalkable();
+	}
+
+	private void MakeRandomTilesUnwalkable()
+	{
+		foreach (WorldTile tile in tiles.Values)
+		{
+			tile.Walkable = RandomBoolean(random);
+			if (!tile.Walkable)
+            {
+				tile.SetColor(Color.black);
+            }
+		}
+	}
+
+	private bool RandomBoolean(System.Random random)
+	{
+		return random.Next() > (Int32.MaxValue / 4);
 	}
 }

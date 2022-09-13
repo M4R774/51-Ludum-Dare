@@ -140,7 +140,7 @@ public class Pathfinding : MonoBehaviour
             }
 
             foreach (var neighbor in current.Neighbors().Where(
-                tile => !processed.Contains(tile)))  // && tile.Walkable
+                tile => !processed.Contains(tile) && tile.Walkable))
             {
                 var inSearch = toSearch.Contains(neighbor);
 
