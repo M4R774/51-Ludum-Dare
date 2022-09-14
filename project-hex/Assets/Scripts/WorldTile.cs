@@ -63,14 +63,6 @@ public class WorldTile
             }
         }
 
-        /*
-        string debugString = "";
-        foreach (WorldTile neighbor in neighbors)
-        {
-            debugString += neighbor.Name + "; ";
-        }
-        Debug.Log(debugString);
-        */
         return neighbors;
     }
 
@@ -84,15 +76,15 @@ public class WorldTile
     public Vector3Int AxialToOffsetCoordinates(Vector3Int axialCoordinates)
     {
         int column = axialCoordinates.y;
-        var row = axialCoordinates.x + (axialCoordinates.x - (axialCoordinates.x & 1)) / 2;
+        var row = axialCoordinates.x + (axialCoordinates.y - (axialCoordinates.y & 1)) / 2;
         return new Vector3Int(row, column, 0);
     }
 
     public Vector3Int OffsetCoordinatesToAxial(Vector3Int offsetCoordinates)
     {
-        var column = offsetCoordinates.y - (offsetCoordinates.x - (offsetCoordinates.x & 1)) / 2;
-        var row = offsetCoordinates.x;
-        return new Vector3Int(row, column, 0);
+        var column = offsetCoordinates.y;
+        var row = offsetCoordinates.x - (offsetCoordinates.y - (offsetCoordinates.y & 1)) / 2;
+        return new Vector3Int(column, row, 0);
     }
 
     public Vector3Int axialSubtract(Vector3Int tileA, Vector3Int tileB)
@@ -108,7 +100,6 @@ public class WorldTile
         var vec = axialSubtract(startTile, targetTile);
         return ((Mathf.Abs(vec.y)
               + Mathf.Abs(vec.y + vec.x)
-              + Mathf.Abs(vec.y)) / 2);
+              + Mathf.Abs(vec.x)) / 2);
     }
-
 }

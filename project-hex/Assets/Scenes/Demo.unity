@@ -323,7 +323,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -7107,6 +7107,8 @@ MonoBehaviour:
   cameraSpeed: 5
   cameraSmoothing: 10
   zoomSpeed: {x: 0, y: -0.5, z: 0.5}
+  rotateStartPosition: {x: 0, y: 0, z: 0}
+  rotateCurrentPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &2110737256
 Transform:
   m_ObjectHideFlags: 0

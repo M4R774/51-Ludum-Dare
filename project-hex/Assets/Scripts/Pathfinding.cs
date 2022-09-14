@@ -14,6 +14,7 @@ public class Pathfinding : MonoBehaviour
     private static readonly Color PathColor = Color.red;
     private static readonly Color OpenColor = Color.green;
     private static readonly Color ClosedColor = Color.blue;
+    List<WorldTile> coloredTilesInPreviousRound = new();
 
     // Pathfinding tests
     private WorldTile targetTile;
@@ -90,10 +91,11 @@ public class Pathfinding : MonoBehaviour
     //
     // Also, setting colors and text on each hex affects performance, so removing that will also 
     // improve it marginally.
-    public static List<WorldTile> FindPath(WorldTile startNode, WorldTile targetNode)
+    public List<WorldTile> FindPath(WorldTile startNode, WorldTile targetNode)
     {
         var toSearch = new List<WorldTile>() { startNode };
         var processed = new List<WorldTile>();
+        ClearAllColouredTiles();
 
         while (toSearch.Any())
         {
@@ -110,6 +112,7 @@ public class Pathfinding : MonoBehaviour
             toSearch.Remove(current);
 
             current.SetColor(ClosedColor);
+            //coloredTilesInPreviousRound.Add(current);
 
             if (current == targetNode)
             {
@@ -156,10 +159,20 @@ public class Pathfinding : MonoBehaviour
                         neighbor.DistanceToTarget = neighbor.GetDistance(targetNode);
                         toSearch.Add(neighbor);
                         neighbor.SetColor(OpenColor);
+                        coloredTilesInPreviousRound.Add(neighbor);
                     }
                 }
             }
         }
         return null;
+    }
+
+    private void ClearAllColouredTiles()
+    {
+        foreach (WorldTile tile in coloredTilesInPreviousRound)
+        {
+            tile.SetColor(Color.white);
+        }
+        coloredTilesInPreviousRound.Clear();
     }
 }
