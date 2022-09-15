@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseHighlighter : MonoBehaviour
+public class MouseHoverHighlighter : MonoBehaviour
 {
     public GridLayout gridLayout;
+    public float lightHeight;
 
-    private RaycastHit last_hit;
     private RaycastHit hit;
     private Ray ray;
     private Vector3 mousePosition;
     private Vector3Int tilePosUnderMouse;
+    private List<IHighlightable> highLightedObjects;
+
+    void Start()
+    {
+        highLightedObjects = new();
+    }
 
     void Update()
     {
@@ -18,24 +24,22 @@ public class MouseHighlighter : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             mousePosition = hit.point;
-            mousePosition.y = hit.transform.position.y + 2;
+            mousePosition.y = 0;
             tilePosUnderMouse = gridLayout.WorldToCell(mousePosition);
-            transform.position = gridLayout.CellToWorld(tilePosUnderMouse);
+            transform.position = gridLayout.CellToWorld(tilePosUnderMouse) + new Vector3(0, lightHeight, 0);
 
-            IHighlightable object_to_highlight = hit.transform.GetComponent<IHighlightable>();
-            if (object_to_highlight != null)
+            IHighlightable objectToHighlight = hit.transform.GetComponent<IHighlightable>();
+            if (objectToHighlight != null)
             {
-                last_hit = hit;
-                object_to_highlight.Highlight();
+                highLightedObjects.Add(objectToHighlight);
+                objectToHighlight.SetHighlightLevel(1);
             }
 
-            IHighlightable object_to_unlight;
-            if (last_hit.transform != null) 
-            { 
-                object_to_unlight = last_hit.transform.GetComponent<IHighlightable>();
-                if (hit.transform != last_hit.transform && object_to_unlight != null)
+            foreach (IHighlightable objectToUnlight in highLightedObjects)
+            {
+                if (objectToUnlight != objectToHighlight)
                 {
-                    object_to_unlight.Unlight();
+                    objectToUnlight.SetHighlightLevel(0);
                 }
             }
 

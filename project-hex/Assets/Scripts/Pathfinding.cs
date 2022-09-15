@@ -5,85 +5,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Pathfinding : MonoBehaviour
+public static class Pathfinding
 {
-	public GridLayout gridLayout;
-
-	private WorldTile _tile;
+	public static GridLayout gridLayout;
 
     private static readonly Color PathColor = Color.red;
     private static readonly Color OpenColor = Color.green;
     private static readonly Color ClosedColor = Color.blue;
-    List<WorldTile> coloredTilesInPreviousRound = new();
+    static List<WorldTile> coloredTilesInPreviousRound = new();
 
-    // Pathfinding tests
-    private WorldTile targetTile;
-    private WorldTile startTile;
-
-    private void Update()
-	{
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (GetWorldlTileUnderMouse(out _tile))
-            {
-                Debug.Log("Tile " + _tile.Name);
-
-                if (targetTile != null)
-                {
-                    targetTile.TilemapMember.SetColor(targetTile.CellCoordinates, Color.white);
-                }
-                targetTile = _tile;
-
-                _tile.TilemapMember.SetTileFlags(_tile.CellCoordinates, TileFlags.None);
-                _tile.TilemapMember.SetColor(_tile.CellCoordinates, Color.red);
-
-                if (startTile != null && targetTile != null)
-                    FindPath(startTile, targetTile);
-            }
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (GetWorldlTileUnderMouse(out _tile))
-            {
-                if (startTile != null)
-                {
-                    startTile.TilemapMember.SetColor(startTile.CellCoordinates, Color.white);
-                }
-                startTile = _tile;
-
-                _tile.TilemapMember.SetTileFlags(startTile.CellCoordinates, TileFlags.None);
-                _tile.TilemapMember.SetColor(startTile.CellCoordinates, Color.yellow);
-                startTile = _tile;
-
-                if(startTile != null && targetTile != null)
-                    FindPath(startTile, targetTile);
-            }
-        }
-    }
-
-    private bool GetWorldlTileUnderMouse(out WorldTile _tile)
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        _tile = null;
-        if (Physics.Raycast(ray, out hit))
-        {
-            Vector3 mousePosition = hit.point;
-            Vector3Int tileCoordinatesUnderMouse = gridLayout.WorldToCell(mousePosition);
-            var tiles = GameTiles.instance.tiles; // This is our Dictionary of tiles
-
-            if (tiles.TryGetValue(tileCoordinatesUnderMouse, out _tile))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return false;
-    }
 
     // This algorithm is written for readability. Although it would be perfectly fine in 80% of
     // games, please don't use this in an RTS without first applying some optimization mentioned
@@ -91,7 +21,7 @@ public class Pathfinding : MonoBehaviour
     //
     // Also, setting colors and text on each hex affects performance, so removing that will also 
     // improve it marginally.
-    public List<WorldTile> FindPath(WorldTile startNode, WorldTile targetNode)
+    public static List<WorldTile> FindPath(WorldTile startNode, WorldTile targetNode)
     {
         var toSearch = new List<WorldTile>() { startNode };
         var processed = new List<WorldTile>();
@@ -112,7 +42,6 @@ public class Pathfinding : MonoBehaviour
             toSearch.Remove(current);
 
             current.SetColor(ClosedColor);
-            //coloredTilesInPreviousRound.Add(current);
 
             if (current == targetNode)
             {
@@ -167,7 +96,7 @@ public class Pathfinding : MonoBehaviour
         return null;
     }
 
-    private void ClearAllColouredTiles()
+    private static void ClearAllColouredTiles()
     {
         foreach (WorldTile tile in coloredTilesInPreviousRound)
         {

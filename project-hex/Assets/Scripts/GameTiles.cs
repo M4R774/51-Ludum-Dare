@@ -6,10 +6,11 @@ using UnityEngine.Tilemaps;
 public class GameTiles : MonoBehaviour
 {
 	public static GameTiles instance;
-	public Tilemap Tilemap;
+	public Tilemap tilemap;
+	public GridLayout grid;
 
 	public Dictionary<Vector3, WorldTile> tiles;
-    private System.Random random = new System.Random();
+    private readonly System.Random random = new();
 
     private void Awake()
 	{
@@ -25,21 +26,26 @@ public class GameTiles : MonoBehaviour
 		GetWorldTiles();
 	}
 
-	// Use this for initialization
-	private void GetWorldTiles()
+    private void Start()
+    {
+		Pathfinding.gridLayout = grid;
+    }
+
+    // Use this for initialization
+    private void GetWorldTiles()
 	{
 		tiles = new Dictionary<Vector3, WorldTile>();
-		foreach (Vector3Int pos in Tilemap.cellBounds.allPositionsWithin)
+		foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
 		{
 			var localPlace = new Vector3Int(pos.x, pos.y, pos.z);
 
-			if (!Tilemap.HasTile(localPlace)) continue;
+			if (!tilemap.HasTile(localPlace)) continue;
 			var tile = new WorldTile
 			{
 				CellCoordinates = localPlace,
-				WorldPosition = Tilemap.CellToWorld(localPlace),
-				TileBase = Tilemap.GetTile(localPlace),
-				TilemapMember = Tilemap,
+				WorldPosition = tilemap.CellToWorld(localPlace),
+				TileBase = tilemap.GetTile(localPlace),
+				TilemapMember = tilemap,
 				Name = localPlace.y + "," + localPlace.x,
 				// Cost = 1 // TODO: Change this with the proper cost from ruletile
 			};
