@@ -57,23 +57,9 @@ public class MouseController : MonoBehaviour
                 if (clickedTile.Walkable)
                 {
                     List<WorldTile> path = Pathfinding.FindPath(_tile, clickedTile);
-                    MoveSelectedObjectTowardsTarget(path, 2);
+                    selectedObjects[0].MoveTowardsTarget(path);
                 }
             }
-        }
-    }
-
-    private void MoveSelectedObjectTowardsTarget(List<WorldTile> path, int movementSpeed)
-    {
-        int numberOfTilesToMove = movementSpeed;
-        if (path.Count < movementSpeed)
-        {
-            numberOfTilesToMove = path.Count;
-        }
-
-        for (int i = 0; i< numberOfTilesToMove; i++)
-        {
-            selectedObjects[0].MoveToTile(path[path.Count-1-i].CellCoordinates);
         }
     }
 
