@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour, ISelectable, IHighlightable
 {
+    private GridLayout grid;
     private bool isSelected;
     private int highlightLevel;
     private Material material;
 
     void Start()
     {
+        grid = GameTiles.instance.grid;
         isSelected = false;
         material = transform.GetComponent<Renderer>().material;
     }
@@ -52,5 +54,17 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         {
             material.SetColor("_EmissionColor", Color.black);
         }
+    }
+
+    public Vector3Int GetTileCoordinates()
+    {
+        Vector3 tilePosition = transform.position;
+        tilePosition.y = 0;
+        return grid.WorldToCell(tilePosition);
+    }
+
+    public void MoveToTile(Vector3Int tileCoordinates)
+    {
+        transform.position = grid.CellToWorld(tileCoordinates);
     }
 }

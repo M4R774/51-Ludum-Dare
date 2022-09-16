@@ -26,6 +26,7 @@ public static class Pathfinding
         var toSearch = new List<WorldTile>() { startNode };
         var processed = new List<WorldTile>();
         ClearAllColouredTiles();
+        coloredTilesInPreviousRound.Add(startNode);
 
         while (toSearch.Any())
         {

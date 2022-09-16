@@ -27,26 +27,6 @@ public class MouseController : MonoBehaviour
             HandleSelectable(_selectable);
             HandleTile(_tile);
         }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            GetWorldlTileUnderMouse(out _tile, out _selectable);
-            if (_tile != null)
-            {
-                if (startTile != null)
-                {
-                    startTile.TilemapMember.SetColor(startTile.CellCoordinates, Color.white);
-                }
-                startTile = _tile;
-
-                _tile.TilemapMember.SetTileFlags(startTile.CellCoordinates, TileFlags.None);
-                _tile.TilemapMember.SetColor(startTile.CellCoordinates, Color.yellow);
-                startTile = _tile;
-
-                if (startTile != null && targetTile != null)
-                    Pathfinding.FindPath(startTile, targetTile);
-            }
-        }
     }
 
     private void HandleSelectable(ISelectable selectable)
@@ -66,17 +46,28 @@ public class MouseController : MonoBehaviour
         }
     }
 
-    private void HandleTile(WorldTile tile)
+    private void HandleTile(WorldTile clickedTile)
     {
-        if (_tile != null && _selectable == null)
+        if (clickedTile != null && _selectable == null)
         {
-            targetTile = _tile;
+            if (selectedObjects.Count > 0 && clickedTile != null)
+            {
+                Vector3Int selectedObjectCoordinates = selectedObjects[0].GetTileCoordinates();
+                GameTiles.instance.tiles.TryGetValue(selectedObjectCoordinates, out _tile);
+                if (clickedTile.Walkable)
+                {
+                    List<WorldTile> path = Pathfinding.FindPath(_tile, clickedTile);
+                    MoveSelectedObjectTowardsTarget(path, 2);
+                }
+            }
+        }
+    }
 
-            _tile.TilemapMember.SetTileFlags(_tile.CellCoordinates, TileFlags.None);
-            _tile.TilemapMember.SetColor(_tile.CellCoordinates, Color.red);
-
-            if (startTile != null && targetTile != null)
-                Pathfinding.FindPath(startTile, targetTile);
+    private void MoveSelectedObjectTowardsTarget(List<WorldTile> path, int numberOfTileMoves)
+    {
+        for (int i = 0; i<numberOfTileMoves; i++)
+        {
+            selectedObjects[0].MoveToTile(path[path.Count-1-i].CellCoordinates);
         }
     }
 
