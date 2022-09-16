@@ -68,7 +68,6 @@ public static class Pathfinding
                     tile.SetColor(PathColor);
                 }
                 startNode.SetColor(PathColor);
-                Debug.Log(path.Count);
                 return path;
             }
 

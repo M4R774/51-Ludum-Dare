@@ -20,6 +20,14 @@ public class MouseHoverHighlighter : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale > 0)
+        {
+            HighlightObjectUnderMouse();
+        }
+    }
+
+    private void HighlightObjectUnderMouse()
+    {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
         {

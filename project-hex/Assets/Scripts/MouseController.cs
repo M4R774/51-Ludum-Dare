@@ -21,7 +21,7 @@ public class MouseController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Time.timeScale > 0)
         {
             GetWorldlTileUnderMouse(out _tile, out _selectable);
             HandleSelectable(_selectable);
@@ -63,9 +63,15 @@ public class MouseController : MonoBehaviour
         }
     }
 
-    private void MoveSelectedObjectTowardsTarget(List<WorldTile> path, int numberOfTileMoves)
+    private void MoveSelectedObjectTowardsTarget(List<WorldTile> path, int movementSpeed)
     {
-        for (int i = 0; i<numberOfTileMoves; i++)
+        int numberOfTilesToMove = movementSpeed;
+        if (path.Count < movementSpeed)
+        {
+            numberOfTilesToMove = path.Count;
+        }
+
+        for (int i = 0; i< numberOfTilesToMove; i++)
         {
             selectedObjects[0].MoveToTile(path[path.Count-1-i].CellCoordinates);
         }
