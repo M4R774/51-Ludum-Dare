@@ -15,8 +15,11 @@ public class WorldTile
 
     public void SetColor(Color color)
     {
-        TilemapMember.SetTileFlags(CellCoordinates, TileFlags.None);
-        TilemapMember.SetColor(CellCoordinates, color);
+        if (TilemapMember != null)
+        {
+            TilemapMember.SetTileFlags(CellCoordinates, TileFlags.None);
+            TilemapMember.SetColor(CellCoordinates, color);
+        }
     }
 
     // Variables needed for pathfinding

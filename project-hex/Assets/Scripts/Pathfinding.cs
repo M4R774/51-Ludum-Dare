@@ -9,11 +9,23 @@ public static class Pathfinding
 {
 	public static GridLayout gridLayout;
 
-    private static readonly Color PathColor = Color.red;
-    private static readonly Color OpenColor = Color.green;
-    private static readonly Color ClosedColor = Color.blue;
-    static List<WorldTile> coloredTilesInPreviousRound = new();
+    //private static readonly Color PathColor = Color.red;
+    //private static readonly Color OpenColor = Color.green;
+    //private static readonly Color ClosedColor = Color.blue;
+    //static List<WorldTile> coloredTilesInPreviousRound = new();
 
+    public static List<WorldTile> GetAllTilesWithingRange(WorldTile startTile, int range)
+    {
+        List<WorldTile> tilesWithinRange = new();
+        
+        for (int i = 0; i < range; i++)
+        {
+            //asdf
+        }
+
+
+        return tilesWithinRange;
+    }
 
     // This algorithm is written for readability. Although it would be perfectly fine in 80% of
     // games, please don't use this in an RTS without first applying some optimization mentioned
@@ -25,8 +37,8 @@ public static class Pathfinding
     {
         var toSearch = new List<WorldTile>() { startNode };
         var processed = new List<WorldTile>();
-        ClearAllColouredTiles();
-        coloredTilesInPreviousRound.Add(startNode);
+        //ClearAllColouredTiles();
+        //coloredTilesInPreviousRound.Add(startNode);
 
         while (toSearch.Any())
         {
@@ -42,7 +54,7 @@ public static class Pathfinding
             processed.Add(current);
             toSearch.Remove(current);
 
-            current.SetColor(ClosedColor);
+            //current.SetColor(ClosedColor);
 
             if (current == targetNode)
             {
@@ -65,9 +77,9 @@ public static class Pathfinding
                         Debug.DrawLine(previousTile.WorldPosition, tile.WorldPosition, Color.magenta, 1);
                     }
                     previousTile = tile;
-                    tile.SetColor(PathColor);
+                    //tile.SetColor(PathColor);
                 }
-                startNode.SetColor(PathColor);
+                //startNode.SetColor(PathColor);
                 return path;
             }
 
@@ -87,8 +99,8 @@ public static class Pathfinding
                     {
                         neighbor.DistanceToTarget = neighbor.GetDistance(targetNode);
                         toSearch.Add(neighbor);
-                        neighbor.SetColor(OpenColor);
-                        coloredTilesInPreviousRound.Add(neighbor);
+                        //neighbor.SetColor(OpenColor);
+                        //coloredTilesInPreviousRound.Add(neighbor);
                     }
                 }
             }
@@ -96,6 +108,7 @@ public static class Pathfinding
         return null;
     }
 
+    /*
     private static void ClearAllColouredTiles()
     {
         foreach (WorldTile tile in coloredTilesInPreviousRound)
@@ -104,4 +117,5 @@ public static class Pathfinding
         }
         coloredTilesInPreviousRound.Clear();
     }
+    */
 }
