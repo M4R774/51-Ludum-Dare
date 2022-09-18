@@ -22,12 +22,14 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
     {
         isSelected = true;
         DetermineEmissionAndColor();
+        ColorTilesWithinMovementRange(Color.white);
     }
 
     public void Unselect()
     {
         isSelected = false;
         DetermineEmissionAndColor();
+        ColorTilesWithinMovementRange(Color.grey);
     }
 
     public bool IsSelected()
@@ -39,22 +41,6 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
     {
         highlightLevel = levelOfHighlight;
         DetermineEmissionAndColor();
-    }
-
-    private void DetermineEmissionAndColor()
-    {
-        if (highlightLevel >= 2 || isSelected)
-        {
-            material.SetColor("_EmissionColor", Color.yellow);
-        }
-        else if (highlightLevel == 1)
-        {
-            material.SetColor("_EmissionColor", Color.grey);
-        }
-        else
-        {
-            material.SetColor("_EmissionColor", Color.black);
-        }
     }
 
     public Vector3Int GetTileCoordinates()
@@ -75,8 +61,40 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         StartCoroutine(LerpTowardsTarget(path, numberOfTilesToMove));
     }
 
+    private void ColorTilesWithinMovementRange(Color color)
+    {
+        List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingRange(GetTileUnderMyself(), movementSpeed);
+        foreach (WorldTile tileInRange in tilesWithinRange)
+        {
+            tileInRange.SetColor(color);
+        }
+    }
+
+    private WorldTile GetTileUnderMyself()
+    {
+        GameTiles.instance.tiles.TryGetValue(GetTileCoordinates(), out WorldTile tileUnderCube);
+        return tileUnderCube;
+    }
+
+    private void DetermineEmissionAndColor()
+    {
+        if (highlightLevel >= 2 || isSelected)
+        {
+            material.SetColor("_EmissionColor", Color.yellow);
+        }
+        else if (highlightLevel == 1)
+        {
+            material.SetColor("_EmissionColor", Color.grey);
+        }
+        else
+        {
+            material.SetColor("_EmissionColor", Color.black);
+        }
+    }
+
     private IEnumerator LerpTowardsTarget(List<WorldTile> path, int numberOfTilesToLerp)
     {
+        List<WorldTile> tilesWithinRangeInTheBeginning = Pathfinding.GetAllTilesWithingRange(GetTileUnderMyself(), movementSpeed);
         for (int i = 0; i < numberOfTilesToLerp; i++)
         {
             Vector3 currentPos = transform.position;
@@ -99,5 +117,10 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
             transform.position = targetPosition;
             yield return null;
         }
+        foreach (WorldTile tile in tilesWithinRangeInTheBeginning)
+        {
+            tile.SetColor(Color.grey);
+        }
+        ColorTilesWithinMovementRange(Color.white);
     }
 }

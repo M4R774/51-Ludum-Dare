@@ -16,13 +16,35 @@ public static class Pathfinding
 
     public static List<WorldTile> GetAllTilesWithingRange(WorldTile startTile, int range)
     {
-        List<WorldTile> tilesWithinRange = new();
-        
-        for (int i = 0; i < range; i++)
+        List<WorldTile> tilesWithinRange = new() { startTile };
+        List<WorldTile> tilesToSearch = new();
+
+        foreach (WorldTile initialNeighbour in startTile.Neighbors())
         {
-            //asdf
+            if (initialNeighbour.Walkable )
+            {
+                tilesToSearch.Add(initialNeighbour);
+            }
         }
 
+        for (int i = 1; i < range; i++)
+        {
+            List<WorldTile> newNeighbors = new();
+            foreach (WorldTile tileToSearch in tilesToSearch)
+            {
+                foreach (WorldTile newNeighbour in tileToSearch.Neighbors())
+                {
+                    if (newNeighbour.Walkable && !newNeighbors.Contains(newNeighbour))
+                    {
+                        newNeighbors.Add(newNeighbour);
+                    }
+                }
+            }
+            tilesToSearch.Clear();
+            newNeighbors = newNeighbors.Except(tilesWithinRange).ToList();
+            tilesToSearch.AddRange(newNeighbors);
+            tilesWithinRange.AddRange(newNeighbors);
+        }
 
         return tilesWithinRange;
     }

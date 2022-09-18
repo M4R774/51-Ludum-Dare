@@ -49,6 +49,9 @@ public class GameTiles : MonoBehaviour
 				Name = localPlace.y + "," + localPlace.x,
 				// Cost = 1 // TODO: Change this with the proper cost from ruletile
 			};
+			Color invisible = new(0, 0, 0, 0);
+			tile.SetColor(invisible);
+
 
 			tiles.Add(localPlace, tile);
 		}
@@ -60,10 +63,7 @@ public class GameTiles : MonoBehaviour
 		foreach (WorldTile tile in tiles.Values)
 		{
 			tile.Walkable = RandomBoolean(random);
-			if (!tile.Walkable)
-            {
-				tile.SetColor(Color.black);
-            }
+			// TODO: Set tile
 		}
 	}
 
