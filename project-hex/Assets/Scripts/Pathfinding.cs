@@ -23,6 +23,7 @@ public static class Pathfinding
         {
             if (initialNeighbour.Walkable )
             {
+                tilesWithinRange.Add(initialNeighbour);
                 tilesToSearch.Add(initialNeighbour);
             }
         }
