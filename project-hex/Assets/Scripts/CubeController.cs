@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour, ISelectable, IHighlightable
 {
-    public int movementSpeed = 20;
+    public int movementSpeed;
+    public int visibilityRange;
+
     private GridLayout grid;
     private bool isSelected;
     private int highlightLevel;
     private Material material;
+    private 
 
     void Start()
     {
@@ -22,14 +25,14 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
     {
         isSelected = true;
         DetermineEmissionAndColor();
-        ColorTilesWithinMovementRange(Color.white);
+        ColorTilesWithinRange(Color.green, movementSpeed);
     }
 
     public void Unselect()
     {
         isSelected = false;
         DetermineEmissionAndColor();
-        ColorTilesWithinMovementRange(Color.grey);
+        ColorTilesWithinRange(Color.grey, movementSpeed);
     }
 
     public bool IsSelected()
@@ -61,11 +64,13 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         StartCoroutine(LerpTowardsTarget(path, numberOfTilesToMove));
     }
 
-    private void ColorTilesWithinMovementRange(Color color)
+    private void ColorTilesWithinRange(Color color, int range)
     {
-        List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingRange(GetTileUnderMyself(), movementSpeed);
+        List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingRange(GetTileUnderMyself(), range);
         foreach (WorldTile tileInRange in tilesWithinRange)
         {
+            tileInRange.IsVisible = true;
+            EventManager.VisibilityHasChanged();
             tileInRange.SetColor(color);
         }
     }
@@ -97,7 +102,6 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         List<WorldTile> tilesWithinRangeInTheBeginning = Pathfinding.GetAllTilesWithingRange(GetTileUnderMyself(), movementSpeed);
         for (int i = 0; i < numberOfTilesToLerp; i++)
         {
-            Vector3 currentPos = transform.position;
             Vector3 targetPosition = path[path.Count - 1 - i].WorldPosition;
             float elapsedTime = 0;
             float transitionTimeBetweenTiles = .3f;
@@ -121,6 +125,6 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         {
             tile.SetColor(Color.grey);
         }
-        ColorTilesWithinMovementRange(Color.white);
+        ColorTilesWithinRange(Color.green, movementSpeed);
     }
 }

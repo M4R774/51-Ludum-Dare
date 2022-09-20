@@ -13,6 +13,17 @@ public class WorldTile
     public Tilemap TilemapMember { get; set; }
     public string Name { get; set; }
 
+
+    // Variables needed for pathfinding
+    public bool Walkable { get; set; }
+    public int DistanceFromStart { get; set; }
+    public int DistanceToTarget { get; set; }
+    public WorldTile NextDestination { get; set; }
+
+    private bool isVisible;
+    private bool isExplored;
+    private bool isWithinMovementRange;
+
     public void SetColor(Color color)
     {
         if (TilemapMember != null)
@@ -22,15 +33,38 @@ public class WorldTile
         }
     }
 
-    // Variables needed for pathfinding
-    public bool Walkable { get; set; }
-    public int DistanceFromStart { get; set; }
-    public int DistanceToTarget { get; set; }
+    public bool IsVisible 
+    {
+        get { return isVisible; }
+        set
+        {
+            isVisible = value;
+            if (value == true)
+            {
+                IsExplored = true;
+                SetColor(Color.white);
+            }
+        }
+    }
+
+    public bool IsExplored 
+    {
+        get { return isExplored; }
+        set 
+        {
+            isExplored = value;
+            if (value == true)
+            {
+                SetColor(Color.gray);
+            }
+        }
+    }
+
     public int GetTotalPathCost()
     {
         return DistanceFromStart + DistanceToTarget;
     }
-    public WorldTile NextDestination { get; set; }
+
     public List<WorldTile> Neighbors()
     {
         List<Vector3Int> even = new();
