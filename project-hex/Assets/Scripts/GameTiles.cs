@@ -47,11 +47,11 @@ public class GameTiles : MonoBehaviour
 				TileBase = tilemap.GetTile(localPlace),
 				TilemapMember = tilemap,
 				Name = localPlace.y + "," + localPlace.x,
+				IsVisible = false,
+				IsExplored = false,
+				IsWithinMovementRange = false,
 				// Cost = 1 // TODO: Change this with the proper cost from ruletile
 			};
-			Color invisible = new(0, 0, 0, 0);
-			tile.SetColor(invisible);
-
 
 			tiles.Add(localPlace, tile);
 		}

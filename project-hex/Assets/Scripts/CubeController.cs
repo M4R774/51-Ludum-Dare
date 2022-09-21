@@ -19,20 +19,21 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         grid = GameTiles.instance.grid;
         isSelected = false;
         material = transform.GetComponent<Renderer>().material;
+        InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
     }
 
     public void Select()
     {
         isSelected = true;
         DetermineEmissionAndColor();
-        ColorTilesWithinRange(Color.green, movementSpeed);
+        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementSpeed, true);
     }
 
     public void Unselect()
     {
         isSelected = false;
         DetermineEmissionAndColor();
-        ColorTilesWithinRange(Color.grey, movementSpeed);
+        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementSpeed, false);
     }
 
     public bool IsSelected()
@@ -64,15 +65,23 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         StartCoroutine(LerpTowardsTarget(path, numberOfTilesToMove));
     }
 
-    private void ColorTilesWithinRange(Color color, int range)
+    private void InformTilesIfTheyAreWithinVisionRange(WorldTile startTile, int range, bool isInRange)
     {
-        List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingRange(GetTileUnderMyself(), range);
+        List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingRange(startTile, range);
         foreach (WorldTile tileInRange in tilesWithinRange)
         {
-            tileInRange.IsVisible = true;
-            EventManager.VisibilityHasChanged();
-            tileInRange.SetColor(color);
+            tileInRange.IsVisible = isInRange;
         }
+    }
+
+    private void InformTilesIfTheyAreWithinMovementRange(WorldTile startTile, int range, bool isInRange)
+    {
+        List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingRange(startTile, range);
+        foreach (WorldTile tileInRange in tilesWithinRange)
+        {
+            tileInRange.IsWithinMovementRange = isInRange;
+        }
+        EventManager.VisibilityHasChanged();
     }
 
     private WorldTile GetTileUnderMyself()
@@ -99,7 +108,7 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
 
     private IEnumerator LerpTowardsTarget(List<WorldTile> path, int numberOfTilesToLerp)
     {
-        List<WorldTile> tilesWithinRangeInTheBeginning = Pathfinding.GetAllTilesWithingRange(GetTileUnderMyself(), movementSpeed);
+        WorldTile startingTile = GetTileUnderMyself();
         for (int i = 0; i < numberOfTilesToLerp; i++)
         {
             Vector3 targetPosition = path[path.Count - 1 - i].WorldPosition;
@@ -112,7 +121,6 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
             while (elapsedTime < transitionTimeBetweenTiles)
             {
                 transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
-                //transform.position = Vector3.Lerp(currentPos, targetPosition, (elapsedTime / transitionTimeBetweenTiles));
                 elapsedTime += Time.deltaTime;
 
                 yield return null;
@@ -121,10 +129,24 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
             transform.position = targetPosition;
             yield return null;
         }
-        foreach (WorldTile tile in tilesWithinRangeInTheBeginning)
-        {
-            tile.SetColor(Color.grey);
-        }
-        ColorTilesWithinRange(Color.green, movementSpeed);
+        InformTilesIfTheyAreWithinMovementRange(startingTile, movementSpeed, false);
+        InformTilesIfTheyAreWithinVisionRange(startingTile, visibilityRange, false);
+        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementSpeed, true);
+        EventManager.VisibilityHasChanged();
+    }
+
+    private void OnEnable()
+    {
+        EventManager.OnVisibilityChange += ReCalculateVisibility;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnVisibilityChange -= ReCalculateVisibility;
+    }
+
+    public void ReCalculateVisibility()
+    {
+        InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
     }
 }

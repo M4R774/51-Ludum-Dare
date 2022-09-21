@@ -5,11 +5,11 @@ using UnityEngine;
 public class HideIfNotVisible : MonoBehaviour
 {
     private GridLayout grid;
-    private MeshRenderer renderer;
+    private MeshRenderer meshRenderer;
 
     private void Start()
     {
-        renderer = transform.GetComponent<MeshRenderer>();
+        meshRenderer = transform.GetComponent<MeshRenderer>();
         grid = GameTiles.instance.grid;
     }
 
@@ -28,11 +28,11 @@ public class HideIfNotVisible : MonoBehaviour
         GameTiles.instance.tiles.TryGetValue(GetTileCoordinates(), out WorldTile tileUnderMyself);
         if (tileUnderMyself.IsVisible)
         {
-            renderer.enabled = true;
+            meshRenderer.enabled = true;
         }
         else
         {
-            renderer.enabled = false;
+            meshRenderer.enabled = false;
         }
     }
 

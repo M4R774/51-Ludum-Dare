@@ -24,26 +24,17 @@ public class WorldTile
     private bool isExplored;
     private bool isWithinMovementRange;
 
-    public void SetColor(Color color)
-    {
-        if (TilemapMember != null)
-        {
-            TilemapMember.SetTileFlags(CellCoordinates, TileFlags.None);
-            TilemapMember.SetColor(CellCoordinates, color);
-        }
-    }
-
     public bool IsVisible 
     {
         get { return isVisible; }
         set
         {
             isVisible = value;
-            if (value == true)
+            if (isVisible)
             {
-                IsExplored = true;
-                SetColor(Color.white);
+                isExplored = true;
             }
+            CalculateAndSetTileColor();
         }
     }
 
@@ -53,10 +44,17 @@ public class WorldTile
         set 
         {
             isExplored = value;
-            if (value == true)
-            {
-                SetColor(Color.gray);
-            }
+            CalculateAndSetTileColor();
+        }
+    }
+
+    public bool IsWithinMovementRange
+    {
+        get { return isWithinMovementRange; }
+        set
+        {
+            isWithinMovementRange = value;
+            CalculateAndSetTileColor();
         }
     }
 
@@ -67,26 +65,7 @@ public class WorldTile
 
     public List<WorldTile> Neighbors()
     {
-        List<Vector3Int> even = new();
-        even.Add(new Vector3Int( 0, 1, 0 ));
-        even.Add(new Vector3Int(-1, 1, 0 ));
-        even.Add(new Vector3Int(-1, 0, 0 ));
-        even.Add(new Vector3Int(-1,-1, 0 ));
-        even.Add(new Vector3Int( 0,-1, 0 ));
-        even.Add(new Vector3Int( 1, 0, 0 ));
-
-        List<Vector3Int> odd = new();
-        odd.Add(new Vector3Int( 1, 1, 0));
-        odd.Add(new Vector3Int( 0, 1, 0));
-        odd.Add(new Vector3Int(-1, 0, 0));
-        odd.Add(new Vector3Int( 0,-1, 0));
-        odd.Add(new Vector3Int( 1,-1, 0));
-        odd.Add(new Vector3Int( 1, 0, 0));
-
-        List<List<Vector3Int>> precalculatedDirections = new();
-        precalculatedDirections.Add(even);
-        precalculatedDirections.Add(odd);
-
+        List<List<Vector3Int>> precalculatedDirections = GetPrecalculatedNeighbourDirections();
         int evenOrOddColumn = CellCoordinates.y & 1;
         List<Vector3Int> neighborDirections = precalculatedDirections[evenOrOddColumn];
 
@@ -103,40 +82,76 @@ public class WorldTile
         return neighbors;
     }
 
-    public int GetDistance(WorldTile targetTile)
+    private void CalculateAndSetTileColor()
     {
-        var ac = OffsetCoordinatesToAxial(CellCoordinates);
-        var bc = OffsetCoordinatesToAxial(targetTile.CellCoordinates);
-        return axialDistance(ac, bc);
+        if (isVisible && !isWithinMovementRange)
+        {
+            SetColor(Color.white);
+        }
+        else if (isWithinMovementRange && isVisible)
+        {
+            Color lightGreen = new(.7f, 1, .7f, 1);
+            SetColor(lightGreen);
+        }
+        else if (isWithinMovementRange && !isVisible && isExplored)
+        {
+            Color darkGreen = new(.35f, .5f, .35f, 1);
+            SetColor(darkGreen);
+        }
+        else if (isWithinMovementRange && !isVisible && !isExplored)
+        {
+            Color darkGreen = new(.35f, .5f, .35f, .5f);
+            SetColor(darkGreen);
+        }
+        else if (isExplored)
+        {
+            SetColor(Color.grey);
+        }
+        else 
+        {
+            Color invisible = new(0,0,0,0);
+            SetColor(invisible);
+        }
     }
 
-    public Vector3Int AxialToOffsetCoordinates(Vector3Int axialCoordinates)
+    private void SetColor(Color color)
     {
-        int column = axialCoordinates.y;
-        var row = axialCoordinates.x + (axialCoordinates.y - (axialCoordinates.y & 1)) / 2;
-        return new Vector3Int(row, column, 0);
+        if (TilemapMember != null)
+        {
+            TilemapMember.SetTileFlags(CellCoordinates, TileFlags.None);
+            TilemapMember.SetColor(CellCoordinates, color);
+        }
     }
 
-    public Vector3Int OffsetCoordinatesToAxial(Vector3Int offsetCoordinates)
+    private List<List<Vector3Int>> GetPrecalculatedNeighbourDirections()
     {
-        var column = offsetCoordinates.y;
-        var row = offsetCoordinates.x - (offsetCoordinates.y - (offsetCoordinates.y & 1)) / 2;
-        return new Vector3Int(column, row, 0);
+        List<List<Vector3Int>> precalculatedDirections = new();
+        precalculatedDirections.Add(GetNeighbourDirectionsForEvenHex());
+        precalculatedDirections.Add(GetNeighbourDirectionsForOddHex());
+        return precalculatedDirections;
     }
 
-    public Vector3Int axialSubtract(Vector3Int tileA, Vector3Int tileB)
+    private List<Vector3Int> GetNeighbourDirectionsForEvenHex()
     {
-        return new Vector3Int(
-            tileA.y - tileB.y, 
-            tileA.x - tileB.x, 
-            0);
+        List<Vector3Int> even = new();
+        even.Add(new Vector3Int(0, 1, 0));
+        even.Add(new Vector3Int(-1, 1, 0));
+        even.Add(new Vector3Int(-1, 0, 0));
+        even.Add(new Vector3Int(-1, -1, 0));
+        even.Add(new Vector3Int(0, -1, 0));
+        even.Add(new Vector3Int(1, 0, 0));
+        return even;
     }
 
-    public int axialDistance(Vector3Int startTile, Vector3Int targetTile)
+    private List<Vector3Int> GetNeighbourDirectionsForOddHex()
     {
-        var vec = axialSubtract(startTile, targetTile);
-        return ((Mathf.Abs(vec.y)
-              + Mathf.Abs(vec.y + vec.x)
-              + Mathf.Abs(vec.x)) / 2);
+        List<Vector3Int> odd = new();
+        odd.Add(new Vector3Int(1, 1, 0));
+        odd.Add(new Vector3Int(0, 1, 0));
+        odd.Add(new Vector3Int(-1, 0, 0));
+        odd.Add(new Vector3Int(0, -1, 0));
+        odd.Add(new Vector3Int(1, -1, 0));
+        odd.Add(new Vector3Int(1, 0, 0));
+        return odd;
     }
 }
