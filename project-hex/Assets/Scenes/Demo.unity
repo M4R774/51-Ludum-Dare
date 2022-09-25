@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2
-  visibilityRange: 3
+  visibilityRange: 0
 --- !u!114 &227218722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1281,7 +1281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2
-  visibilityRange: 3
+  visibilityRange: 0
 --- !u!1 &714698633
 GameObject:
   m_ObjectHideFlags: 0
@@ -2052,7 +2052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2
-  visibilityRange: 3
+  visibilityRange: 0
 --- !u!1 &1292954301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2427,7 +2427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 4
-  visibilityRange: 3
+  visibilityRange: 0
 --- !u!1 &1572720450
 GameObject:
   m_ObjectHideFlags: 0
@@ -8471,6 +8471,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f864cb00c4421d4697c186f62c82f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileTypes:
+  - {fileID: 11400000, guid: 7908334383bd8604796fbadaece192c2, type: 2}
+  - {fileID: 11400000, guid: 2ca6ebe49d1aa3a4ead2426a9cc8a680, type: 2}
+  - {fileID: 11400000, guid: 2207b78e0b74a0144a6ce1dc3e89d5c1, type: 2}
+  tileDatas:
+  - {fileID: 11400000, guid: 24527ccaacdfd124fb9e7f589d4f5e73, type: 2}
+  - {fileID: 11400000, guid: e5a7ab8119742e7458ac0f98401cc7b7, type: 2}
+  - {fileID: 11400000, guid: 2e81c9eaaff00054ebb8693f91c2ab01, type: 2}
   tilemap: {fileID: 1784175915}
   grid: {fileID: 377798428}
 --- !u!1 &1807297433

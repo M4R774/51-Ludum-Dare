@@ -3,16 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
+// GameTiles is the World map, a collection of WorldTile objects
 public class GameTiles : MonoBehaviour
 {
+	public List<Tile> tileTypes;
+	public List<TileData> tileDatas;
 	public static GameTiles instance;
 	public Tilemap tilemap;
 	public GridLayout grid;
+	public Dictionary<Vector3Int, WorldTile> tiles;
 
-	public Dictionary<Vector3, WorldTile> tiles;
-    private readonly System.Random random = new();
+	private Dictionary<TileBase, TileData> tileBaseToTileData;
 
-    private void Awake()
+	public bool TileTypeIsWalkable(WorldTile tile)
+    {
+		return tileBaseToTileData[tile.TileBase].walkable;
+	}
+
+	public bool TileTypeBlocksVision(WorldTile tile)
+	{
+		return tileBaseToTileData[tile.TileBase].blocksVision;
+	}
+
+	public WorldTile GetTileByWorldPosition(Vector3 worldPosition)
+    {
+		worldPosition.y = 0;
+		Vector3Int tileCoordinates = grid.WorldToCell(worldPosition);
+		tiles.TryGetValue(tileCoordinates, out WorldTile tile);
+		return tile;
+	}
+
+	private void Awake()
+	{
+		Pathfinding.gridLayout = grid;
+		CheckThatIamOnlyInstance();
+		GenerateDictTileBaseToTileData();
+		GenerateMap();
+	}
+
+	private void CheckThatIamOnlyInstance()
 	{
 		if (instance == null)
 		{
@@ -22,26 +52,36 @@ public class GameTiles : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
-
-		GetWorldTiles();
 	}
 
-    private void Start()
+	// Initialize the dictionary, so that the TileData class is connected with Tile types.
+	private void GenerateDictTileBaseToTileData()
     {
-		Pathfinding.gridLayout = grid;
-    }
+		tileBaseToTileData = new();
 
-    // Use this for initialization
-    private void GetWorldTiles()
+		foreach (TileData tileData in tileDatas)
+        {
+			foreach (Tile tile in tileData.tiles)
+            {
+				tileBaseToTileData.Add(tile, tileData);
+			}
+		}
+	}
+
+	private void GenerateMap()
 	{
-		tiles = new Dictionary<Vector3, WorldTile>();
+		tiles = new Dictionary<Vector3Int, WorldTile>();
 		foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
 		{
 			var localPlace = new Vector3Int(pos.x, pos.y, pos.z);
 
 			if (!tilemap.HasTile(localPlace)) continue;
-			var tile = new WorldTile
-			{
+			int randomTileIndex = UnityEngine.Random.Range(0, tileTypes.Count);
+			Tile randomizedTileType = tileTypes[randomTileIndex];
+			tilemap.SetTile(localPlace, randomizedTileType);
+
+			WorldTile tile = new()
+            {
 				CellCoordinates = localPlace,
 				WorldPosition = tilemap.CellToWorld(localPlace),
 				TileBase = tilemap.GetTile(localPlace),
@@ -50,25 +90,8 @@ public class GameTiles : MonoBehaviour
 				IsVisible = false,
 				IsExplored = false,
 				IsWithinMovementRange = false,
-				// Cost = 1 // TODO: Change this with the proper cost from ruletile
 			};
-
 			tiles.Add(localPlace, tile);
 		}
-		MakeRandomTilesUnwalkable();
-	}
-
-	private void MakeRandomTilesUnwalkable()
-	{
-		foreach (WorldTile tile in tiles.Values)
-		{
-			tile.Walkable = RandomBoolean(random);
-			// TODO: Set tile
-		}
-	}
-
-	private bool RandomBoolean(System.Random random)
-	{
-		return random.Next() > (Int32.MaxValue / 4);
 	}
 }

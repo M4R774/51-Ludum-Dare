@@ -12,10 +12,10 @@ public class WorldTile
     public TileBase TileBase { get; set; }
     public Tilemap TilemapMember { get; set; }
     public string Name { get; set; }
+    public GameObject GameObjectOnTheTile { get; set; }
 
 
     // Variables needed for pathfinding
-    public bool Walkable { get; set; }
     public int DistanceFromStart { get; set; }
     public int DistanceToTarget { get; set; }
     public WorldTile NextDestination { get; set; }
@@ -23,6 +23,55 @@ public class WorldTile
     private bool isVisible;
     private bool isExplored;
     private bool isWithinMovementRange;
+
+    public bool IsWalkable()
+    {
+        if (!GameTiles.instance.TileTypeIsWalkable(this))
+        {
+            return false; // Tiletype is not walkable
+        }
+        else if (GameObjectOnTheTile == null)
+        {
+            return true; // The tiletype is walkable and free of gameobjects
+        }
+        else // there is a GameObject on a walkable tile
+        {
+            HideIfNotVisible enemyComponent = GameObjectOnTheTile.GetComponent<HideIfNotVisible>();
+            if (enemyComponent == null)
+            {
+                return true; // There is a gameobject, but you can move through it
+            }
+            else
+            {
+                return false; // There was an enemy object
+            }
+        }
+    }
+
+    public bool BlocksVision()
+    {
+        if (GameTiles.instance.TileTypeBlocksVision(this))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool CanEndTurnHere()
+    {
+
+        if (IsWalkable() && GameObjectOnTheTile == null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public bool IsVisible 
     {
@@ -65,9 +114,8 @@ public class WorldTile
 
     public List<WorldTile> Neighbors()
     {
-        List<List<Vector3Int>> precalculatedDirections = GetPrecalculatedNeighbourDirections();
         int evenOrOddColumn = CellCoordinates.y & 1;
-        List<Vector3Int> neighborDirections = precalculatedDirections[evenOrOddColumn];
+        List<Vector3Int> neighborDirections = Pathfinding.GetPrecalculatedNeighbourDirections()[evenOrOddColumn];
 
         List<WorldTile> neighbors = new();
         foreach (Vector3Int neigborDirection in neighborDirections)
@@ -121,37 +169,5 @@ public class WorldTile
             TilemapMember.SetTileFlags(CellCoordinates, TileFlags.None);
             TilemapMember.SetColor(CellCoordinates, color);
         }
-    }
-
-    private List<List<Vector3Int>> GetPrecalculatedNeighbourDirections()
-    {
-        List<List<Vector3Int>> precalculatedDirections = new();
-        precalculatedDirections.Add(GetNeighbourDirectionsForEvenHex());
-        precalculatedDirections.Add(GetNeighbourDirectionsForOddHex());
-        return precalculatedDirections;
-    }
-
-    private List<Vector3Int> GetNeighbourDirectionsForEvenHex()
-    {
-        List<Vector3Int> even = new();
-        even.Add(new Vector3Int(0, 1, 0));
-        even.Add(new Vector3Int(-1, 1, 0));
-        even.Add(new Vector3Int(-1, 0, 0));
-        even.Add(new Vector3Int(-1, -1, 0));
-        even.Add(new Vector3Int(0, -1, 0));
-        even.Add(new Vector3Int(1, 0, 0));
-        return even;
-    }
-
-    private List<Vector3Int> GetNeighbourDirectionsForOddHex()
-    {
-        List<Vector3Int> odd = new();
-        odd.Add(new Vector3Int(1, 1, 0));
-        odd.Add(new Vector3Int(0, 1, 0));
-        odd.Add(new Vector3Int(-1, 0, 0));
-        odd.Add(new Vector3Int(0, -1, 0));
-        odd.Add(new Vector3Int(1, -1, 0));
-        odd.Add(new Vector3Int(1, 0, 0));
-        return odd;
     }
 }

@@ -8,58 +8,49 @@ public class MouseController : MonoBehaviour
     public GridLayout gridLayout;
 
     // Pathfinding tests
-    private WorldTile targetTile;
-    private WorldTile startTile;
-    private WorldTile _tile;
-    private ISelectable _selectable;
-    private List<ISelectable> selectedObjects;
+    private ISelectable selectedObject;
 
     private void Start()
     {
-        selectedObjects = new();
+        selectedObject = null;
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && Time.timeScale > 0)
         {
-            GetWorldlTileUnderMouse(out _tile, out _selectable);
-            HandleSelectable(_selectable);
-            HandleTile(_tile);
+            GetWorldlTileUnderMouse(out WorldTile clickedTile, out ISelectable clickedSelectable);
+            HandleSelectable(clickedSelectable);
+            HandleTile(clickedTile, clickedSelectable);
         }
     }
 
-    private void HandleSelectable(ISelectable selectable)
+    private void HandleSelectable(ISelectable clickedSelectable)
     {
-        if (selectable != null)
+        if (clickedSelectable != null)
         {
-            if (selectable.IsSelected())
+            if (clickedSelectable.IsSelected())
             {
-                selectable.Unselect();
-                selectedObjects.Remove(_selectable);
+                clickedSelectable.Unselect();
+                selectedObject = null;
             }
             else
             {
-                selectable.Select();
-                selectedObjects.Add(_selectable);
+                selectedObject?.Unselect();
+                clickedSelectable.Select();
+                selectedObject = clickedSelectable;
             }
         }
     }
 
-    private void HandleTile(WorldTile clickedTile)
+    private void HandleTile(WorldTile clickedTile, ISelectable clickeckSelectable)
     {
-        if (clickedTile != null && _selectable == null)
+        if (MovementIsPossible(clickedTile, clickeckSelectable))
         {
-            if (selectedObjects.Count > 0 && clickedTile != null)
-            {
-                Vector3Int selectedObjectCoordinates = selectedObjects[0].GetTileCoordinates();
-                GameTiles.instance.tiles.TryGetValue(selectedObjectCoordinates, out _tile);
-                if (clickedTile.Walkable)
-                {
-                    List<WorldTile> path = Pathfinding.FindPath(_tile, clickedTile);
-                    selectedObjects[0].MoveTowardsTarget(path);
-                }
-            }
+            Vector3Int selectedObjectCoordinates = selectedObject.GetTileCoordinates();
+            GameTiles.instance.tiles.TryGetValue(selectedObjectCoordinates, out WorldTile tile);
+            List<WorldTile> path = Pathfinding.FindPath(tile, clickedTile);
+            selectedObject.MoveTowardsTarget(path);
         }
     }
 
@@ -75,6 +66,22 @@ public class MouseController : MonoBehaviour
             Vector3Int tileCoordinatesUnderMouse = gridLayout.WorldToCell(mousePosition);
             var tiles = GameTiles.instance.tiles; // This is our Dictionary of tiles
             tiles.TryGetValue(tileCoordinatesUnderMouse, out _tile);
+        }
+    }
+
+    private bool MovementIsPossible(WorldTile clickedTile, ISelectable clickedSelectable)
+    {
+        if (clickedTile != null &&
+            clickedSelectable == null &&
+            selectedObject != null &&
+            clickedTile.CanEndTurnHere() &&
+            clickedTile.IsVisible)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

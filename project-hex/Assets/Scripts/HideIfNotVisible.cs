@@ -11,6 +11,10 @@ public class HideIfNotVisible : MonoBehaviour
     {
         meshRenderer = transform.GetComponent<MeshRenderer>();
         grid = GameTiles.instance.grid;
+        CheckIfVisible();
+
+        WorldTile tileUnderMyself = GameTiles.instance.GetTileByWorldPosition(transform.position);
+        tileUnderMyself.GameObjectOnTheTile = transform.gameObject;
     }
 
     private void OnEnable()

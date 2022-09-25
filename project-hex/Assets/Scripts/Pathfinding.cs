@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +7,16 @@ using UnityEngine.Tilemaps;
 
 public static class Pathfinding
 {
-	public static GridLayout gridLayout;
+    public static GridLayout gridLayout;
 
-    public static List<WorldTile> GetAllTilesWithingRange(WorldTile startTile, int range)
+    public static List<WorldTile> GetAllTilesWithingMovementRange(WorldTile startTile, int range)
     {
         List<WorldTile> tilesWithinRange = new() { startTile };
         List<WorldTile> tilesToSearch = new();
 
         foreach (WorldTile initialNeighbour in startTile.Neighbors())
         {
-            if (initialNeighbour.Walkable )
+            if (initialNeighbour.IsWalkable())
             {
                 tilesWithinRange.Add(initialNeighbour);
                 tilesToSearch.Add(initialNeighbour);
@@ -30,7 +30,7 @@ public static class Pathfinding
             {
                 foreach (WorldTile newNeighbour in tileToSearch.Neighbors())
                 {
-                    if (newNeighbour.Walkable && !newNeighbors.Contains(newNeighbour))
+                    if (newNeighbour.IsWalkable() && !newNeighbors.Contains(newNeighbour))
                     {
                         newNeighbors.Add(newNeighbour);
                     }
@@ -43,6 +43,73 @@ public static class Pathfinding
         }
 
         return tilesWithinRange;
+    }
+
+    public static List<WorldTile> GetAllVisibleTiles(WorldTile startingTile, int visionRange)
+    {
+        List<WorldTile> visibleTiles = new() { startingTile };
+        List<Vector3Int> outerEdge = GetRingOfRadius(startingTile.CellCoordinates, visionRange);
+
+        foreach (Vector3Int edgeCoordinates in outerEdge)
+        {
+            for (int i = 0; i < visionRange; i++)
+            {
+                Vector3 sampleWorldPosition = Vector3.Lerp(startingTile.WorldPosition,
+                                                      gridLayout.CellToWorld(edgeCoordinates),
+                                                      1.0f / visionRange * i);
+                Vector3Int sampleTileCoordinates = gridLayout.WorldToCell(sampleWorldPosition);
+                GameTiles.instance.tiles.TryGetValue(sampleTileCoordinates, out WorldTile sampleTile);
+                if (sampleTile == null)
+                {
+                    break;
+                }
+                if (!visibleTiles.Contains(sampleTile))
+                {
+                    visibleTiles.Add(sampleTile);
+                }
+                if (sampleTile.BlocksVision())
+                {
+                    break;
+                }
+            }
+        }
+
+        return visibleTiles;
+    }
+
+    // this code doesn't work for radius == 0
+    public static List<Vector3Int> GetRingOfRadius(Vector3Int gridCoordinates, int radius)
+    {
+        List<Vector3Int> ring = new();
+        for (int i = 0; i < radius; i++)
+        {
+            gridCoordinates = NeighborGridCoordinates(gridCoordinates)[4];
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < radius; j++)
+            {
+                ring.Add(gridCoordinates);
+                gridCoordinates = NeighborGridCoordinates(gridCoordinates)[i];
+            }
+        }
+
+        return ring;
+    }
+
+    public static List<Vector3Int> NeighborGridCoordinates(Vector3Int CellCoordinates)
+    {
+        int evenOrOddColumn = CellCoordinates.y & 1;
+        List<Vector3Int> neighborDirections = GetPrecalculatedNeighbourDirections()[evenOrOddColumn];
+
+        List<Vector3Int> neighbors = new();
+        foreach (Vector3Int neigborDirection in neighborDirections)
+        {
+            neighbors.Add(CellCoordinates + neigborDirection);
+        }
+
+        return neighbors;
     }
 
     // This algorithm is written for readability. Although it would be perfectly fine in 80% of
@@ -96,7 +163,7 @@ public static class Pathfinding
             }
 
             foreach (var neighbor in current.Neighbors().Where(
-                tile => !processed.Contains(tile) && tile.Walkable))
+                tile => !processed.Contains(tile) && tile.IsWalkable() && (tile.GameObjectOnTheTile == null || tile.GameObjectOnTheTile.GetComponent<HideIfNotVisible>() == null)))
             {
                 var inSearch = toSearch.Contains(neighbor);
 
@@ -109,7 +176,7 @@ public static class Pathfinding
 
                     if (!inSearch)
                     {
-                        neighbor.DistanceToTarget = GetDistance(neighbor, targetNode);
+                        neighbor.DistanceToTarget = GetDistanceInTiles(neighbor, targetNode);
                         toSearch.Add(neighbor);
                     }
                 }
@@ -148,10 +215,42 @@ public static class Pathfinding
               + Mathf.Abs(vec.x)) / 2);
     }
 
-    private static int GetDistance(WorldTile startTile, WorldTile targetTile)
+    private static int GetDistanceInTiles(WorldTile startTile, WorldTile targetTile)
     {
         var ac = OffsetCoordinatesToAxial(startTile.CellCoordinates);
         var bc = OffsetCoordinatesToAxial(targetTile.CellCoordinates);
         return AxialDistance(ac, bc);
+    }
+
+    public static List<List<Vector3Int>> GetPrecalculatedNeighbourDirections()
+    {
+        List<List<Vector3Int>> precalculatedDirections = new();
+        precalculatedDirections.Add(GetNeighbourDirectionsForEvenHex());
+        precalculatedDirections.Add(GetNeighbourDirectionsForOddHex());
+        return precalculatedDirections;
+    }
+
+    private static List<Vector3Int> GetNeighbourDirectionsForEvenHex()
+    {
+        List<Vector3Int> even = new();
+        even.Add(new Vector3Int(0, 1, 0));
+        even.Add(new Vector3Int(-1, 1, 0));
+        even.Add(new Vector3Int(-1, 0, 0));
+        even.Add(new Vector3Int(-1, -1, 0));
+        even.Add(new Vector3Int(0, -1, 0));
+        even.Add(new Vector3Int(1, 0, 0));
+        return even;
+    }
+
+    private static List<Vector3Int> GetNeighbourDirectionsForOddHex()
+    {
+        List<Vector3Int> odd = new();
+        odd.Add(new Vector3Int(1, 1, 0));
+        odd.Add(new Vector3Int(0, 1, 0));
+        odd.Add(new Vector3Int(-1, 0, 0));
+        odd.Add(new Vector3Int(0, -1, 0));
+        odd.Add(new Vector3Int(1, -1, 0));
+        odd.Add(new Vector3Int(1, 0, 0));
+        return odd;
     }
 }
