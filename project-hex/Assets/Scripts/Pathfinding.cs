@@ -14,6 +14,11 @@ public static class Pathfinding
         List<WorldTile> tilesWithinRange = new() { startTile };
         List<WorldTile> tilesToSearch = new();
 
+        if (range <= 0)
+        {
+            return tilesWithinRange;
+        }
+
         foreach (WorldTile initialNeighbour in startTile.Neighbors())
         {
             if (initialNeighbour.IsWalkable())
@@ -52,7 +57,7 @@ public static class Pathfinding
 
         foreach (Vector3Int edgeCoordinates in outerEdge)
         {
-            for (int i = 0; i < visionRange; i++)
+            for (int i = 0; i < visionRange + 1; i++)
             {
                 Vector3 sampleWorldPosition = Vector3.Lerp(startingTile.WorldPosition,
                                                       gridLayout.CellToWorld(edgeCoordinates),
@@ -67,7 +72,7 @@ public static class Pathfinding
                 {
                     visibleTiles.Add(sampleTile);
                 }
-                if (sampleTile.BlocksVision())
+                if (sampleTile.BlocksVision() && i != 0)
                 {
                     break;
                 }

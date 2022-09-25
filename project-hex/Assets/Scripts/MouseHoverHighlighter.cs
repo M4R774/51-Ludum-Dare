@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class MouseHoverHighlighter : MonoBehaviour
 {
-    public GridLayout gridLayout;
+    public MouseController mouseController;
     public float lightHeight;
 
-    private RaycastHit hit;
+    private GridLayout gridLayout;
     private Ray ray;
     private Vector3 mousePosition;
     private Vector3Int tilePosUnderMouse;
@@ -15,6 +15,7 @@ public class MouseHoverHighlighter : MonoBehaviour
 
     void Start()
     {
+        gridLayout = mouseController.gridLayout;
         highLightedObjects = new();
     }
 
@@ -28,39 +29,27 @@ public class MouseHoverHighlighter : MonoBehaviour
 
     private void HighlightObjectUnderMouse()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
+        mousePosition = mouseController.hit.point;
+        mousePosition.y = 0;
+        tilePosUnderMouse = gridLayout.WorldToCell(mousePosition);
+        transform.position = gridLayout.CellToWorld(tilePosUnderMouse) + new Vector3(0, lightHeight, 0);
+        if (mouseController.hit.transform == null)
         {
-            mousePosition = hit.point;
-            mousePosition.y = 0;
-            tilePosUnderMouse = gridLayout.WorldToCell(mousePosition);
-            transform.position = gridLayout.CellToWorld(tilePosUnderMouse) + new Vector3(0, lightHeight, 0);
-
-            IHighlightable objectToHighlight = hit.transform.GetComponent<IHighlightable>();
-            if (objectToHighlight != null)
-            {
-                highLightedObjects.Add(objectToHighlight);
-                objectToHighlight.SetHighlightLevel(1);
-            }
-
-            foreach (IHighlightable objectToUnlight in highLightedObjects)
-            {
-                if (objectToUnlight != objectToHighlight)
-                {
-                    objectToUnlight.SetHighlightLevel(0);
-                }
-            }
-
-            DrawDebugLines();
+            return;
         }
-    }
+        IHighlightable objectToHighlight = mouseController.hit.transform.GetComponent<IHighlightable>();
+        if (objectToHighlight != null)
+        {
+            highLightedObjects.Add(objectToHighlight);
+            objectToHighlight.SetHighlightLevel(1);
+        }
 
-    void DrawDebugLines()
-    {
-        // Debug
-        Debug.DrawRay(Camera.main.ScreenToWorldPoint(Input.mousePosition), ray.direction * 20, Color.red);
-        Debug.DrawLine(hit.point, hit.point + Vector3.left, Color.blue);
-        Debug.DrawLine(hit.point, hit.point + Vector3.back, Color.green);
-        Debug.DrawLine(hit.point, hit.point + Vector3.up, Color.cyan);
+        foreach (IHighlightable objectToUnlight in highLightedObjects)
+        {
+            if (objectToUnlight != objectToHighlight)
+            {
+                objectToUnlight.SetHighlightLevel(0);
+            }
+        }
     }
 }

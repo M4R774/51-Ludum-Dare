@@ -15,6 +15,6 @@ MonoBehaviour:
   tiles:
   - {fileID: 11400000, guid: 2207b78e0b74a0144a6ce1dc3e89d5c1, type: 2}
   walkable: 0
-  blocksVision: 0
+  blocksVision: 1
   cost: 1
   height: 1

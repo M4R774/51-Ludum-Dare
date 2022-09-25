@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: hex-material
+  m_Name: highlight-hex
   m_Shader: {fileID: -6465566751694194690, guid: 41ef45cf3f0034b4287a043de8e6be9c, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -231,7 +231,7 @@ Material:
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
     - _DstBlend: 0
-    - _Emission: 0
+    - _Emission: 5
     - _EmissionEnabled: 0
     - _EnableExternalAlpha: 0
     - _EnableHeightBlend: 0
@@ -305,7 +305,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _EmisColor: {r: 0.2, g: 0.2, b: 0.2, a: 0}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 10, g: 3, b: 0, a: 0}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

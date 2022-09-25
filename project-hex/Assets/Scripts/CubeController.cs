@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour, ISelectable, IHighlightable
 {
-    public int movementSpeed;
     public int visibilityRange;
+    public int movementSpeed;
 
     private GridLayout grid;
     private bool isSelected;
@@ -29,7 +29,13 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         //Pathfinding.GetRingOfRadius(GetTileUnderMyself(), 5);
     }
 
-    public void Select()
+    public int MovementSpeed
+    {
+        get { return movementSpeed; }
+        //set { movementSpeed = value; }
+    }
+
+public void Select()
     {
         isSelected = true;
         DetermineEmissionAndColor();
@@ -71,6 +77,10 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
             numberOfTilesToMove = path.Count;
         }
 
+        if (numberOfTilesToMove == 0)
+        {
+            return;
+        }
         StartCoroutine(LerpThroughPath(path, numberOfTilesToMove));
     }
 
@@ -93,7 +103,7 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         EventManager.VisibilityHasChanged();
     }
 
-    private WorldTile GetTileUnderMyself()
+    public WorldTile GetTileUnderMyself()
     {
         WorldTile tileUnderCube = GameTiles.instance.GetTileByWorldPosition(transform.position);
         return tileUnderCube;
@@ -142,6 +152,7 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
 
     private IEnumerator LerpToNextTile(List<WorldTile> path, int i)
     {
+        WorldTile startingTile = GetTileUnderMyself();
         Vector3 targetPosition = path[path.Count - 1 - i].WorldPosition;
         float elapsedTime = 0;
         float transitionTimeBetweenTiles = .3f;
@@ -157,6 +168,8 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
             yield return null;
         }
 
+        InformTilesIfTheyAreWithinVisionRange(startingTile, visibilityRange, false);
+        InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
         transform.position = targetPosition;
     }
 

@@ -1,27 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class MouseController : MonoBehaviour
 {
     public GridLayout gridLayout;
+    public RaycastHit hit;
+    public LineRenderer lineRenderer;
+    public GameObject glowingHex;
 
-    // Pathfinding tests
     private ISelectable selectedObject;
+    private WorldTile oldTileUnderMouse;
 
     private void Start()
     {
+        lineRenderer = transform.gameObject.GetComponent<LineRenderer>();
         selectedObject = null;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Time.timeScale > 0)
+        if (Time.timeScale > 0)
         {
-            GetWorldlTileUnderMouse(out WorldTile clickedTile, out ISelectable clickedSelectable);
-            HandleSelectable(clickedSelectable);
-            HandleTile(clickedTile, clickedSelectable);
+            GetWorldlTileUnderMouse(out WorldTile tileUnderMouse, out ISelectable selectableUnderMouse);
+            PlanAndDrawPath(tileUnderMouse);
+            oldTileUnderMouse = tileUnderMouse;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                HandleSelectable(selectableUnderMouse);
+                HandleTile(tileUnderMouse, selectableUnderMouse);
+            }
         }
     }
 
@@ -59,7 +70,7 @@ public class MouseController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         _selectable = null;
         _tile = null;
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out hit))
         {
             _selectable = hit.transform.GetComponent<ISelectable>();
             Vector3 mousePosition = hit.point;
@@ -83,5 +94,75 @@ public class MouseController : MonoBehaviour
         {
             return false;
         }
+    }
+
+
+    private void PlanAndDrawPath(WorldTile tileUnderMouse)
+    {
+        // If no valid target
+        if (!IfDrawingNewLineIsNeeded(tileUnderMouse, out List<WorldTile> path))
+        {
+            return;
+        }
+        else
+        {
+            glowingHex.SetActive(true);
+        }
+
+        int numberOfTilesToMove = selectedObject.MovementSpeed;
+        if (path.Count < selectedObject.MovementSpeed)
+        {
+            numberOfTilesToMove = path.Count;
+        }
+        int offset = path.Count - numberOfTilesToMove;
+
+        Vector3[] pathPositions = new Vector3[path.Count + 1];
+        pathPositions.SetValue(path[offset].WorldPosition, 0);
+        glowingHex.transform.position = path[offset].WorldPosition;
+        for (int i = 1; i < numberOfTilesToMove; i++)
+        {
+            Vector3 newPosition = path[offset + i].WorldPosition;
+            newPosition.y = 0.2f;
+            pathPositions.SetValue(newPosition, i);
+        }
+        pathPositions.SetValue(selectedObject.GetTileUnderMyself().WorldPosition, path.Count - offset);
+        lineRenderer.positionCount = path.Count + 1 - offset;
+        lineRenderer.SetPositions(pathPositions);
+    }
+
+    private bool IfDrawingNewLineIsNeeded(WorldTile tileUnderMouse, out List<WorldTile> path)
+    {
+        path = null;
+        // If no valid target
+        if (selectedObject == null ||
+            selectedObject.MovementSpeed <= 0 ||
+            tileUnderMouse == null ||
+            !tileUnderMouse.IsWalkable() ||
+            !tileUnderMouse.IsVisible)
+        {
+            ResetLineRenderer();
+            return false;
+        }
+
+        // If nothin has changed
+        if (oldTileUnderMouse == tileUnderMouse)
+        {
+            return false;
+        }
+
+        // If no valid path
+        path = Pathfinding.FindPath(selectedObject.GetTileUnderMyself(), tileUnderMouse);
+        if (path == null || path.Count == 0)
+        {
+            ResetLineRenderer();
+            return false;
+        }
+        return true;
+    }
+
+    private void ResetLineRenderer()
+    {
+        glowingHex.SetActive(false);
+        lineRenderer.positionCount = 0;
     }
 }
