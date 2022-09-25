@@ -10,6 +10,13 @@ public class EventManager : MonoBehaviour
     public delegate void EndTurn();
     public static event EndTurn OnEndTurn;
 
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     public static void VisibilityHasChanged()
     {
         OnVisibilityChange?.Invoke();
@@ -17,5 +24,10 @@ public class EventManager : MonoBehaviour
     public static void TurnHasEnded()
     {
         OnEndTurn?.Invoke();
+    }
+
+    public void Play()
+    {
+        audioSource.Play();
     }
 }
