@@ -6,6 +6,7 @@ using UnityEngine;
 public class CubeController : MonoBehaviour, ISelectable, IHighlightable
 {
     public int visibilityRange;
+    public int movementPointsLeft;
     public int movementSpeed;
 
     private GridLayout grid;
@@ -26,12 +27,12 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         tileUnderMe = GetTileUnderMyself();
         tileUnderMe.GameObjectOnTheTile = transform.gameObject;
 
-        //Pathfinding.GetRingOfRadius(GetTileUnderMyself(), 5);
+        movementPointsLeft = movementSpeed;
     }
 
     public int MovementSpeed
     {
-        get { return movementSpeed; }
+        get { return movementPointsLeft; }
         //set { movementSpeed = value; }
     }
 
@@ -39,14 +40,14 @@ public void Select()
     {
         isSelected = true;
         DetermineEmissionAndColor();
-        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementSpeed, true);
+        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
     }
 
     public void Unselect()
     {
         isSelected = false;
         DetermineEmissionAndColor();
-        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementSpeed, false);
+        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, false);
     }
 
     public bool IsSelected()
@@ -71,13 +72,13 @@ public void Select()
     {
         if (movementInProgress) return;
 
-        int numberOfTilesToMove = movementSpeed;
-        if (path.Count < movementSpeed)
+        int numberOfTilesToMove = movementPointsLeft;
+        if (path.Count < movementPointsLeft)
         {
             numberOfTilesToMove = path.Count;
         }
 
-        if (numberOfTilesToMove == 0)
+        if (numberOfTilesToMove <= 0)
         {
             return;
         }
@@ -137,6 +138,7 @@ public void Select()
         for (int i = 0; i < numberOfTilesToLerp; i++)
         {
             yield return LerpToNextTile(path, i);
+            movementPointsLeft -= 1;
         }
 
         // Refresh vision and movement range highlighting
@@ -144,7 +146,7 @@ public void Select()
         InformTilesIfTheyAreWithinVisionRange(startingTile, visibilityRange, false);
         if (isSelected)
         {
-            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementSpeed, true);
+            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
         }
         EventManager.VisibilityHasChanged();
         movementInProgress = false;
@@ -176,15 +178,27 @@ public void Select()
     private void OnEnable()
     {
         EventManager.OnVisibilityChange += ReCalculateVisibility;
+        EventManager.OnEndTurn += ResetOnEndTurn;
     }
 
     private void OnDisable()
     {
         EventManager.OnVisibilityChange -= ReCalculateVisibility;
+        EventManager.OnEndTurn -= ResetOnEndTurn;
     }
 
     public void ReCalculateVisibility()
     {
         InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
+    }
+
+    public void ResetOnEndTurn()
+    {
+        movementPointsLeft = movementSpeed;
+        if (isSelected)
+        {
+            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
+        }
+
     }
 }
