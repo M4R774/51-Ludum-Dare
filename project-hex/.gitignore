@@ -60,3 +60,9 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# VSCode-required settings files and analyzers
+# https://code.visualstudio.com/docs/other/unity
+NuGet
+omnisharp.json
+.editorconfig
+.vscode
