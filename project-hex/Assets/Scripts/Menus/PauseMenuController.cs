@@ -8,6 +8,11 @@ public class PauseMenuController : MonoBehaviour
     public GameObject pauseMenuCanvas;
     public string nameOfMainMenuScene;
 
+    public void Start()
+    {
+        Continue();
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

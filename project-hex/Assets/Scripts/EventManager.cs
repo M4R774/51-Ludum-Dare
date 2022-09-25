@@ -25,9 +25,4 @@ public class EventManager : MonoBehaviour
     {
         OnEndTurn?.Invoke();
     }
-
-    public void Play()
-    {
-        audioSource.Play();
-    }
 }
