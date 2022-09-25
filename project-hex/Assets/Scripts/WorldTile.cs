@@ -81,6 +81,7 @@ public class WorldTile
             isVisible = value;
             if (isVisible)
             {
+                TilemapMember.GetInstantiatedObject(CellCoordinates).SetActive(false);
                 isExplored = true;
             }
             CalculateAndSetTileColor();
