@@ -129,7 +129,7 @@ public void Select()
     private IEnumerator LerpThroughPath(List<WorldTile> path, int numberOfTilesToLerp)
     {
         tileUnderMe.GameObjectOnTheTile = null;
-        WorldTile endTile = path[path.Count - numberOfTilesToLerp];
+        WorldTile endTile = path[^numberOfTilesToLerp];
         tileUnderMe = endTile;
         endTile.GameObjectOnTheTile = transform.gameObject;
 
@@ -138,7 +138,7 @@ public void Select()
         for (int i = 0; i < numberOfTilesToLerp; i++)
         {
             yield return LerpToNextTile(path, i);
-            movementPointsLeft -= 1;
+            movementPointsLeft -= 1; //GetTileUnderMyself().GetTileTypeCost();
         }
 
         // Refresh vision and movement range highlighting

@@ -26,6 +26,11 @@ public class GameTiles : MonoBehaviour
 		return tileBaseToTileData[tile.TileBase].blocksVision;
 	}
 
+	internal int GetTileTypeCost(WorldTile tile)
+	{
+		return tileBaseToTileData[tile.TileBase].cost;
+	}
+
 	public WorldTile GetTileByWorldPosition(Vector3 worldPosition)
     {
 		worldPosition.y = 0;

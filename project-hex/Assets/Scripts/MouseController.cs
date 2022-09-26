@@ -32,6 +32,7 @@ public class MouseController : MonoBehaviour
             {
                 HandleSelectable(selectableUnderMouse);
                 HandleTile(tileUnderMouse, selectableUnderMouse);
+                ResetLineRenderer();
             }
         }
     }

@@ -113,6 +113,12 @@ public class WorldTile
         return DistanceFromStart + DistanceToTarget;
     }
 
+    public int GetTileTypeCost()
+    {
+        int cost = GameTiles.instance.GetTileTypeCost(this);
+        return cost;
+    }
+
     public List<WorldTile> Neighbors()
     {
         int evenOrOddColumn = CellCoordinates.y & 1;
