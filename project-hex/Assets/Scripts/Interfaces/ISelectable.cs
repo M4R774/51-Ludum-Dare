@@ -4,8 +4,9 @@ using UnityEngine;
 
 public interface ISelectable
 {
+    public Transform GetTransform();
     int MovementSpeed { get; }
-
+    int MovementPointsLeft();
     public void Select();
     public void Unselect();
     public bool IsSelected();

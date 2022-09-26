@@ -149,6 +149,7 @@ public void Select()
             InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
         }
         EventManager.VisibilityHasChanged();
+        EventManager.MaybeTurnHasEnded();
         movementInProgress = false;
     }
 
@@ -200,5 +201,15 @@ public void Select()
             InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
         }
 
+    }
+
+    public int MovementPointsLeft()
+    {
+        return movementPointsLeft;
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }

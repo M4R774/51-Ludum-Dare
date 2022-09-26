@@ -10,6 +10,9 @@ public class EventManager : MonoBehaviour
     public delegate void EndTurn();
     public static event EndTurn OnEndTurn;
 
+    public delegate void MaybeEndTurn();
+    public static event MaybeEndTurn OnMaybeEndTurn;
+
     private AudioSource audioSource;
 
     private void Start()
@@ -21,6 +24,12 @@ public class EventManager : MonoBehaviour
     {
         OnVisibilityChange?.Invoke();
     }
+
+    public static void MaybeTurnHasEnded()
+    {
+        OnMaybeEndTurn?.Invoke();
+    }
+
     public static void TurnHasEnded()
     {
         OnEndTurn?.Invoke();

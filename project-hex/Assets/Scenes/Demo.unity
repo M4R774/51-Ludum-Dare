@@ -1049,7 +1049,6 @@ GameObject:
   - component: {fileID: 406476941}
   - component: {fileID: 406476944}
   - component: {fileID: 406476945}
-  - component: {fileID: 406476946}
   - component: {fileID: 406476947}
   m_Layer: 0
   m_Name: Mouse
@@ -1184,23 +1183,6 @@ MonoBehaviour:
   gridLayout: {fileID: 377798428}
   lineRenderer: {fileID: 406476947}
   glowingHex: {fileID: 2106538391}
---- !u!114 &406476946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 406476940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7488602e0cea80942bacc77f466cd29f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerControlledUnits:
-  - {fileID: 1395886328}
-  - {fileID: 114884179}
-  - {fileID: 1247225469}
-  - {fileID: 556171852}
 --- !u!120 &406476947
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -43033,6 +43015,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2110737256}
   - component: {fileID: 2110737254}
+  - component: {fileID: 2110737257}
   m_Layer: 0
   m_Name: CameraRig
   m_TagString: Untagged
@@ -43074,6 +43057,25 @@ Transform:
   m_Father: {fileID: 1340316140}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2110737257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110737252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7488602e0cea80942bacc77f466cd29f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerControlledUnits:
+  - {fileID: 1395886328}
+  - {fileID: 114884179}
+  - {fileID: 1247225469}
+  - {fileID: 556171852}
+  mouseController: {fileID: 406476945}
+  cameraController: {fileID: 2110737254}
 --- !u!1 &2120547202
 GameObject:
   m_ObjectHideFlags: 0

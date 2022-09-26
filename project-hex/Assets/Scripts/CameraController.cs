@@ -19,6 +19,11 @@ public class CameraController : MonoBehaviour
     private Vector3 newEulerRotation;
     private Vector3 newZoom;
 
+    public void SetNewPosition(Transform targetTransform)
+    {
+        newPosition = targetTransform.position;
+    }
+
     private void Start()
     {
         newPosition = transform.position;
