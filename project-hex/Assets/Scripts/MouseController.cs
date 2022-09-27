@@ -16,7 +16,10 @@ public class MouseController : MonoBehaviour
 
     public void SetSelectedObject(ISelectable newSelected)
     {
-        selectedObject.Unselect();
+        if (selectedObject != null)
+        {
+            selectedObject.Unselect();
+        }
         newSelected.Select();
         selectedObject = newSelected;
     }

@@ -28,4 +28,14 @@ public class AudioManager : MonoBehaviour
             audioSource.Play();
         }
     }
+
+    private void OnEnable()
+    {
+        EventManager.OnEndTurn += Play;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnEndTurn -= Play;
+    }
 }
