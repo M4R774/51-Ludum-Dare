@@ -1,25 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {
     public List<GameObject> playerControlledUnits;
+    public Button nextUnitButton;
     public MouseController mouseController;
     public CameraController cameraController;
     public bool automaticallyEndTurn;
 
     private int indexOfLastSelectedUnit;
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab) && GetAnyUnitThatHasActionsLeft() != null)
+        {
+            SelectNextUnit();
+            cameraController.SetNewPosition(mouseController.GetSelectedObject().GetTransform());
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            EventManager.TurnHasEnded();
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && mouseController.GetSelectedObject() != null)
+        {
+            mouseController.GetSelectedObject().SkipTurn();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftAlt) && mouseController.GetSelectedObject() != null)
+        {
+            cameraController.SetNewPosition(mouseController.GetSelectedObject().GetTransform());
+        }
+    }
+
     public void SelectNextUnit()
     {
-        GameObject selectedUnit = AnyUnitIsSelected();
+        ISelectable selectedSelectable = mouseController.GetSelectedObject();
+        GameObject selectedUnit = null;
+        if (selectedSelectable != null)
+        {
+            selectedUnit = selectedSelectable.GetTransform().gameObject;
+        }
 
         for (int i = 0; i < playerControlledUnits.Count; i++)
         {
             int indexOfNewUnit = (indexOfLastSelectedUnit + i) % playerControlledUnits.Count;
-            if (selectedUnit != playerControlledUnits[indexOfNewUnit] && 
-                playerControlledUnits[indexOfNewUnit].GetComponent<ISelectable>().MovementPointsLeft() > 0)
+            if (selectedUnit != playerControlledUnits[indexOfNewUnit] &&
+                IfGameObjectHasMovementPointsLeft(playerControlledUnits[indexOfNewUnit]))
             {
                 indexOfLastSelectedUnit = indexOfNewUnit;
                 mouseController.SetSelectedObject(playerControlledUnits[indexOfNewUnit].GetComponent<ISelectable>());
@@ -30,40 +58,59 @@ public class TurnManager : MonoBehaviour
 
     private void CheckIfTurnCanBeAutomaticallyEndedOrGoToNextUnit()
     {
-        GameObject selectedUnit = AnyUnitIsSelected();
+        GameObject selectedUnit = mouseController.GetSelectedObject().GetTransform().gameObject;
         GameObject unitWithActionsLeft = GetAnyUnitThatHasActionsLeft();
-
-        if (selectedUnit.GetComponent<ISelectable>().MovementPointsLeft() <= 0 && 
-            unitWithActionsLeft != null)
+        if (!IfSelectableHasMovementPointsLeft(selectedUnit.GetComponent<ISelectable>()))
         {
-            mouseController.SetSelectedObject(unitWithActionsLeft.GetComponent<ISelectable>());
-        }
-        else if (automaticallyEndTurn)
-        {
-            EventManager.TurnHasEnded();
+            if (unitWithActionsLeft != null)
+            {
+                SelectNextUnit();
+            }
+            else if (unitWithActionsLeft == null)
+            {
+                nextUnitButton.interactable = false;
+                mouseController.SetSelectedObject(null);
+                if (automaticallyEndTurn)
+                {
+                    EventManager.TurnHasEnded();
+                }
+            }
         }
     }
 
     private void SelectNewUnitOnEndTurn()
     {
-        GameObject unitWithActionsLeft = AnyUnitIsSelected();
-        if (unitWithActionsLeft == null)
+        nextUnitButton.interactable = true;
+
+        if (mouseController.GetSelectedObject() == null)
         {
-            unitWithActionsLeft = playerControlledUnits[0];
+            GameObject unitWithActionsLeft = playerControlledUnits[0];
             mouseController.SetSelectedObject(unitWithActionsLeft.GetComponent<ISelectable>());
         }
     }
 
-    private GameObject AnyUnitIsSelected()
+    private bool IfSelectableHasMovementPointsLeft(ISelectable selectedUnit)
     {
-        foreach (GameObject unit in playerControlledUnits)
+        if (selectedUnit.MovementPointsLeft() <= 0)
         {
-            if (unit.GetComponent<ISelectable>().IsSelected())
-            {
-                return unit;
-            }
+            return false;
         }
-        return null;
+        else
+        {
+            return true;
+        }
+    }
+
+    private bool IfGameObjectHasMovementPointsLeft(GameObject gameObject)
+    {
+        if (gameObject.GetComponent<ISelectable>().MovementPointsLeft() <= 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     private GameObject GetAnyUnitThatHasActionsLeft()

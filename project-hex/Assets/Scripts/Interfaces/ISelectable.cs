@@ -4,7 +4,9 @@ using UnityEngine;
 
 public interface ISelectable
 {
+    public void SkipTurn();
     public Transform GetTransform();
+    public GameObject GetGameObject();
     int MovementSpeed { get; }
     int MovementPointsLeft();
     public void Select();

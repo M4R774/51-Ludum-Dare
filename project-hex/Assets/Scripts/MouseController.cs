@@ -14,14 +14,22 @@ public class MouseController : MonoBehaviour
     private ISelectable selectedObject;
     private WorldTile oldTileUnderMouse;
 
+    public ISelectable GetSelectedObject()
+    {
+        return selectedObject;
+    }
+
     public void SetSelectedObject(ISelectable newSelected)
     {
         if (selectedObject != null)
         {
             selectedObject.Unselect();
         }
-        newSelected.Select();
-        selectedObject = newSelected;
+        if (newSelected != null)
+        {
+            newSelected.Select();
+            selectedObject = newSelected;
+        }
     }
 
     private void Start()

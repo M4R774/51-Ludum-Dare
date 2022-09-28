@@ -110,6 +110,43 @@ public void Select()
         return tileUnderCube;
     }
 
+    public void SkipTurn()
+    {
+        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, false);
+        movementPointsLeft = 0;
+        EventManager.MaybeTurnHasEnded();
+    }
+
+    public void ReCalculateVisibility()
+    {
+        InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
+    }
+
+    public void ResetOnEndTurn()
+    {
+        movementPointsLeft = movementSpeed;
+        if (isSelected)
+        {
+            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
+        }
+
+    }
+
+    public int MovementPointsLeft()
+    {
+        return movementPointsLeft;
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return transform.gameObject;
+    }
+
     private void DetermineEmissionAndColor()
     {
         if (highlightLevel >= 2 || isSelected)
@@ -186,30 +223,5 @@ public void Select()
     {
         EventManager.OnVisibilityChange -= ReCalculateVisibility;
         EventManager.OnEndTurn -= ResetOnEndTurn;
-    }
-
-    public void ReCalculateVisibility()
-    {
-        InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
-    }
-
-    public void ResetOnEndTurn()
-    {
-        movementPointsLeft = movementSpeed;
-        if (isSelected)
-        {
-            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
-        }
-
-    }
-
-    public int MovementPointsLeft()
-    {
-        return movementPointsLeft;
-    }
-
-    public Transform GetTransform()
-    {
-        return transform;
     }
 }
