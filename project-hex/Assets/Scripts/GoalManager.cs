@@ -7,7 +7,7 @@ public class GoalManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnGoalAwayFromPlayer(4);
+        SpawnGoalAwayFromPlayer(15);
     }
 
     // Update is called once per frame
