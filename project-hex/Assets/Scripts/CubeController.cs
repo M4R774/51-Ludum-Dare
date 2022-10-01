@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(ActionBarManager))]
 public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighlightable
 {
     public int visibilityRange;

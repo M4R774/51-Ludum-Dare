@@ -31,17 +31,17 @@ public class ActionBarManager : MonoBehaviour
     {
         int children = gameObject.transform.childCount;
         Debug.Log(children);
-        //if (children > 0) {
-        //    for (int i = 0; i < children; ++i)
-        //    {
-        //        actionPoints.Add(gameObject.transform.GetChild(i).GetComponent<Image>());
-        //    }
-//
-        //    for (int i = 0; i < actionPoints.Count - 1; i++)
-        //    {
-        //        actionPoints[i].color = Color.gray;
-        //    }
-        //}
+
+        for (int i = 0; i < children; ++i)
+        {
+            actionPoints.Add(gameObject.transform.GetChild(i).GetComponent<Image>());
+        }
+
+        for (int i = 0; i < actionPoints.Count; i++)
+        {
+            actionPoints[i].color = Color.gray;
+        }
+
     }
 
     // Update is called once per frame
@@ -52,12 +52,13 @@ public class ActionBarManager : MonoBehaviour
 
     public void SetVisible(int movementPointsLeft)
     {
-        //if (movementPointsLeft > 0 && actionPoints.Count > 0) {
-        //    for (int i = 0; i < movementPointsLeft; i++)
-        //    {
-        //        actionPoints[i].color = Color.green;
-        //    }
-        //}
+        for (int i = 0; i < actionPoints.Count; i++)
+        {
+            if(i <= movementPointsLeft) {
+                actionPoints[i].color = Color.green;
+            } else {
+                actionPoints[i].color = Color.gray;
+            }
+        }
     }
-
 }
