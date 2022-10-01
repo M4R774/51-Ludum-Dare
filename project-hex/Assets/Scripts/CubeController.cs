@@ -107,10 +107,6 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
                 neighbor.GameObjectOnTheTile.GetComponent<CubeController>().isPlayable = true;
             }
         }
-        if (movementPointsLeft > 0) {
-            movementPointsLeft -= 1;
-        }
-        actionBarManager.SetVisible(movementPointsLeft);
     }
 
     private void InformTilesIfTheyAreWithinVisionRange(WorldTile startTile, int range, bool isInRange)
@@ -203,6 +199,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         {
             yield return LerpToNextTile(path, i);
             movementPointsLeft -= 1; //GetTileUnderMyself().GetTileTypeCost();
+            actionBarManager.SetVisible(movementPointsLeft);
         }
 
         // Refresh vision and movement range highlighting
@@ -245,8 +242,8 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     {
         if (movementPointsLeft < 5) {
             movementPointsLeft += 1;
+            actionBarManager.SetVisible(movementPointsLeft);
         }
-        actionBarManager.SetVisible(movementPointsLeft);
     }
 
     private void OnEnable()

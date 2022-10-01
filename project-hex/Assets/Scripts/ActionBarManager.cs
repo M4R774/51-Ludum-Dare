@@ -30,8 +30,6 @@ public class ActionBarManager : MonoBehaviour
     void Start()
     {
         int children = gameObject.transform.childCount;
-        Debug.Log(children);
-
         for (int i = 0; i < children; ++i)
         {
             actionPoints.Add(gameObject.transform.GetChild(i).GetComponent<Image>());
