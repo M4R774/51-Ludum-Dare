@@ -102,7 +102,10 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         foreach (var neighbor in tileUnderMe.Neighbors().Where(
             tile => tile.GameObjectOnTheTile != null))
         {
-            if (!neighbor.GameObjectOnTheTile.GetComponent<CubeController>().IsPlayable())
+            if (
+                neighbor.GameObjectOnTheTile.GetComponent<CubeController>() != null &&
+                !neighbor.GameObjectOnTheTile.GetComponent<CubeController>().IsPlayable()
+            )
             {
                 neighbor.GameObjectOnTheTile.GetComponent<CubeController>().isPlayable = true;
             }
@@ -242,6 +245,8 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     {
         if (movementPointsLeft < 10) {
             movementPointsLeft = 10;
+            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), 5, false);
+            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
             actionBarManager.SetVisible(movementPointsLeft);
         }
     }

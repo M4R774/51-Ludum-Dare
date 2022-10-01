@@ -128,12 +128,12 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private void OnEnable()
     {
         EventManager.OnTenSecondTimerEnded += AIMoveAndAttack;
-        EventManager.OnTenSecondTimerEnded += FireMG;
+        EventManager.OnShortTimerEnded += FireMG;
     }
 
     private void OnDisable()
     {
         EventManager.OnTenSecondTimerEnded -= AIMoveAndAttack;
-        EventManager.OnTenSecondTimerEnded -= FireMG;
+        EventManager.OnShortTimerEnded -= FireMG;
     }
 }
