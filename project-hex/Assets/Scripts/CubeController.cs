@@ -103,6 +103,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
                 neighbor.GameObjectOnTheTile.GetComponent<CubeController>().isPlayable = true;
             }
         }
+        Debug.Log("Remove one action here");
     }
 
     private void InformTilesIfTheyAreWithinVisionRange(WorldTile startTile, int range, bool isInRange)
