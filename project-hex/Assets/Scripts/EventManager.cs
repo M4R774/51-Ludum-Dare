@@ -13,12 +13,12 @@ public class EventManager : MonoBehaviour
     public delegate void MaybeEndTurn();
     public static event MaybeEndTurn OnMaybeEndTurn;
 
-    private AudioSource audioSource;
+    public delegate void TenSecondTimerEnded();
+    public static event TenSecondTimerEnded OnTenSecondTimerEnded;
 
-    private void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
+    public delegate void ShortTimerEnded();
+    public static event ShortTimerEnded OnShortTimerEnded;
+
 
     public static void VisibilityHasChanged()
     {
@@ -33,5 +33,15 @@ public class EventManager : MonoBehaviour
     public static void TurnHasEnded()
     {
         OnEndTurn?.Invoke();
+    }
+
+    public static void TenSecondTimerHasEnded()
+    {
+        OnTenSecondTimerEnded?.Invoke();
+    }
+
+    public static void ShortTimerHasEnded()
+    {
+        OnShortTimerEnded?.Invoke();
     }
 }
