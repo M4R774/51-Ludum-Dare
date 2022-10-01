@@ -34,9 +34,16 @@ public class GoalManager : MonoBehaviour
     {
         Vector3Int initialPlayerCellCoordinates = new Vector3Int(0, 0, 0);
         List<Vector3Int> outerEdge = Pathfinding.GetRingOfRadius(initialPlayerCellCoordinates, radius);
-        int randEdgePoint = Random.Range(0, outerEdge.Count);
-        Vector3 spawnPosition = Pathfinding.gridLayout.CellToWorld(outerEdge[randEdgePoint]);
-        transform.position = spawnPosition;
+        foreach (Vector3Int edgePoint in outerEdge)
+        {
+            Vector3 spawnPosition = Pathfinding.gridLayout.CellToWorld(edgePoint);
+            WorldTile tileUnderPossibleSpawnPosition = GameTiles.instance.GetTileByWorldPosition(spawnPosition);
+            if (tileUnderPossibleSpawnPosition.IsWalkable()) {
+                transform.position = spawnPosition;
+                return;
+            }
+        }
+        transform.position = initialPlayerCellCoordinates;
     }
 
     public Vector3Int GetTileCoordinates()
