@@ -4,4 +4,5 @@ public interface IHighlightable
 {
     // How highlighted the object should be. 0 = not highlighted, 1 = semi-highlighted, 2 = super high
     public void SetHighlightLevel(int levelOfHighlight);
+    public bool IsPlayable();
 }

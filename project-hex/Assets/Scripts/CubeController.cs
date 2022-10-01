@@ -41,11 +41,15 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         //set { movementSpeed = value; }
     }
 
-public void Select()
+    public void Select()
     {
-        isSelected = true;
-        DetermineEmissionAndColor();
-        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
+        if (isPlayable)
+        {
+            isSelected = true;
+            DetermineEmissionAndColor();
+            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
+        }
+
     }
 
     public void Unselect()
@@ -58,6 +62,11 @@ public void Select()
     public bool IsSelected()
     {
         return isSelected;
+    }
+
+    public bool IsPlayable()
+    {
+        return isPlayable;
     }
 
     public void SetHighlightLevel(int levelOfHighlight)

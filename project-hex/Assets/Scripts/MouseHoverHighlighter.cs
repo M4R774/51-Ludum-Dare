@@ -38,7 +38,7 @@ public class MouseHoverHighlighter : MonoBehaviour
             return;
         }
         IHighlightable objectToHighlight = mouseController.hit.transform.GetComponent<IHighlightable>();
-        if (objectToHighlight != null)
+        if (objectToHighlight != null && objectToHighlight.IsPlayable())
         {
             highLightedObjects.Add(objectToHighlight);
             objectToHighlight.SetHighlightLevel(1);

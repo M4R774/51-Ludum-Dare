@@ -25,7 +25,7 @@ public class MouseController : MonoBehaviour
         {
             selectedObject.Unselect();
         }
-        if (newSelected != null)
+        if (newSelected != null && newSelected.IsPlayable())
         {
             newSelected.Select();
             selectedObject = newSelected;
@@ -43,7 +43,9 @@ public class MouseController : MonoBehaviour
         if (Time.timeScale > 0)
         {
             GetWorldlTileUnderMouse(out WorldTile tileUnderMouse, out ISelectable selectableUnderMouse);
-            PlanAndDrawPath(tileUnderMouse);
+            if (selectedObject != null && selectedObject.IsPlayable()) {
+                PlanAndDrawPath(tileUnderMouse);
+            }
             oldTileUnderMouse = tileUnderMouse;
 
             if (Input.GetMouseButtonDown(0))
@@ -105,7 +107,8 @@ public class MouseController : MonoBehaviour
             clickedSelectable == null &&
             selectedObject != null &&
             clickedTile.CanEndTurnHere() &&
-            clickedTile.IsVisible)
+            clickedTile.IsVisible &&
+            selectedObject.IsPlayable())
         {
             return true;
         }
