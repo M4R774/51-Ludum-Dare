@@ -1378,7 +1378,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1738854407}
     m_Modifications:
     - target: {fileID: 6986820570470540444, guid: add2d0c25f30ac04a9ad6daf2680bd92, type: 3}
       propertyPath: m_RootOrder
@@ -2167,6 +2167,7 @@ GameObject:
   - component: {fileID: 1340316142}
   - component: {fileID: 1340316143}
   - component: {fileID: 1340316144}
+  - component: {fileID: 1340316145}
   m_Layer: 0
   m_Name: GameControllers
   m_TagString: Untagged
@@ -2334,6 +2335,22 @@ MonoBehaviour:
   mouseController: {fileID: 406476945}
   cameraController: {fileID: 2110737254}
   automaticallyEndTurn: 0
+--- !u!114 &1340316145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340316139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee0cd17bef7fbbf4a9b6632e9c9728f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyTank: {fileID: 2041220267}
+  endingDelayInSeconds: 5
+  victoryScreenName: VictoryScreen
+  losingScreenName: LosingScreen
 --- !u!4 &1357285102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7931332081362438783, guid: 2e0419293f265414990420db9111ab5e, type: 3}
@@ -2371,7 +2388,7 @@ Transform:
   - {fileID: 377798429}
   - {fileID: 1738854407}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1395886328
 GameObject:
@@ -2653,6 +2670,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1395886332}
+  - {fileID: 2041220268}
   m_Father: {fileID: 1386134338}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -41739,6 +41757,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917805166}
   m_CullTransparentMesh: 1
+--- !u!1 &2041220267 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6986820570470540445, guid: add2d0c25f30ac04a9ad6daf2680bd92, type: 3}
+  m_PrefabInstance: {fileID: 1082996079}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2041220268 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6986820570470540444, guid: add2d0c25f30ac04a9ad6daf2680bd92, type: 3}
+  m_PrefabInstance: {fileID: 1082996079}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2106538391 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8653783730718138910, guid: 7d323520c4103954ea74ef1773f61483, type: 3}

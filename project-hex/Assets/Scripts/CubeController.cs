@@ -263,5 +263,6 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     private void OnDestroy()
     {
         TurnManager.instance.playerControlledUnits.Remove(gameObject);
+        EventManager.MaybeGameHasEnded();
     }
 }
