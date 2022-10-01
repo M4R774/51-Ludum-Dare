@@ -143,11 +143,17 @@ public class MouseController : MonoBehaviour
 
     private bool ShootingIsPossible(WorldTile clickedTile, ISelectable clickedSelectable)
     {
+        int shootingRange = 2;
+        WorldTile startTile = selectedObject.GetTileUnderMyself();
+        List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingMovementRange(startTile, shootingRange);
+
         if (clickedTile != null &&
             clickedSelectable == null &&
             selectedObject != null &&
             clickedTile.IsVisible &&
-            selectedObject.IsPlayable())
+            selectedObject.IsPlayable() &&
+            tilesWithinRange.Contains(clickedTile)
+        )
         {
             return true;
         }
@@ -193,7 +199,8 @@ public class MouseController : MonoBehaviour
         lineRenderer.SetPositions(pathPositions);
 
         Material mymat = GetComponent<Renderer>().material;
-        if (plannedMoveCount <= 2) // Shooting range
+        int shootingRange = 2;
+        if (plannedMoveCount <= shootingRange) // Shooting range
         {
             mymat.SetColor("_EmissionColor", Color.red);
         }
