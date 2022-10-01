@@ -12,6 +12,12 @@ public class TurnManager : MonoBehaviour
     public bool automaticallyEndTurn;
 
     private int indexOfLastSelectedUnit;
+    public static TurnManager instance;
+
+    public void Awake()
+    {
+        CheckThatIamOnlyInstance();
+    }
 
     public void Update()
     {
@@ -53,6 +59,18 @@ public class TurnManager : MonoBehaviour
                 mouseController.SetSelectedObject(playerControlledUnits[indexOfNewUnit].GetComponent<ISelectable>());
                 break;
             }
+        }
+    }
+
+    private void CheckThatIamOnlyInstance()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
         }
     }
 

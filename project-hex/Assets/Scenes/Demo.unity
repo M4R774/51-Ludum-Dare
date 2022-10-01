@@ -914,6 +914,7 @@ GameObject:
   - component: {fileID: 351470702}
   - component: {fileID: 351470701}
   - component: {fileID: 351470700}
+  - component: {fileID: 351470704}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -929,8 +930,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351470698}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.0744214, y: 1.3551955, z: 0.5210534}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 6.0744214, y: 2, z: 0.5210534}
+  m_LocalScale: {x: 1, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1738854407}
@@ -1011,6 +1012,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351470698}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &351470704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351470698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 038185bd0fd00ef4e9e73bb57c9a82b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &377798427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1721,6 +1734,7 @@ RectTransform:
   m_AnchoredPosition: {x: -5.0000305, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
 --- !u!1 &828360089
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,6 +1845,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828360089}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+=======
+>>>>>>> 4617d20 (Add AI movement)
 --- !u!1 &841253202
 GameObject:
   m_ObjectHideFlags: 0
@@ -4002,6 +4018,7 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
 --- !u!1 &1726112993
 GameObject:
   m_ObjectHideFlags: 0
@@ -4112,6 +4129,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1726112993}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+=======
+>>>>>>> 4617d20 (Add AI movement)
 --- !u!1 &1738854406
 GameObject:
   m_ObjectHideFlags: 0
@@ -4142,9 +4161,6 @@ Transform:
   m_Children:
   - {fileID: 1395886332}
   - {fileID: 351470699}
-  - {fileID: 1726112994}
-  - {fileID: 828360090}
-  - {fileID: 1866088171}
   m_Father: {fileID: 1386134338}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43020,6 +43036,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1807297433}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &1866088170
 GameObject:
   m_ObjectHideFlags: 0
@@ -43130,6 +43147,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1866088170}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+=======
+>>>>>>> 4617d20 (Add AI movement)
 --- !u!1 &1876418877
 GameObject:
   m_ObjectHideFlags: 0

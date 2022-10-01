@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeController : MonoBehaviour, ISelectable, IHighlightable
+public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighlightable
 {
     public int visibilityRange;
     public int movementPointsLeft;
     public int movementSpeed;
     public bool isPlayable;
 
-    private GridLayout grid;
     private bool isSelected;
     private int highlightLevel;
     private Material material;
@@ -75,13 +74,6 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         DetermineEmissionAndColor();
     }
 
-    public Vector3Int GetTileCoordinates()
-    {
-        Vector3 tilePosition = transform.position;
-        tilePosition.y = 0;
-        return grid.WorldToCell(tilePosition);
-    }
-
     public void MoveTowardsTarget(List<WorldTile> path)
     {
         if (movementInProgress) return;
@@ -118,11 +110,7 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         EventManager.VisibilityHasChanged();
     }
 
-    public WorldTile GetTileUnderMyself()
-    {
-        WorldTile tileUnderCube = GameTiles.instance.GetTileByWorldPosition(transform.position);
-        return tileUnderCube;
-    }
+
 
     public void SkipTurn()
     {
