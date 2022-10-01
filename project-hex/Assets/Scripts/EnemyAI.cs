@@ -16,6 +16,7 @@ public class EnemyAI : AbstractObjectInWorldSpace
     void Start()
     {
         turnManager = TurnManager.instance;
+        grid = GameTiles.instance.grid;
         tileUnderMe = GetTileUnderMyself();
     }
 
@@ -40,19 +41,27 @@ public class EnemyAI : AbstractObjectInWorldSpace
 
     private void FireBarrage()
     {
-        GameObject projectile = Instantiate(projectilePrefab, transform);
+        GameObject projectile = Instantiate(projectilePrefab, transform, false);
+        if (turnManager.playerControlledUnits[0] == null)
+        {
+            Debug.Log("palyercontobbalasdfunits(o) on null :(");
+        }
+
         projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(turnManager.playerControlledUnits[0].transform.position);
     }
 
     private void FireMachineGun()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     public void MoveTowardsTarget(List<WorldTile> path)
     {
         if (movementInProgress) return;
-        StartCoroutine(LerpThroughPath(path));
+        if (path != null)
+        {
+            StartCoroutine(LerpThroughPath(path));
+        }
     }
 
     public bool TargetIsInRange()
