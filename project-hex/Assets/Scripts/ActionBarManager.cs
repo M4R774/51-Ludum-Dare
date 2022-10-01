@@ -8,6 +8,7 @@ public class ActionBarManager : MonoBehaviour
     public static ActionBarManager instance;
     public List<Image> actionPoints;
 
+    public int savedState;
     public void Awake()
     {
         CheckThatIamOnlyInstance();
@@ -56,6 +57,31 @@ public class ActionBarManager : MonoBehaviour
                 actionPoints[i].color = Color.green;
             } else {
                 actionPoints[i].color = Color.gray;
+            }
+        }
+        savedState = movementPointsLeft;
+    }
+
+    public void SetPlan(int plannedMoveCount) {
+        // Plan next move BUT
+        // first return from previous plan:
+        SetVisible(savedState);
+
+        var greens = new List<int>();
+        for (int i = 0; i < actionPoints.Count; i++) {
+            if(
+                actionPoints[i].color == Color.green
+            ) {
+                greens.Add(i);
+            }
+        }
+
+        for (int i = 0; i < plannedMoveCount; i++)
+        {
+            int lastGreen = greens.Count - i - 1;
+            if (lastGreen < greens.Count)
+            {
+                actionPoints[greens[lastGreen]].color = new Color (0, 1, 0, 0.1f);
             }
         }
     }

@@ -13,6 +13,7 @@ public class MouseController : MonoBehaviour
 
     private ISelectable selectedObject;
     private WorldTile oldTileUnderMouse;
+    private ActionBarManager actionBarManager;
 
     public ISelectable GetSelectedObject()
     {
@@ -36,6 +37,7 @@ public class MouseController : MonoBehaviour
     {
         lineRenderer = transform.gameObject.GetComponent<LineRenderer>();
         selectedObject = null;
+        actionBarManager = ActionBarManager.instance;
     }
 
     private void Update()
@@ -137,6 +139,7 @@ public class MouseController : MonoBehaviour
             numberOfTilesToMove = path.Count;
         }
         int offset = path.Count - numberOfTilesToMove;
+        int plannedMoveCount = path.Count - offset;
 
         Vector3[] pathPositions = new Vector3[path.Count + 1];
         pathPositions.SetValue(path[offset].WorldPosition, 0);
@@ -148,8 +151,10 @@ public class MouseController : MonoBehaviour
             pathPositions.SetValue(newPosition, i);
         }
         pathPositions.SetValue(selectedObject.GetTileUnderMyself().WorldPosition, path.Count - offset);
-        lineRenderer.positionCount = path.Count + 1 - offset;
+
+        lineRenderer.positionCount = plannedMoveCount + 1;
         lineRenderer.SetPositions(pathPositions);
+        actionBarManager.SetPlan(plannedMoveCount);
     }
 
     private bool IfDrawingNewLineIsNeeded(WorldTile tileUnderMouse, out List<WorldTile> path)
