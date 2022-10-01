@@ -24,15 +24,18 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private void AIMoveAndAttack()
     {
         // Move 1 tile towards playerUnits[0]
-        List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), turnManager.playerControlledUnits[0].GetComponent<ISelectable>().GetTileUnderMyself());
-        MoveTowardsTarget(pathToPlayerUnit);
-
-        // TODO: Intelligent (=closest playerUnit) target choosing
-
-        // Launch drone/barrage if in range
-        if (TargetIsInRange())
+        if (turnManager.playerControlledUnits.Count > 0)
         {
-            FireBarrage();
+            List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), turnManager.playerControlledUnits[0].GetComponent<ISelectable>().GetTileUnderMyself());
+            MoveTowardsTarget(pathToPlayerUnit);
+
+            // TODO: Intelligent (=closest playerUnit) target choosing
+
+            // Launch drone/barrage if in range
+            if (TargetIsInRange())
+            {
+                FireBarrage();
+            }
         }
     }
 
@@ -114,6 +117,12 @@ public class EnemyAI : AbstractObjectInWorldSpace
         }
 
         transform.position = targetPosition;
+    }
+
+    private void OnDestroy()
+    {
+        //TODO: Spawn effects
+        EventManager.MaybeGameHasEnded();
     }
 
     private void OnEnable()
