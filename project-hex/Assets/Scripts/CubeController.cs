@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(ActionBarManager))]
 public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighlightable
 {
     public int visibilityRange;
@@ -16,6 +17,8 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     private Material material;
     private bool movementInProgress;
     private WorldTile tileUnderMe;
+
+    private ActionBarManager actionBarManager;
 
     void Start()
     {
@@ -33,6 +36,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         tileUnderMe.GameObjectOnTheTile = transform.gameObject;
 
         movementPointsLeft = movementSpeed;
+        actionBarManager = ActionBarManager.instance;
     }
 
     public int MovementSpeed
@@ -46,6 +50,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         if (isPlayable)
         {
             isSelected = true;
+            actionBarManager.SetVisible(movementPointsLeft);
             DetermineEmissionAndColor();
             InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
         }
@@ -103,7 +108,10 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
                 neighbor.GameObjectOnTheTile.GetComponent<CubeController>().isPlayable = true;
             }
         }
-        Debug.Log("Remove one action here");
+        if (movementPointsLeft > 0) {
+            movementPointsLeft -= 1;
+        }
+        actionBarManager.SetVisible(movementPointsLeft);
     }
 
     private void InformTilesIfTheyAreWithinVisionRange(WorldTile startTile, int range, bool isInRange)
@@ -234,15 +242,25 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         transform.position = targetPosition;
     }
 
+    private void AddMovementPoint()
+    {
+        if (movementPointsLeft < 5) {
+            movementPointsLeft += 1;
+        }
+        actionBarManager.SetVisible(movementPointsLeft);
+    }
+
     private void OnEnable()
     {
         EventManager.OnVisibilityChange += ReCalculateVisibility;
         EventManager.OnEndTurn += ResetOnEndTurn;
+        EventManager.OnShortTimerEnded += AddMovementPoint;
     }
 
     private void OnDisable()
     {
         EventManager.OnVisibilityChange -= ReCalculateVisibility;
         EventManager.OnEndTurn -= ResetOnEndTurn;
+        EventManager.OnShortTimerEnded -= AddMovementPoint;
     }
 }
