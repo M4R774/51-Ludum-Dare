@@ -23,6 +23,10 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
         grid = GameTiles.instance.grid;
         isSelected = false;
         material = transform.GetComponent<Renderer>().material;
+        if (!isPlayable)
+        {
+            material.color = Color.blue;
+        }
         InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
 
         tileUnderMe = GetTileUnderMyself();
@@ -150,7 +154,10 @@ public void Select()
 
     private void DetermineEmissionAndColor()
     {
-        if (highlightLevel >= 2 || isSelected)
+        if (!isPlayable) {
+            return;
+        }
+        else if (highlightLevel >= 2 || isSelected)
         {
             material.SetColor("_EmissionColor", Color.yellow);
         }
