@@ -43219,6 +43219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f864cb00c4421d4697c186f62c82f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rescuableCube: {fileID: 8320353224584023608, guid: 08109f143af2df64896ef95fe837cc98, type: 3}
   tileTypes:
   - {fileID: 11400000, guid: 7908334383bd8604796fbadaece192c2, type: 2}
   - {fileID: 11400000, guid: 2ca6ebe49d1aa3a4ead2426a9cc8a680, type: 2}

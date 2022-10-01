@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using System.Linq;
 
 // GameTiles is the World map, a collection of WorldTile objects
 public class GameTiles : MonoBehaviour
 {
+	public GameObject rescuableCube;
 	public List<Tile> tileTypes;
 	public List<TileData> tileDatas;
 	public static GameTiles instance;
@@ -45,6 +46,7 @@ public class GameTiles : MonoBehaviour
 		CheckThatIamOnlyInstance();
 		GenerateDictTileBaseToTileData();
 		GenerateMap();
+		GenerateInactiveCubes();
 	}
 
 	private void CheckThatIamOnlyInstance()
@@ -97,6 +99,19 @@ public class GameTiles : MonoBehaviour
 				IsWithinMovementRange = false,
 			};
 			tiles.Add(localPlace, tile);
+		}
+	}
+
+	private void GenerateInactiveCubes()
+	{
+		var rand = new System.Random();
+		var items = new  List<int>();
+		items.AddRange(Enumerable.Range(0, tiles.Count).OrderBy(i => rand.Next()).Take(6));
+
+		foreach(var item in items)
+		{
+		    var worldPosition = tiles.ElementAt(item).Value.WorldPosition;
+			Instantiate(rescuableCube, worldPosition, rescuableCube.transform.rotation);
 		}
 	}
 }
