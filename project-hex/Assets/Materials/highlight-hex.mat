@@ -259,7 +259,7 @@ Material:
     - _Normal_Strength: 0
     - _NumLayersCount: 1
     - _OcclusionStrength: 1
-    - _Opacity: 1
+    - _Opacity: 0.33
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -305,7 +305,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _EmisColor: {r: 0.2, g: 0.2, b: 0.2, a: 0}
-    - _EmissionColor: {r: 10, g: 3, b: 0, a: 0}
+    - _EmissionColor: {r: 5, g: 5, b: 10, a: 0}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

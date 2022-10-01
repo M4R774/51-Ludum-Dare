@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca9c9ddaa0274ed4fbffe6b7b6e8ec6c, type: 3}
+  m_Name: sea-water-hex-data
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: 1b4188d9dd41641fda3cea5098ef45a6, type: 2}
+  walkable: 1
+  blocksVision: 0
+  cost: 0
+  height: 0
