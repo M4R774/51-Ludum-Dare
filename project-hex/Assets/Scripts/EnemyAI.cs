@@ -8,6 +8,7 @@ public class EnemyAI : AbstractObjectInWorldSpace
     public int movementSpeed;
     public int barrageRange;
     public GameObject projectilePrefab;
+    public GameObject bulletPrefab;
 
     private TurnManager turnManager;  // For accessing player controlled units
     private bool movementInProgress;
@@ -26,33 +27,33 @@ public class EnemyAI : AbstractObjectInWorldSpace
         List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), turnManager.playerControlledUnits[0].GetComponent<ISelectable>().GetTileUnderMyself());
         MoveTowardsTarget(pathToPlayerUnit);
 
+        // TODO: Intelligent (=closest playerUnit) target choosing
+
         // Launch drone/barrage if in range
         if (TargetIsInRange())
         {
             FireBarrage();
-        }
-
-        // Fire laser/machinegun if line of sight to player
-        if (GetTileUnderMyself().IsVisible)
-        {
-            FireMachineGun();
         }
     }
 
     private void FireBarrage()
     {
         GameObject projectile = Instantiate(projectilePrefab, transform, false);
-        if (turnManager.playerControlledUnits[0] == null)
-        {
-            Debug.Log("palyercontobbalasdfunits(o) on null :(");
-        }
-
         projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(turnManager.playerControlledUnits[0].transform.position);
+    }
+
+    private void FireMG()
+    {
+        if (GetTileUnderMyself().IsVisible)
+        {
+            FireMachineGun();
+        }
     }
 
     private void FireMachineGun()
     {
-        //throw new NotImplementedException();
+        GameObject projectile = Instantiate(bulletPrefab, transform, false);
+        projectile.GetComponent<MGBulletLerp>().SlerpToTargetAndExplode(turnManager.playerControlledUnits[0].transform.position);
     }
 
     public void MoveTowardsTarget(List<WorldTile> path)
@@ -118,10 +119,12 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private void OnEnable()
     {
         EventManager.OnTenSecondTimerEnded += AIMoveAndAttack;
+        EventManager.OnShortTimerEnded += FireMG;
     }
 
     private void OnDisable()
     {
         EventManager.OnTenSecondTimerEnded -= AIMoveAndAttack;
+        EventManager.OnShortTimerEnded -= FireMG;
     }
 }
