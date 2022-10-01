@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class EnemyAI : AbstractObjectInWorldSpace
 {
     public int movementSpeed;
+    public int barrageRange;
+    public GameObject projectilePrefab;
 
     private TurnManager turnManager;  // For accessing player controlled units
     private bool movementInProgress;
@@ -13,24 +16,65 @@ public class EnemyAI : AbstractObjectInWorldSpace
     void Start()
     {
         turnManager = TurnManager.instance;
+        grid = GameTiles.instance.grid;
         tileUnderMe = GetTileUnderMyself();
     }
 
     private void AIMoveAndAttack()
     {
         // Move 1 tile towards playerUnits[0]
-        List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), turnManager.playerControlledUnits[0].GetComponent<CubeController>().GetTileUnderMyself());
+        List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), turnManager.playerControlledUnits[0].GetComponent<ISelectable>().GetTileUnderMyself());
         MoveTowardsTarget(pathToPlayerUnit);
 
         // Launch drone/barrage if in range
+        if (TargetIsInRange())
+        {
+            FireBarrage();
+        }
 
         // Fire laser/machinegun if line of sight to player
+        if (GetTileUnderMyself().IsVisible)
+        {
+            FireMachineGun();
+        }
+    }
+
+    private void FireBarrage()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, transform, false);
+        if (turnManager.playerControlledUnits[0] == null)
+        {
+            Debug.Log("palyercontobbalasdfunits(o) on null :(");
+        }
+
+        projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(turnManager.playerControlledUnits[0].transform.position);
+    }
+
+    private void FireMachineGun()
+    {
+        //throw new NotImplementedException();
     }
 
     public void MoveTowardsTarget(List<WorldTile> path)
     {
         if (movementInProgress) return;
-        StartCoroutine(LerpThroughPath(path));
+        if (path != null)
+        {
+            StartCoroutine(LerpThroughPath(path));
+        }
+    }
+
+    public bool TargetIsInRange()
+    {
+        ISelectable target = turnManager.playerControlledUnits[0].GetComponent<ISelectable>();
+        int distanceToTarget = Pathfinding.GetDistanceInTiles(
+            target.GetTileUnderMyself(), 
+            GetTileUnderMyself());
+        if (distanceToTarget < barrageRange)
+        {
+            return true;
+        }
+        return false;
     }
 
     private IEnumerator LerpThroughPath(List<WorldTile> path)

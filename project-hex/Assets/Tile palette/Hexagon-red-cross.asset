@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Hexagon-red-cross
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: a2039870a52690c4f9e8698bcfc260c9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e12b782e14aee4384b8f0b87835dcd5a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -31,6 +31,6 @@ MonoBehaviour:
     e31: 0
     e32: 0
     e33: 1
-  m_InstancedGameObject: {fileID: 0}
+  m_InstancedGameObject: {fileID: 8043657083834407706, guid: 0424719b8f73c43d9a54a0afb5b13a4e, type: 3}
   m_Flags: 1
   m_ColliderType: 1

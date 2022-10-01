@@ -220,7 +220,7 @@ public static class Pathfinding
               + Mathf.Abs(vec.x)) / 2);
     }
 
-    private static int GetDistanceInTiles(WorldTile startTile, WorldTile targetTile)
+    public static int GetDistanceInTiles(WorldTile startTile, WorldTile targetTile)
     {
         var ac = OffsetCoordinatesToAxial(startTile.CellCoordinates);
         var bc = OffsetCoordinatesToAxial(targetTile.CellCoordinates);

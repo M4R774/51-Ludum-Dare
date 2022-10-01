@@ -23,6 +23,7 @@ public class WorldTile
     private bool isVisible;
     private bool isExplored;
     private bool isWithinMovementRange;
+    private bool isInBarrageZone;
 
     public bool IsWalkable()
     {
@@ -108,6 +109,16 @@ public class WorldTile
         }
     }
 
+    public bool IsInBarrageZone
+    {
+        get { return isInBarrageZone; }
+        set
+        {
+            isInBarrageZone = value;
+            CalculateAndSetTileColor();
+        }
+    }
+
     public int GetTotalPathCost()
     {
         return DistanceFromStart + DistanceToTarget;
@@ -139,7 +150,11 @@ public class WorldTile
 
     private void CalculateAndSetTileColor()
     {
-        if (isVisible && !isWithinMovementRange)
+        if (isInBarrageZone)
+        {
+            SetColor(Color.red);
+        }
+        else if (isVisible && !isWithinMovementRange)
         {
             SetColor(Color.white);
         }
