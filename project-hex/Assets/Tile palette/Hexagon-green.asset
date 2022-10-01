@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Hexagon-green
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 8206de0c0d96569468081522d6d5930a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c46c40ff1c5ba4a4fb60c1da6251d2c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -31,6 +31,6 @@ MonoBehaviour:
     e31: 0
     e32: 0
     e33: 1
-  m_InstancedGameObject: {fileID: 0}
+  m_InstancedGameObject: {fileID: 1080750911185684882, guid: e1427b938df074b8b96888e7070751bd, type: 3}
   m_Flags: 1
   m_ColliderType: 0
