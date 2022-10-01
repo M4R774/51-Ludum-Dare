@@ -10,6 +10,7 @@ public class MouseController : MonoBehaviour
     public RaycastHit hit;
     public LineRenderer lineRenderer;
     public GameObject glowingHex;
+    public GameObject projectilePrefab;
 
     private ISelectable selectedObject;
     private WorldTile oldTileUnderMouse;
@@ -56,6 +57,12 @@ public class MouseController : MonoBehaviour
                 HandleTile(tileUnderMouse, selectableUnderMouse);
                 ResetLineRenderer();
             }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                HandleSelectable(selectableUnderMouse);
+                HandlePossibleShootingTile(tileUnderMouse, selectableUnderMouse);
+                ResetLineRenderer();
+            }
         }
     }
 
@@ -88,6 +95,20 @@ public class MouseController : MonoBehaviour
         }
     }
 
+    private void HandlePossibleShootingTile(WorldTile clickedTile, ISelectable clickeckSelectable)
+    {
+        if (ShootingIsPossible(clickedTile, clickeckSelectable))
+        {
+            FireBarrage(clickedTile.WorldPosition);
+        }
+    }
+
+    private void FireBarrage(Vector3 positionToFireUpon)
+    {
+        GameObject projectile = Instantiate(projectilePrefab, transform, false);
+        projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(positionToFireUpon);
+    }
+
     private void GetWorldlTileUnderMouse(out WorldTile _tile, out ISelectable _selectable)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -109,6 +130,22 @@ public class MouseController : MonoBehaviour
             clickedSelectable == null &&
             selectedObject != null &&
             clickedTile.CanEndTurnHere() &&
+            clickedTile.IsVisible &&
+            selectedObject.IsPlayable())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool ShootingIsPossible(WorldTile clickedTile, ISelectable clickedSelectable)
+    {
+        if (clickedTile != null &&
+            clickedSelectable == null &&
+            selectedObject != null &&
             clickedTile.IsVisible &&
             selectedObject.IsPlayable())
         {
