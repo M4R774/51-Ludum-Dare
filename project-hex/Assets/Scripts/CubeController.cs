@@ -263,4 +263,9 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         EventManager.OnEndTurn -= ResetOnEndTurn;
         EventManager.OnShortTimerEnded -= AddMovementPoint;
     }
+
+    private void OnDestroy()
+    {
+        TurnManager.instance.playerControlledUnits.Remove(gameObject);
+    }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileSlerp : MonoBehaviour
+public class MGBulletLerp : MonoBehaviour
 {
     private WorldTile targetWorldTile;
     private GridLayout grid;
@@ -15,15 +15,16 @@ public class ProjectileSlerp : MonoBehaviour
         Vector3Int targetCellCoordinates = grid.WorldToCell(targetWorldPosition);
         targetWorldTile = GameTiles.instance.tiles[targetCellCoordinates];
 
-        StartCoroutine(LerpToTarget(targetWorldPosition));
+        StartCoroutine(LerpToTarget());
     }
 
-    private IEnumerator LerpToTarget(Vector3 targetPosition)
+    private IEnumerator LerpToTarget()
     {
         float timeElapsed = 0;
-        float lerpDuration = 5;
+        float lerpDuration = 1;
         Vector3 startPosition = transform.position;
-        DrawDangerZone(true);
+        WorldTile targetTile = GetTargetTile();
+        Vector3 targetPosition = targetTile.WorldPosition;
         while (timeElapsed < lerpDuration)
         {
             transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / lerpDuration);
@@ -31,27 +32,21 @@ public class ProjectileSlerp : MonoBehaviour
 
             yield return null;
         }
-        DrawDangerZone(false);
+
         transform.position = targetPosition;
         // TODO: Explosion effect
-        foreach(WorldTile dangerTile in barrageZone)
+
+        if (targetTile.GameObjectOnTheTile != null)
         {
-            if (dangerTile.GameObjectOnTheTile != null)
-            {
-                Destroy(dangerTile.GameObjectOnTheTile);
-            }
+            Destroy(targetTile.GameObjectOnTheTile);
         }
         Destroy(gameObject);
     }
 
-    private void DrawDangerZone(bool enableOrDisable)
+    private WorldTile GetTargetTile()
     {
         barrageZone = targetWorldTile.Neighbors();
         barrageZone.Add(targetWorldTile);
-
-        foreach (WorldTile barrageTile in barrageZone)
-        {
-            barrageTile.IsInBarrageZone = enableOrDisable;
-        }
+        return barrageZone[Random.Range(0, barrageZone.Count)];
     }
 }
