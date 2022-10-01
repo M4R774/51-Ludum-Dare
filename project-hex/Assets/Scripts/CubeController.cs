@@ -29,7 +29,10 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         {
             material.color = Color.blue;
         }
-        InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
+        else
+        {
+            InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
+        }
 
         tileUnderMe = GetTileUnderMyself();
         tileUnderMe.GameObjectOnTheTile = transform.gameObject;
@@ -142,7 +145,9 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
 
     public void ReCalculateVisibility()
     {
-        InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
+        if (isPlayable) {
+            InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
+        }
     }
 
     public void ResetOnEndTurn()
