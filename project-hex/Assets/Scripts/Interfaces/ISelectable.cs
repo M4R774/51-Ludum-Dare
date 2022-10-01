@@ -15,5 +15,6 @@ public interface ISelectable
     public bool IsPlayable();
     public Vector3Int GetTileCoordinates();
     public void MoveTowardsTarget(List<WorldTile> path);
+    public void ActivateSurroundingCubes();
     public WorldTile GetTileUnderMyself();
 }

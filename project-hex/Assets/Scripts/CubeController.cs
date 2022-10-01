@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighlightable
@@ -89,6 +90,19 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
             return;
         }
         StartCoroutine(LerpThroughPath(path, numberOfTilesToMove));
+    }
+
+    public void ActivateSurroundingCubes()
+    {
+        tileUnderMe = GetTileUnderMyself();
+        foreach (var neighbor in tileUnderMe.Neighbors().Where(
+            tile => tile.GameObjectOnTheTile != null))
+        {
+            if (!neighbor.GameObjectOnTheTile.GetComponent<CubeController>().IsPlayable())
+            {
+                neighbor.GameObjectOnTheTile.GetComponent<CubeController>().isPlayable = true;
+            }
+        }
     }
 
     private void InformTilesIfTheyAreWithinVisionRange(WorldTile startTile, int range, bool isInRange)
@@ -193,6 +207,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         EventManager.VisibilityHasChanged();
         EventManager.MaybeTurnHasEnded();
         movementInProgress = false;
+        ActivateSurroundingCubes();
     }
 
     private IEnumerator LerpToNextTile(List<WorldTile> path, int i)
