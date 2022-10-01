@@ -191,6 +191,17 @@ public class MouseController : MonoBehaviour
 
         lineRenderer.positionCount = plannedMoveCount + 1;
         lineRenderer.SetPositions(pathPositions);
+
+        Material mymat = GetComponent<Renderer>().material;
+        if (plannedMoveCount <= 2) // Shooting range
+        {
+            mymat.SetColor("_EmissionColor", Color.red);
+        }
+        else
+        {
+            mymat.SetColor("_EmissionColor", Color.yellow);
+        }
+
         actionBarManager.SetPlan(plannedMoveCount);
     }
 
