@@ -52,7 +52,7 @@ public class ActionBarManager : MonoBehaviour
     {
         for (int i = 0; i < actionPoints.Count; i++)
         {
-            if(i <= movementPointsLeft) {
+            if(i < movementPointsLeft) {
                 actionPoints[i].color = Color.green;
             } else {
                 actionPoints[i].color = Color.gray;
