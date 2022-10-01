@@ -116,7 +116,8 @@ public class GameTiles : MonoBehaviour
 		foreach(var item in items)
 		{
 		    var worldPosition = tiles.ElementAt(item).Value.WorldPosition;
-			Instantiate(rescuableCube, worldPosition, rescuableCube.transform.rotation);
+			GameObject createdCube = Instantiate(rescuableCube, worldPosition, rescuableCube.transform.rotation);
+			TurnManager.instance.playerControlledUnits.Add(createdCube);
 		}
 	}
 }
