@@ -146,24 +146,22 @@ public class MouseController : MonoBehaviour
 
     private bool ShootingIsPossible(WorldTile clickedTile, ISelectable clickedSelectable)
     {
-        int shootingRange = 2;
-        WorldTile startTile = selectedObject.GetTileUnderMyself();
-        List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingMovementRange(startTile, shootingRange);
-
         if (clickedTile != null &&
             clickedSelectable == null &&
             selectedObject != null &&
             clickedTile.IsVisible &&
-            selectedObject.IsPlayable() &&
-            tilesWithinRange.Contains(clickedTile)
+            selectedObject.IsPlayable()
         )
         {
-            return true;
+            int shootingRange = 2;
+            WorldTile startTile = selectedObject.GetTileUnderMyself();
+            List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingMovementRange(startTile, shootingRange);
+            if (tilesWithinRange.Contains(clickedTile))
+            {
+                return true;
+            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
 
