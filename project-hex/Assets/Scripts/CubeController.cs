@@ -11,6 +11,9 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     public int movementSpeed;
     public bool isPlayable;
 
+    public float smoothTime;
+    public float transitionTimeBetweenTiles = .3f;
+
     private bool isSelected;
     private int highlightLevel;
     private Material material;
@@ -228,14 +231,18 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         WorldTile startingTile = GetTileUnderMyself();
         Vector3 targetPosition = path[path.Count - 1 - i].WorldPosition;
         float elapsedTime = 0;
-        float transitionTimeBetweenTiles = .3f;
 
         Vector3 velocity = Vector3.zero;
-        float smoothTime = 0.1F;
-
         while (elapsedTime < transitionTimeBetweenTiles)
         {
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+
+            // Rotation
+            Vector3 targetDirection = (targetPosition - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 4);
+
+
             elapsedTime += Time.deltaTime;
 
             yield return null;
