@@ -155,6 +155,38 @@ public class WorldTile
 
     private void CalculateAndSetTileColor()
     {
+        if (isVisible)
+        {
+            GameObject instantiated = TilemapMember.GetInstantiatedObject(CellCoordinates);
+            if (instantiated != null)
+            {
+                if (instantiated.transform.childCount > 0)
+                {
+                    GameObject child = instantiated.transform.GetChild(0).gameObject;
+                    if (child != null)
+                    {
+                        child.GetComponent<MeshRenderer>().material.color = Color.white;
+                    }
+                }
+            }
+        }
+        else
+        {
+            GameObject instantiated = TilemapMember.GetInstantiatedObject(CellCoordinates);
+            if (instantiated != null)
+            {
+                if (instantiated.transform.childCount > 0)
+                {
+                    GameObject child = instantiated.transform.GetChild(0).gameObject;
+                    if (child != null)
+                    {
+                        child.GetComponent<MeshRenderer>().material.color = Color.gray;
+                    }
+                }
+
+            }
+        }
+
         if (isInBarrageZone)
         {
             SetColor(Color.red);
