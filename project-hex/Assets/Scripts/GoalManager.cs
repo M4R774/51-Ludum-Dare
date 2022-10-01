@@ -4,17 +4,31 @@ using UnityEngine;
 
 public class GoalManager : MonoBehaviour
 {
+    public static GoalManager instance;
+
+    public void Awake()
+    {
+        CheckThatIamOnlyInstance();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         SpawnGoalAwayFromPlayer(15);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void CheckThatIamOnlyInstance()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
+
 
     private void SpawnGoalAwayFromPlayer(int radius)
     {
@@ -23,5 +37,12 @@ public class GoalManager : MonoBehaviour
         int randEdgePoint = Random.Range(0, outerEdge.Count);
         Vector3 spawnPosition = Pathfinding.gridLayout.CellToWorld(outerEdge[randEdgePoint]);
         transform.position = spawnPosition;
+    }
+
+    public Vector3Int GetTileCoordinates()
+    {
+        Vector3 tilePosition = transform.position;
+        tilePosition.y = 0;
+        return Pathfinding.gridLayout.WorldToCell(tilePosition);
     }
 }

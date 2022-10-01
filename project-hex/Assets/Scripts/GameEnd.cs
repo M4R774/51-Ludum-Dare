@@ -18,6 +18,11 @@ public class GameEnd : MonoBehaviour
         gameHasAlreadyEnded = false;
     }
 
+    private void Update()
+    {
+        CheckIfGameHasEnded();
+    }
+
     private void CheckIfGameHasEnded()
     {
         if (!gameHasAlreadyEnded)
@@ -26,11 +31,25 @@ public class GameEnd : MonoBehaviour
             {
                 PlayerLost();
             }
-            else if (enemyTank == null)
+            else if (
+                AnyPlayerControlledUnitsAreInGoal()
+            )
             {
                 PlayerWon();
             }
         }
+    }
+
+    private bool AnyPlayerControlledUnitsAreInGoal()
+    {
+        foreach (GameObject unit in TurnManager.instance.playerControlledUnits)
+        {
+            if (unit.GetComponent<ISelectable>().GetTileCoordinates() == GoalManager.instance.GetTileCoordinates())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void PlayerWon()
@@ -47,15 +66,5 @@ public class GameEnd : MonoBehaviour
     {
         yield return new WaitForSeconds(delayInSeconds);
         SceneManager.LoadScene(endingScreenName);
-    }
-
-    private void OnEnable()
-    {
-        EventManager.OnTenSecondTimerEnded += CheckIfGameHasEnded;
-    }
-
-    private void OnDisable()
-    {
-        EventManager.OnTenSecondTimerEnded -= CheckIfGameHasEnded;
     }
 }
