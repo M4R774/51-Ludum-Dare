@@ -145,13 +145,13 @@ public class TurnManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnMaybeEndTurn += CheckIfTurnCanBeAutomaticallyEndedOrGoToNextUnit;
-        EventManager.OnEndTurn += SelectNewUnitOnEndTurn;
+        //EventManager.OnMaybeEndTurn += CheckIfTurnCanBeAutomaticallyEndedOrGoToNextUnit;
+        //EventManager.OnEndTurn += SelectNewUnitOnEndTurn;
     }
 
     private void OnDisable()
     {
-        EventManager.OnMaybeEndTurn -= CheckIfTurnCanBeAutomaticallyEndedOrGoToNextUnit;
-        EventManager.OnEndTurn -= SelectNewUnitOnEndTurn;
+        //EventManager.OnMaybeEndTurn -= CheckIfTurnCanBeAutomaticallyEndedOrGoToNextUnit;
+        //EventManager.OnEndTurn -= SelectNewUnitOnEndTurn;
     }
 }

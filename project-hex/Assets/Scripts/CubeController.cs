@@ -242,6 +242,8 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     {
         if (movementPointsLeft < 5) {
             movementPointsLeft += 1;
+            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), 5, false);
+            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
             actionBarManager.SetVisible(movementPointsLeft);
         }
     }
