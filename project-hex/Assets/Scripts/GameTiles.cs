@@ -99,6 +99,11 @@ public class GameTiles : MonoBehaviour
 				IsWithinMovementRange = false,
 			};
 			tiles.Add(localPlace, tile);
+			GameObject instantiatedObject = tile.TilemapMember.GetInstantiatedObject(localPlace);
+			if (instantiatedObject != null)
+            {
+				instantiatedObject.SetActive(false);
+            }
 		}
 	}
 

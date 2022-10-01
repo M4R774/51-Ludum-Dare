@@ -82,7 +82,12 @@ public class WorldTile
             isVisible = value;
             if (isVisible)
             {
-                //TilemapMember.GetInstantiatedObject(CellCoordinates).SetActive(false);
+                GameObject instantiatedObject = TilemapMember.GetInstantiatedObject(CellCoordinates);
+                if (instantiatedObject != null)
+                {
+                    instantiatedObject.SetActive(true);
+                }
+                
                 isExplored = true;
             }
             CalculateAndSetTileColor();
