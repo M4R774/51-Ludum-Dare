@@ -2464,7 +2464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTank: {fileID: 2041220267}
-  endingDelayInSeconds: 5
+  endingDelayInSeconds: 1
   victoryScreenName: VictoryScreen
   losingScreenName: LosingScreen
 --- !u!114 &1340316146
@@ -2632,6 +2632,8 @@ MonoBehaviour:
   movementPointsLeft: 0
   movementSpeed: 10
   isPlayable: 1
+  smoothTime: 0
+  transitionTimeBetweenTiles: 0.3
 --- !u!1 &1572720450
 GameObject:
   m_ObjectHideFlags: 0
