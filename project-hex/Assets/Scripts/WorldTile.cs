@@ -13,12 +13,14 @@ public class WorldTile
     public Tilemap TilemapMember { get; set; }
     public string Name { get; set; }
     public GameObject GameObjectOnTheTile { get; set; }
+    public List<WorldTile> history;
 
 
     // Variables needed for pathfinding
     public int DistanceFromStart { get; set; }
     public int DistanceToTarget { get; set; }
     public WorldTile NextDestination { get; set; }
+    public int BFSDistance;
 
     private bool isVisible;
     private bool isExplored;

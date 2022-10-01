@@ -8,8 +8,9 @@ using UnityEngine.Tilemaps;
 public static class Pathfinding
 {
     public static GridLayout gridLayout;
+    private static List<WorldTile> tilesWithinMovementRange;
 
-    public static List<WorldTile> GetAllTilesWithingMovementRange(WorldTile startTile, int range)
+    public static List<WorldTile> GetAllTilesWithingMovementRangeOld(WorldTile startTile, int range)
     {
         List<WorldTile> tilesWithinRange = new() { startTile };
         List<WorldTile> tilesToSearch = new();
@@ -48,6 +49,43 @@ public static class Pathfinding
         }
 
         return tilesWithinRange;
+    }
+
+    public static List<WorldTile> GetAllTilesWithingMovementRange(WorldTile startTile, int range)
+    {
+        foreach (WorldTile tile in GameTiles.instance.tiles.Values)
+        {
+            tile.BFSDistance = Int32.MaxValue;
+        }
+
+
+        List<WorldTile> validTiles = new();
+        startTile.BFSDistance = 0;
+        Queue<WorldTile> queue = new Queue<WorldTile>();
+        queue.Enqueue(startTile);
+        while (queue.Count > 0)
+        {
+            WorldTile current = queue.Dequeue();
+            for (int i = 0; i < current.Neighbors().Count; i++)
+            {
+                WorldTile neighbor = current.Neighbors()[i];
+                if (neighbor.BFSDistance > range)
+                {
+                    int movementCost = WindControl.instance.GetCostToDirection(i);
+                    neighbor.BFSDistance = movementCost + current.BFSDistance;
+                    if (neighbor.BFSDistance <= range)
+                    {
+                        queue.Enqueue(neighbor);
+                    }
+                }
+            }
+            if (current.BFSDistance > 0 && current.BFSDistance <= range)
+            {
+                validTiles.Add(current);
+            }
+        }
+
+        return validTiles;
     }
 
     public static List<WorldTile> GetAllVisibleTiles(WorldTile startingTile, int visionRange)
@@ -166,23 +204,29 @@ public static class Pathfinding
                 }
                 return path;
             }
-
-            foreach (var neighbor in current.Neighbors().Where(
-                tile => !processed.Contains(tile) && tile.IsWalkable() && (tile.GameObjectOnTheTile == null || tile.GameObjectOnTheTile.GetComponent<HideIfNotVisible>() == null)))
+            List<WorldTile> neighbors = current.Neighbors();
+            for (int i = 0; i < neighbors.Count; i++)
             {
-                var inSearch = toSearch.Contains(neighbor);
-
-                int costToNeighbor = current.DistanceFromStart + 1; // + current.GetDistance(neighbor);
-
-                if (!inSearch || costToNeighbor < neighbor.DistanceFromStart)
+                WorldTile neighbor = neighbors[i];
+                if (!processed.Contains(neighbor) &&
+                    neighbor.IsWalkable() && 
+                    (neighbor.GameObjectOnTheTile == null ||
+                    neighbor.GameObjectOnTheTile.GetComponent<HideIfNotVisible>() == null))
                 {
-                    neighbor.DistanceFromStart = costToNeighbor;
-                    neighbor.NextDestination = current;
+                    var inSearch = toSearch.Contains(neighbor);
 
-                    if (!inSearch)
+                    int costToNeighbor = current.DistanceFromStart + WindControl.instance.GetCostToDirection(i); // + current.GetDistance(neighbor);
+
+                    if (!inSearch || costToNeighbor < neighbor.DistanceFromStart)
                     {
-                        neighbor.DistanceToTarget = GetDistanceInTiles(neighbor, targetNode);
-                        toSearch.Add(neighbor);
+                        neighbor.DistanceFromStart = costToNeighbor;
+                        neighbor.NextDestination = current;
+
+                        if (!inSearch)
+                        {
+                            neighbor.DistanceToTarget = GetDistanceInTiles(neighbor, targetNode);
+                            toSearch.Add(neighbor);
+                        }
                     }
                 }
             }
