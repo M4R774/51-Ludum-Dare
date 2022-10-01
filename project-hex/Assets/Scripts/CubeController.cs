@@ -11,6 +11,9 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     public int movementSpeed;
     public bool isPlayable;
 
+    public float smoothTime;
+    public float transitionTimeBetweenTiles = .3f;
+
     private bool isSelected;
     private int highlightLevel;
     private Material material;
@@ -228,10 +231,8 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         WorldTile startingTile = GetTileUnderMyself();
         Vector3 targetPosition = path[path.Count - 1 - i].WorldPosition;
         float elapsedTime = 0;
-        float transitionTimeBetweenTiles = .3f;
 
         Vector3 velocity = Vector3.zero;
-        float smoothTime = 0.1F;
 
         while (elapsedTime < transitionTimeBetweenTiles)
         {
