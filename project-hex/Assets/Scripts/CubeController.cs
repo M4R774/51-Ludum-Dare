@@ -14,6 +14,8 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     public float smoothTime;
     public float transitionTimeBetweenTiles = .3f;
 
+    [SerializeField] GameObject playerModel;
+
     private bool isSelected;
     private int highlightLevel;
     private Material material;
@@ -42,6 +44,8 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
 
         movementPointsLeft = movementSpeed;
         actionBarManager = ActionBarManager.instance;
+
+        if(playerModel == null) playerModel = this.gameObject;
     }
 
     public int MovementSpeed
@@ -238,9 +242,9 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
 
             // Rotation
-            Vector3 targetDirection = (targetPosition - transform.position).normalized;
+            Vector3 targetDirection = (targetPosition - playerModel.transform.position).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 4);
+            playerModel.transform.rotation = Quaternion.Lerp(playerModel.transform.rotation, targetRotation, Time.deltaTime * 4);
 
 
             elapsedTime += Time.deltaTime;
