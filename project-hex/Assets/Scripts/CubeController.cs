@@ -233,10 +233,16 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         float elapsedTime = 0;
 
         Vector3 velocity = Vector3.zero;
-
         while (elapsedTime < transitionTimeBetweenTiles)
         {
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+
+            // Rotation
+            Vector3 targetDirection = (targetPosition - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 4);
+
+
             elapsedTime += Time.deltaTime;
 
             yield return null;
