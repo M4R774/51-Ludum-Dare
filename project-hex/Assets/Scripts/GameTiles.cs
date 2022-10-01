@@ -46,7 +46,7 @@ public class GameTiles : MonoBehaviour
 		CheckThatIamOnlyInstance();
 		GenerateDictTileBaseToTileData();
 		GenerateMap();
-		GenerateInactiveCubes();
+		//GenerateInactiveCubes();
 	}
 
 	private void CheckThatIamOnlyInstance()
