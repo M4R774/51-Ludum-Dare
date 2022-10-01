@@ -177,11 +177,13 @@ public class MouseController : MonoBehaviour
             glowingHex.SetActive(true);
         }
 
-        int numberOfTilesToMove = selectedObject.MovementSpeed;
-        if (path.Count < selectedObject.MovementSpeed)
+        int movementPointsLeft = selectedObject.MovementPointsLeft();
+        int numberOfTilesToMove = selectedObject.MovementPointsLeft();
+        if (path.Count < numberOfTilesToMove)
         {
             numberOfTilesToMove = path.Count;
         }
+
         int offset = path.Count - numberOfTilesToMove;
         int plannedMoveCount = path.Count - offset;
 
