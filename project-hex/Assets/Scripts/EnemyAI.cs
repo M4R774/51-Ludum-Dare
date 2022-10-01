@@ -42,7 +42,10 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private void FireBarrage()
     {
         GameObject projectile = Instantiate(projectilePrefab, transform, false);
-        projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(turnManager.playerControlledUnits[0].transform.position);
+        projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(
+            tileUnderMe.WorldPosition,
+            turnManager.playerControlledUnits[0].transform.position
+        );
     }
 
     private void FireMG()

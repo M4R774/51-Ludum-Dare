@@ -106,7 +106,10 @@ public class MouseController : MonoBehaviour
     private void FireBarrage(Vector3 positionToFireUpon)
     {
         GameObject projectile = Instantiate(projectilePrefab, transform, false);
-        projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(positionToFireUpon);
+        projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(
+            selectedObject.GetTileUnderMyself().WorldPosition,
+            positionToFireUpon
+        );
     }
 
     private void GetWorldlTileUnderMouse(out WorldTile _tile, out ISelectable _selectable)
