@@ -27,10 +27,6 @@ public class Timer : MonoBehaviour
             {
                 EventManager.TenSecondTimerHasEnded();
             }
-            else
-            {
-                EventManager.ShortTimerHasEnded();
-            }
         }
         slider.value = timeLeft / timerInSeconds;
     }

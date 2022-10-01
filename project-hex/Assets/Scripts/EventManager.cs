@@ -16,9 +16,6 @@ public class EventManager : MonoBehaviour
     public delegate void TenSecondTimerEnded();
     public static event TenSecondTimerEnded OnTenSecondTimerEnded;
 
-    public delegate void ShortTimerEnded();
-    public static event ShortTimerEnded OnShortTimerEnded;
-
     public delegate void MaybeGameEnded();
     public static event MaybeGameEnded OnMaybeGameEnded;
 
@@ -41,11 +38,6 @@ public class EventManager : MonoBehaviour
     public static void TenSecondTimerHasEnded()
     {
         OnTenSecondTimerEnded?.Invoke();
-    }
-
-    public static void ShortTimerHasEnded()
-    {
-        OnShortTimerEnded?.Invoke();
     }
 
     public static void MaybeGameHasEnded()

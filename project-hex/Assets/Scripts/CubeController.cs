@@ -240,10 +240,8 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
 
     private void AddMovementPoint()
     {
-        if (movementPointsLeft < 5) {
-            movementPointsLeft += 1;
-            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), 5, false);
-            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
+        if (movementPointsLeft < 10) {
+            movementPointsLeft = 10;
             actionBarManager.SetVisible(movementPointsLeft);
         }
     }
@@ -252,14 +250,14 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     {
         EventManager.OnVisibilityChange += ReCalculateVisibility;
         EventManager.OnEndTurn += ResetOnEndTurn;
-        EventManager.OnShortTimerEnded += AddMovementPoint;
+        EventManager.OnTenSecondTimerEnded += AddMovementPoint;
     }
 
     private void OnDisable()
     {
         EventManager.OnVisibilityChange -= ReCalculateVisibility;
         EventManager.OnEndTurn -= ResetOnEndTurn;
-        EventManager.OnShortTimerEnded -= AddMovementPoint;
+        EventManager.OnTenSecondTimerEnded -= AddMovementPoint;
     }
 
     private void OnDestroy()
