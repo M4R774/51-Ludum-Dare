@@ -8,6 +8,7 @@ public class CubeController : MonoBehaviour, ISelectable, IHighlightable
     public int visibilityRange;
     public int movementPointsLeft;
     public int movementSpeed;
+    public bool isPlayable;
 
     private GridLayout grid;
     private bool isSelected;
