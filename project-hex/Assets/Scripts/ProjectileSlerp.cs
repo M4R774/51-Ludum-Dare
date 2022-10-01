@@ -23,7 +23,6 @@ public class ProjectileSlerp : MonoBehaviour
     {
         float timeElapsed = 0;
         float slerpDuration = 2;
-        Debug.Log(startPosition);
         DrawDangerZone(true);
         while (timeElapsed < slerpDuration)
         {
