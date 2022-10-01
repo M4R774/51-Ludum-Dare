@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ProjectileSlerp : MonoBehaviour
 {
+    public GameObject explosion;
     private WorldTile targetWorldTile;
     private GridLayout grid;
     private List<WorldTile> barrageZone;
@@ -41,6 +42,7 @@ public class ProjectileSlerp : MonoBehaviour
                 Destroy(dangerTile.GameObjectOnTheTile);
             }
         }
+        Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 
