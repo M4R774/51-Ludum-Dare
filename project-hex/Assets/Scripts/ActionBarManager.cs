@@ -54,8 +54,9 @@ public class ActionBarManager : MonoBehaviour
     {
         if(playerController.movementSpeed < indicatorImages.Count)
         {
-            Debug.Log("I received an action point :-)");
             playerController.movementSpeed += 1;
+            playerController.visibilityRange = playerController.movementSpeed;
+            EventManager.VisibilityHasChanged();
             SetPlan(currentPlannedMoves);
         }
     }
@@ -66,6 +67,8 @@ public class ActionBarManager : MonoBehaviour
         if(playerController.movementSpeed > 1)
         {
             playerController.movementSpeed -= 1;
+            playerController.visibilityRange = playerController.movementSpeed;
+            EventManager.VisibilityHasChanged();
             SetPlan(currentPlannedMoves);
         }
     }
