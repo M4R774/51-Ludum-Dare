@@ -54,9 +54,9 @@ public class ActionBarManager : MonoBehaviour
         for (int i = 0; i < actionPoints.Count; i++)
         {
             if(i < movementPointsLeft) {
-                actionPoints[i].color = Color.green;
+                actionPoints[i].color = Color.white;
             } else {
-                actionPoints[i].color = Color.gray;
+                actionPoints[i].color = new Color (0, 0, 0, 0.1f);
             }
         }
         savedState = movementPointsLeft;
@@ -70,7 +70,7 @@ public class ActionBarManager : MonoBehaviour
         var greens = new List<int>();
         for (int i = 0; i < actionPoints.Count; i++) {
             if(
-                actionPoints[i].color == Color.green
+                actionPoints[i].color == Color.white
             ) {
                 greens.Add(i);
             }
@@ -81,7 +81,7 @@ public class ActionBarManager : MonoBehaviour
             int lastGreen = greens.Count - i - 1;
             if (lastGreen < greens.Count)
             {
-                actionPoints[greens[lastGreen]].color = new Color (0, 1, 0, 0.1f);
+                actionPoints[greens[lastGreen]].color = Color.gray;
             }
         }
     }
