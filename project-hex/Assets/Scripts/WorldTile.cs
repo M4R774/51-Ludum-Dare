@@ -212,6 +212,15 @@ public class WorldTile
                 {
                     child.GetComponent<MeshRenderer>().material.color = color;
                 }
+
+                for (int j = 0; j < child.transform.childCount; j++)
+                {
+                    GameObject innerChild = child.transform.GetChild(j).gameObject;
+                    if (innerChild.GetComponent<MeshRenderer>() != null)
+                    {
+                        innerChild.GetComponent<MeshRenderer>().material.color = color;
+                    }
+                }
             }
         }
     }
