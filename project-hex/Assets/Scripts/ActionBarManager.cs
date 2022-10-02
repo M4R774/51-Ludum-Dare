@@ -5,32 +5,15 @@ using UnityEngine.UI;
 
 public class ActionBarManager : MonoBehaviour
 {
-    public static ActionBarManager instance;
     public List<Image> actionPoints;
     List<Image> allChildren;
     int currentPlannedMoves = 0; // the amount of hexes the player is planning to move
 
     public int savedState;
 
-    public void Awake()
-    {
-        CheckThatIamOnlyInstance();
-    }
-
-    private void CheckThatIamOnlyInstance()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-
     void Start()
     {
+        actionPoints.Clear();
         int children = gameObject.transform.childCount;
         for (int i = 0; i < children; ++i)
         {
@@ -84,7 +67,7 @@ public class ActionBarManager : MonoBehaviour
         for (int i = 0; i < plannedMoveCount; i++)
         {
             int lastGreen = greens.Count - i - 1;
-            if (lastGreen < greens.Count)
+            if (lastGreen < greens.Count && greens.Count > 0)
             {
                 actionPoints[greens[lastGreen]].color = Color.gray;
             }

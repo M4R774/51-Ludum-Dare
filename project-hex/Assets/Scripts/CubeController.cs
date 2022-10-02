@@ -22,7 +22,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     private bool movementInProgress;
     private WorldTile tileUnderMe;
 
-    private ActionBarManager actionBarManager;
+    public ActionBarManager actionBarManager;
 
     void Start()
     {
@@ -43,7 +43,6 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         tileUnderMe.GameObjectOnTheTile = transform.gameObject;
 
         movementPointsLeft = movementSpeed;
-        actionBarManager = ActionBarManager.instance;
 
         if(playerModel == null) playerModel = this.gameObject;
     }
@@ -59,7 +58,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         if (isPlayable)
         {
             isSelected = true;
-            ActionBarManager.instance.SetVisible(movementPointsLeft);
+            actionBarManager.SetVisible(movementPointsLeft);
             InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
         }
 

@@ -11,10 +11,9 @@ public class MouseController : MonoBehaviour
     public LineRenderer lineRenderer;
     public GameObject glowingHex;
     public GameObject projectilePrefab;
-
     public ISelectable selectedObject;
     private WorldTile oldTileUnderMouse;
-    private ActionBarManager actionBarManager;
+    public ActionBarManager actionBarManager;
     private int shootingRange = 5;
 
     public static MouseController instance;
@@ -43,7 +42,6 @@ public class MouseController : MonoBehaviour
 
         lineRenderer = transform.gameObject.GetComponent<LineRenderer>();
         selectedObject = null;
-        actionBarManager = ActionBarManager.instance;
 
         WorldTile initialPlayerTile = GameTiles.instance.GetTileByWorldPosition(TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>().GetTileCoordinates());
         ISelectable initialSelectable = TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>();
