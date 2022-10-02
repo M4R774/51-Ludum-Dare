@@ -12,8 +12,11 @@ public class DesertIsland : MonoBehaviour
     ActionBarManager actionBarManager;
     GameObject islandModel;
 
+    bool isVisited;
+
     void Start()
     {
+        isVisited = false;
         islandModel = this.gameObject.transform.GetChild(0).gameObject;
         islandModel.transform.rotation = Random.rotation;
         islandModel.transform.localEulerAngles = new Vector3(0, islandModel.transform.localEulerAngles.y, 0);
@@ -23,9 +26,10 @@ public class DesertIsland : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !isVisited)
         {
-            actionBarManager.AddActionPoint();
+            isVisited = true;
+            actionBarManager.IncreaseMaxMovementPoints();
         }
     }
 }

@@ -48,7 +48,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     public int MovementSpeed
     {
         get { return movementPointsLeft; }
-        //set { movementSpeed = value; }
+        set { movementSpeed = value; }
     }
 
     public void Select()
@@ -56,7 +56,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         if (isPlayable)
         {
             isSelected = true;
-            actionBarManager.SetVisible(movementPointsLeft);
+            actionBarManager.RefreshIndicatorColors();
             InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
         }
 
@@ -154,11 +154,9 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     public void ResetOnEndTurn()
     {
         movementPointsLeft = movementSpeed;
-        if (isSelected)
-        {
-            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
-        }
-
+        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), 10, false);
+        InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
+        actionBarManager.RefreshIndicatorColors();
     }
 
     public int MovementPointsLeft()
@@ -189,7 +187,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         {
             yield return LerpToNextTile(path, i);
             movementPointsLeft -= 1; //GetTileUnderMyself().GetTileTypeCost();
-            actionBarManager.SetVisible(movementPointsLeft);
+            actionBarManager.RefreshIndicatorColors();
         }
 
         // Refresh vision and movement range highlighting
@@ -233,28 +231,16 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         transform.position = targetPosition;
     }
 
-    private void AddMovementPoint()
-    {
-        if (movementPointsLeft < 10) {
-            movementPointsLeft = 10;
-            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), 5, false);
-            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
-            actionBarManager.SetVisible(movementPointsLeft);
-        }
-    }
-
     private void OnEnable()
     {
         EventManager.OnVisibilityChange += ReCalculateVisibility;
-        EventManager.OnEndTurn += ResetOnEndTurn;
-        EventManager.OnTenSecondTimerEnded += AddMovementPoint;
+        EventManager.OnTenSecondTimerEnded += ResetOnEndTurn;
     }
 
     private void OnDisable()
     {
         EventManager.OnVisibilityChange -= ReCalculateVisibility;
-        EventManager.OnEndTurn -= ResetOnEndTurn;
-        EventManager.OnTenSecondTimerEnded -= AddMovementPoint;
+        EventManager.OnTenSecondTimerEnded -= ResetOnEndTurn;
     }
 
     private void OnDestroy()
