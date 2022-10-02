@@ -192,12 +192,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
 
         // Refresh vision and movement range highlighting
         GetComponent<PlayerShipAudioManager>().PlayMovementSound();
-        InformTilesIfTheyAreWithinMovementRange(startingTile, movementSpeed, false);
-        InformTilesIfTheyAreWithinVisionRange(startingTile, visibilityRange, false);
-        if (isSelected)
-        {
-            InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
-        }
+        InformTilesIfTheyAreWithinVisionRange(startingTile, visibilityRange + 2, false);
         EventManager.VisibilityHasChanged();
         EventManager.MaybeTurnHasEnded();
         movementInProgress = false;
@@ -226,7 +221,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
             yield return null;
         }
 
-        InformTilesIfTheyAreWithinVisionRange(startingTile, visibilityRange, false);
+        InformTilesIfTheyAreWithinVisionRange(startingTile, visibilityRange + 2, false);
         InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
         transform.position = targetPosition;
     }

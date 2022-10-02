@@ -173,7 +173,8 @@ public class WorldTile
         else if (isVisible) //&& !isWithinMovementRange)
         {
             SetColor(Color.white);
-        }
+        } 
+        /*
         else if (isWithinMovementRange && isVisible)
         {
             Color lightGreen = new(.7f, 1, .7f, 1);
@@ -188,7 +189,7 @@ public class WorldTile
         {
             Color darkGreen = new(.35f, .5f, .35f, .5f);
             //SetColor(darkGreen);
-        }
+        } */
         else if (isExplored)
         {
             SetColor(Color.grey);
