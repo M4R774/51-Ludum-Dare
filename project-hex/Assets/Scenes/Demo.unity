@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -548,6 +548,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1340316140}
     m_Modifications:
+    - target: {fileID: 3858741826744843684, guid: 5decc0376567cfa4e99092391824fcc1, type: 3}
+      propertyPath: m_Cameras.Array.data[0]
+      value: 
+      objectReference: {fileID: 540755359}
     - target: {fileID: 3858741827762330549, guid: 5decc0376567cfa4e99092391824fcc1, type: 3}
       propertyPath: m_Name
       value: CameraRig
@@ -1336,6 +1340,11 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!20 &540755359 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5602011778628419512, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+  m_PrefabInstance: {fileID: 5602011778779819941}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &714698633
 GameObject:
   m_ObjectHideFlags: 0
@@ -41897,30 +41906,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 84143368}
-    - target: {fileID: 5602011778628419519, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5602011778628419519, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5602011778628419519, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.61237246
-      objectReference: {fileID: 0}
-    - target: {fileID: 5602011778628419519, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.61237246
-      objectReference: {fileID: 0}
-    - target: {fileID: 5602011778628419519, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.3535534
-      objectReference: {fileID: 0}
-    - target: {fileID: 5602011778628419519, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.3535534
-      objectReference: {fileID: 0}
     - target: {fileID: 5602011778628419519, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -60

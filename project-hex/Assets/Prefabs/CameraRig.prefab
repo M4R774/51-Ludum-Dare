@@ -102,7 +102,8 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
+  m_Cameras:
+  - {fileID: 0}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -182,6 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 3858741826744843685}
+  objectForCameraToFollow: {fileID: 0}
   mouseMoveEnabled: 0
   screenEdgeBorderThickness: 5
   cameraSpeed: 5
