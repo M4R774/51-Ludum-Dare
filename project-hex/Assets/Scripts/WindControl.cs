@@ -28,6 +28,11 @@ public class WindControl : MonoBehaviour
         return cost;
     }
 
+    public int GetWindRotation()
+    {
+        return windDirection * -60 + 30;
+    }
+
     private void CheckThatIamOnlyInstance()
     {
         if (instance == null)
@@ -40,19 +45,8 @@ public class WindControl : MonoBehaviour
         }
     }
 
-    private void ChangeWindDirection()
+    public void ChangeWindDirection()
     {
         windDirection = Random.Range(0, 6);
-
-    }
-
-    private void OnEnable()
-    {
-        EventManager.OnTenSecondTimerEnded += ChangeWindDirection;
-    }
-
-    private void OnDisable()
-    {
-        EventManager.OnTenSecondTimerEnded -= ChangeWindDirection;
     }
 }

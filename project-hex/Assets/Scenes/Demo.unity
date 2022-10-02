@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.23252985, g: 0.45990413, b: 0.8845892, a: 1}
+  m_IndirectSpecularColor: {r: 0.23253027, g: 0.45990402, b: 0.88458925, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -41913,14 +41913,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1738854407}
     m_Modifications:
+    - target: {fileID: 98182947, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182947, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182947, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182947, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: lengthInSec
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: ShapeModule.type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: ShapeModule.m_Position.z
+      value: -12
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4535256732606641146, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 84143368}
-    - target: {fileID: 5602011778628419519, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -60
-      objectReference: {fileID: 0}
     - target: {fileID: 5602011779598788441, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
       propertyPath: m_RootOrder
       value: 0
