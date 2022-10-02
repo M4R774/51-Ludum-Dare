@@ -39,6 +39,12 @@ public class MouseController : MonoBehaviour
         lineRenderer = transform.gameObject.GetComponent<LineRenderer>();
         selectedObject = null;
         actionBarManager = ActionBarManager.instance;
+
+        WorldTile initialPlayerTile = GameTiles.instance.GetTileByWorldPosition(new Vector3 (0, 0, 0));
+        ISelectable initialSelectable = initialPlayerTile.GameObjectOnTheTile.GetComponent<CubeController>();
+        HandleSelectable(initialSelectable);
+        HandleTile(initialPlayerTile, initialSelectable);
+        ResetLineRenderer();
     }
 
     private void Update()
