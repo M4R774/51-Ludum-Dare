@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.23252985, g: 0.45990413, b: 0.8845892, a: 1}
+  m_IndirectSpecularColor: {r: 0.23253027, g: 0.45990402, b: 0.88458925, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1006,6 +1006,7 @@ MonoBehaviour:
   lineRenderer: {fileID: 406476947}
   glowingHex: {fileID: 2106538391}
   projectilePrefab: {fileID: 5264988255824722025, guid: 0d7e896b8faa81348a87cdf383898752, type: 3}
+  actionBarManager: {fileID: 532917946}
 --- !u!120 &406476947
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1344,6 +1345,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &532917946 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7931332083230141769, guid: 2e0419293f265414990420db9111ab5e, type: 3}
+  m_PrefabInstance: {fileID: 7931332082710744209}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532917939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f13e971a2634b54190f679041cedfe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &714698633
 GameObject:
   m_ObjectHideFlags: 0
@@ -41953,6 +41965,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5602011779598788443, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: actionBarManager
+      value: 
+      objectReference: {fileID: 532917946}
     - target: {fileID: 5602011779598788445, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
       propertyPath: m_Name
       value: Player
