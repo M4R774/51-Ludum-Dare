@@ -29,7 +29,7 @@ public class ActionBarManager : MonoBehaviour
             }
             else if (i < playerController.movementPointsLeft)
             {
-                indicatorImages[i].color = Color.grey;
+                //indicatorImages[i].color = Color.grey;
             }
             else if (i < playerController.movementSpeed)
             {
@@ -83,7 +83,9 @@ public class ActionBarManager : MonoBehaviour
     {
         for (int i = 0; i < indicatorImages.Count; i++)
         {
-            indicatorImages[i].color = Color.gray;
+            //indicatorImages[i].color = Color.gray;
+            // Actually we want them all to be white, as if to appear usable
+            indicatorImages[i].color = Color.white;
         }
     }
 
