@@ -65,7 +65,6 @@ public class ActionBarManager : MonoBehaviour
     {
         if(playerController.movementSpeed > 1)
         {
-            Debug.Log("I lost an action point :-(");
             playerController.movementSpeed -= 1;
             SetPlan(currentPlannedMoves);
         }

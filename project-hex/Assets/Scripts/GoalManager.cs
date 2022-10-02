@@ -6,6 +6,7 @@ public class GoalManager : MonoBehaviour
 {
     public static GoalManager instance;
     public int maxEnemyToGoal;
+    public int goalDistanceFromStartingPosition;
 
     public void Awake()
     {
@@ -15,7 +16,7 @@ public class GoalManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnGoalAwayFromPlayer(15);
+        SpawnGoalAwayFromPlayer(goalDistanceFromStartingPosition);
         MoveEnemyToMidway();
     }
 
@@ -44,18 +45,19 @@ public class GoalManager : MonoBehaviour
 
     private void SpawnGoalAwayFromPlayer(int radius)
     {
-        Vector3Int initialPlayerCellCoordinates = new Vector3Int(0, 0, 0);
+        Vector3Int initialPlayerCellCoordinates = new(0, 0, 0);
         List<Vector3Int> outerEdge = Pathfinding.GetRingOfRadius(initialPlayerCellCoordinates, radius);
-        foreach (Vector3Int edgePoint in outerEdge)
+
+        for (int i = 0; i < outerEdge.Count; i++)
         {
-            Vector3 spawnPosition = Pathfinding.gridLayout.CellToWorld(edgePoint);
-            WorldTile tileUnderPossibleSpawnPosition = GameTiles.instance.GetTileByWorldPosition(spawnPosition);
-            if (tileUnderPossibleSpawnPosition.IsWalkable()) {
-                transform.position = spawnPosition;
+            Vector3 spawnPositionCandidate = Pathfinding.gridLayout.CellToWorld(outerEdge[Random.Range(0, outerEdge.Count)]);
+            WorldTile tileUnderPossibleSpawnPosition = GameTiles.instance.GetTileByWorldPosition(spawnPositionCandidate);
+            if (tileUnderPossibleSpawnPosition.IsWalkable()) 
+            {
+                transform.position = spawnPositionCandidate;
                 return;
             }
         }
-        transform.position = initialPlayerCellCoordinates;
     }
 
     public Vector3Int GetTileCoordinates()
