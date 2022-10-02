@@ -193,24 +193,24 @@ public class WorldTile
         {
             SetColor(Color.red);
         }
-        else if (isVisible && !isWithinMovementRange)
+        else if (isVisible) //&& !isWithinMovementRange)
         {
             SetColor(Color.white);
         }
         else if (isWithinMovementRange && isVisible)
         {
             Color lightGreen = new(.7f, 1, .7f, 1);
-            SetColor(lightGreen);
+            //SetColor(lightGreen);
         }
         else if (isWithinMovementRange && !isVisible && isExplored)
         {
             Color darkGreen = new(.35f, .5f, .35f, 1);
-            SetColor(darkGreen);
+            //SetColor(darkGreen);
         }
         else if (isWithinMovementRange && !isVisible && !isExplored)
         {
             Color darkGreen = new(.35f, .5f, .35f, .5f);
-            SetColor(darkGreen);
+            //SetColor(darkGreen);
         }
         else if (isExplored)
         {

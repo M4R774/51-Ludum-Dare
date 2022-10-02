@@ -41423,6 +41423,7 @@ MonoBehaviour:
   tileDatas:
   - {fileID: 11400000, guid: cb42a72e5ec29415d931021a0cdffe0c, type: 2}
   - {fileID: 11400000, guid: fe4e7ebf8a4284262a9ac7926d40b393, type: 2}
+  - {fileID: 11400000, guid: 96ff5e20a2b51b14c84e8b8eb695e1a1, type: 2}
   tilemap: {fileID: 1784175915}
   grid: {fileID: 377798428}
 --- !u!1 &1807297433
@@ -41910,49 +41911,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1738854407}
     m_Modifications:
-    - target: {fileID: 98182947, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 98182947, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 98182947, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 98182947, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: lengthInSec
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: ShapeModule.type
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
       propertyPath: ShapeModule.m_Scale.x
-      value: 30
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
       propertyPath: ShapeModule.m_Scale.z
-      value: 5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
       propertyPath: ShapeModule.m_Position.z
-      value: -12
-      objectReference: {fileID: 0}
-    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: ShapeModule.radiusThickness
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 98182949, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4535256732606641146, guid: 49e72cabd2d034dd2ad108dff7b27430, type: 3}
       propertyPath: target

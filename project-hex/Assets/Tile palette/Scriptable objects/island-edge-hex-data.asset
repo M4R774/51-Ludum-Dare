@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiles:
   - {fileID: 11400000, guid: fa6ceeed3a7b2204b8f2a7f7dad57397, type: 2}
-  - {fileID: 11400000, guid: 4243e1fd5fbd9114cb5dc32eb35d71ee, type: 2}
   walkable: 0
-  blocksVision: 1
+  blocksVision: 0
   cost: 99
   height: 0

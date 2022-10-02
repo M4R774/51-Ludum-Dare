@@ -8,7 +8,6 @@ public class ParticleRotator : MonoBehaviour
     {
         Vector3 newRotaion = new();
         WindControl.instance.ChangeWindDirection();
-        Debug.Log(WindControl.instance.GetWindRotation());
         newRotaion.y = WindControl.instance.GetWindRotation();
         transform.rotation = Quaternion.Euler(newRotaion);
     }
