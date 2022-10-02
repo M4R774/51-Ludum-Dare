@@ -55,8 +55,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4435720787125235498}
   - component: {fileID: 4435720787125235509}
-  - component: {fileID: 4435720787125235499}
   - component: {fileID: 6146812274214118291}
+  - component: {fileID: 5748586086395980226}
   m_Layer: 2
   m_Name: Desert Island
   m_TagString: Untagged
@@ -93,20 +93,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2bb2eabda100485a801a6fcdd4a8bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountOfOranges: 1
---- !u!65 &4435720787125235499
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4435720787125235508}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 2}
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &6146812274214118291
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -123,6 +109,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &5748586086395980226
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435720787125235508}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.8
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4435720785362727360
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -78,25 +78,25 @@ public class ActionBarManager : MonoBehaviour
     // Grants the player one action point more
     public void AddActionPoint()
     {
-        /*if(actionPoints.Count < allChildren.Count)
+        if(actionPoints.Count < allChildren.Count)
         {
             Debug.Log("I received an action point :-)");
             allChildren[actionPoints.Count].enabled = true;
             actionPoints.Add(gameObject.transform.GetChild(actionPoints.Count).GetComponent<Image>());
             SetPlan(currentPlannedMoves);
-        }*/
+        }
     }
 
     // Removes one action point from the player
     public void RemoveActionPoint()
     {
-        /*if(actionPoints.Count > 1)
+        if(actionPoints.Count > 1)
         {
             Debug.Log("I lost an action point :-(");
             allChildren[actionPoints.Count - 1].enabled = false;
             actionPoints.RemoveAt(actionPoints.Count - 1);
             SetPlan(currentPlannedMoves);
-        }*/
+        }
     }
 
     private void OnEnable()

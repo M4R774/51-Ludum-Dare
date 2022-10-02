@@ -9,7 +9,6 @@ using UnityEngine;
 
 public class DesertIsland : MonoBehaviour
 {
-    [SerializeField] int amountOfOranges = 1;
     ActionBarManager actionBarManager;
     GameObject islandModel;
 
@@ -24,7 +23,7 @@ public class DesertIsland : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player" && amountOfOranges > 0)
+        if (other.gameObject.CompareTag("Player"))
         {
             actionBarManager.AddActionPoint();
         }

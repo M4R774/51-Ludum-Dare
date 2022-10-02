@@ -33,15 +33,9 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         movementInProgress = false;
         grid = GameTiles.instance.grid;
         isSelected = false;
-        material = transform.GetComponent<Renderer>().material;
-        if (!isPlayable)
-        {
-            material.color = Color.blue;
-        }
-        else
-        {
-            InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
-        }
+
+
+        InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
 
         tileUnderMe = GetTileUnderMyself();
         tileUnderMe.GameObjectOnTheTile = transform.gameObject;

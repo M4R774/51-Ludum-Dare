@@ -107,11 +107,7 @@ public class GameTiles : MonoBehaviour
 				IsWithinMovementRange = false,
 			};
 			tiles.Add(localPlace, tile);
-			GameObject instantiatedObject = tile.TilemapMember.GetInstantiatedObject(localPlace);
-			if (instantiatedObject != null)
-			{
-				instantiatedObject.SetActive(false);
-			}
+			DisableInstantiatedObject(tile);
 		}
 	}
 
@@ -137,6 +133,16 @@ public class GameTiles : MonoBehaviour
 		tilemap.SetTile(tile.CellCoordinates, tileType);
 		tile.TileBase = tileType;
 		tiles[tile.CellCoordinates].IsExplored = false;
+		DisableInstantiatedObject(tile);
+	}
+
+	private void DisableInstantiatedObject(WorldTile tile)
+    {
+		GameObject instantiatedObject = tile.TilemapMember.GetInstantiatedObject(tile.CellCoordinates);
+		if (instantiatedObject != null)
+		{
+			instantiatedObject.SetActive(false);
+		}
 	}
 
 	private List<WorldTile> SetTileTypeForNeighbours(WorldTile tile, Tile tiletype)
