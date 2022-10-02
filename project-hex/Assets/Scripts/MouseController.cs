@@ -12,10 +12,12 @@ public class MouseController : MonoBehaviour
     public GameObject glowingHex;
     public GameObject projectilePrefab;
 
-    private ISelectable selectedObject;
+    public ISelectable selectedObject;
     private WorldTile oldTileUnderMouse;
     private ActionBarManager actionBarManager;
     private int shootingRange = 5;
+
+    public static MouseController instance;
 
     public ISelectable GetSelectedObject()
     {
@@ -37,15 +39,29 @@ public class MouseController : MonoBehaviour
 
     private void Start()
     {
+        CheckThatIamOnlyInstance();
+
         lineRenderer = transform.gameObject.GetComponent<LineRenderer>();
         selectedObject = null;
         actionBarManager = ActionBarManager.instance;
 
-        WorldTile initialPlayerTile = GameTiles.instance.GetTileByWorldPosition(new Vector3 (0, 0, 0));
-        ISelectable initialSelectable = initialPlayerTile.GameObjectOnTheTile.GetComponent<CubeController>();
+        WorldTile initialPlayerTile = GameTiles.instance.GetTileByWorldPosition(TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>().GetTileCoordinates());
+        ISelectable initialSelectable = TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>();
         HandleSelectable(initialSelectable);
         HandleTile(initialPlayerTile, initialSelectable);
         ResetLineRenderer();
+    }
+
+    private void CheckThatIamOnlyInstance()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()

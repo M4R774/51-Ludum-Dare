@@ -59,8 +59,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         if (isPlayable)
         {
             isSelected = true;
-            actionBarManager.SetVisible(movementPointsLeft);
-            DetermineEmissionAndColor();
+            ActionBarManager.instance.SetVisible(movementPointsLeft);
             InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
         }
 
@@ -69,7 +68,6 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     public void Unselect()
     {
         isSelected = false;
-        DetermineEmissionAndColor();
         InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, false);
     }
 
@@ -86,7 +84,6 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     public void SetHighlightLevel(int levelOfHighlight)
     {
         highlightLevel = levelOfHighlight;
-        DetermineEmissionAndColor();
     }
 
     public void MoveTowardsTarget(List<WorldTile> path)
@@ -182,25 +179,6 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         return transform.gameObject;
     }
 
-    private void DetermineEmissionAndColor()
-    {
-        if (!isPlayable) {
-            return;
-        }
-        else if (highlightLevel >= 2 || isSelected)
-        {
-            material.SetColor("_EmissionColor", Color.yellow);
-        }
-        else if (highlightLevel == 1)
-        {
-            material.SetColor("_EmissionColor", Color.grey);
-        }
-        else
-        {
-            material.SetColor("_EmissionColor", Color.black);
-        }
-    }
-
     private IEnumerator LerpThroughPath(List<WorldTile> path, int numberOfTilesToLerp)
     {
         tileUnderMe.GameObjectOnTheTile = null;
@@ -285,6 +263,26 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     private void OnDestroy()
     {
         TurnManager.instance.playerControlledUnits.Remove(gameObject);
+        MouseController.instance.selectedObject = null;
         EventManager.MaybeGameHasEnded();
+    }
+
+    protected GridLayout grid;
+
+    public Vector3Int GetTileCoordinates()
+    {
+        Vector3 tilePosition = transform.position;
+        tilePosition.y = 0;
+        return GameTiles.instance.grid.WorldToCell(tilePosition);
+    }
+
+    public WorldTile GetTileUnderMyself()
+    {
+        if (transform != null)
+        {
+            WorldTile tileUnderCube = GameTiles.instance.GetTileByWorldPosition(transform.position);
+            return tileUnderCube;
+        }
+        return null;
     }
 }

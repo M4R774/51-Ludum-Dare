@@ -161,4 +161,23 @@ public class EnemyAI : AbstractObjectInWorldSpace
         EventManager.OnTenSecondTimerEnded -= AIMoveAndAttack;
         EventManager.OnShortTimerEnded -= FireMG;
     }
+
+    protected GridLayout grid;
+
+    public Vector3Int GetTileCoordinates()
+    {
+        Vector3 tilePosition = transform.position;
+        tilePosition.y = 0;
+        return grid.WorldToCell(tilePosition);
+    }
+
+    public WorldTile GetTileUnderMyself()
+    {
+        if (transform != null)
+        {
+            WorldTile tileUnderCube = GameTiles.instance.GetTileByWorldPosition(transform.position);
+            return tileUnderCube;
+        }
+        return null;
+    }
 }

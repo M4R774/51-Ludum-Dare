@@ -54,6 +54,7 @@ public class ProjectileSlerp : MonoBehaviour
             if (dangerTile.GameObjectOnTheTile != null)
             {
                 Destroy(dangerTile.GameObjectOnTheTile);
+                dangerTile.GameObjectOnTheTile = null;
             }
         }
         Instantiate(explosion, transform.position, transform.rotation);

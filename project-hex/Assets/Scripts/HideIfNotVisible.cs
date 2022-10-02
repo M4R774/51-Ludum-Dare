@@ -9,7 +9,6 @@ public class HideIfNotVisible : MonoBehaviour
 
     private void Start()
     {
-        meshChild = transform.GetChild(0);
         grid = GameTiles.instance.grid;
         CheckIfVisible();
 
@@ -30,6 +29,7 @@ public class HideIfNotVisible : MonoBehaviour
     public void CheckIfVisible()
     {
         GameTiles.instance.tiles.TryGetValue(GetTileCoordinates(), out WorldTile tileUnderMyself);
+        meshChild = transform.GetChild(0);
         if (tileUnderMyself.IsVisible)
         {
             meshChild.gameObject.SetActive(true);
@@ -44,6 +44,6 @@ public class HideIfNotVisible : MonoBehaviour
     {
         Vector3 tilePosition = transform.position;
         tilePosition.y = 0;
-        return grid.WorldToCell(tilePosition);
+        return GameTiles.instance.grid.WorldToCell(tilePosition);
     }
 }
