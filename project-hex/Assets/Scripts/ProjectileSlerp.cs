@@ -22,7 +22,7 @@ public class ProjectileSlerp : MonoBehaviour
     private IEnumerator SlerpToTarget(Vector3 startPosition, Vector3 targetPosition)
     {
         float timeElapsed = 0;
-        float slerpDuration = 2;
+        float slerpDuration = 5;
         DrawDangerZone(true);
         while (timeElapsed < slerpDuration)
         {

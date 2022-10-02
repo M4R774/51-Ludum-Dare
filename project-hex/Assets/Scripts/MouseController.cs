@@ -15,6 +15,7 @@ public class MouseController : MonoBehaviour
     private ISelectable selectedObject;
     private WorldTile oldTileUnderMouse;
     private ActionBarManager actionBarManager;
+    private int shootingRange = 5;
 
     public ISelectable GetSelectedObject()
     {
@@ -151,7 +152,6 @@ public class MouseController : MonoBehaviour
             selectedObject.IsPlayable()
         )
         {
-            int shootingRange = 2;
             WorldTile startTile = selectedObject.GetTileUnderMyself();
             List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingMovementRange(startTile, shootingRange);
             if (tilesWithinRange.Contains(clickedTile))
@@ -200,8 +200,7 @@ public class MouseController : MonoBehaviour
         lineRenderer.SetPositions(pathPositions);
 
         Material mymat = GetComponent<Renderer>().material;
-        int shootingRange = 2;
-        if (plannedMoveCount <= shootingRange) // Shooting range
+        if (plannedMoveCount <= shootingRange)
         {
             mymat.SetColor("_EmissionColor", Color.red);
         }
