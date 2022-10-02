@@ -15,6 +15,18 @@ public class GoalManager : MonoBehaviour
     void Start()
     {
         SpawnGoalAwayFromPlayer(15);
+        MoveEnemyToMidway();
+    }
+
+    private void MoveEnemyToMidway()
+    {
+        List<WorldTile> tilesBetweenPlayerAndGoalPath = Pathfinding.FindPath(
+            TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>().GetTileUnderMyself(),
+            GetTileUnderMyself()
+        );
+        int maxEnemyToGoal = 4;
+        int enemyToGoal = Mathf.Min(tilesBetweenPlayerAndGoalPath.Count - 1, maxEnemyToGoal);
+        EnemyAI.instance.transform.position = tilesBetweenPlayerAndGoalPath[enemyToGoal].WorldPosition;
     }
 
     private void CheckThatIamOnlyInstance()
@@ -51,5 +63,11 @@ public class GoalManager : MonoBehaviour
         Vector3 tilePosition = transform.position;
         tilePosition.y = 0;
         return Pathfinding.gridLayout.WorldToCell(tilePosition);
+    }
+
+    public WorldTile GetTileUnderMyself()
+    {
+        WorldTile tileUnderMe = GameTiles.instance.GetTileByWorldPosition(transform.position);
+        return tileUnderMe;
     }
 }

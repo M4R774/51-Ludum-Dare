@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyAI : AbstractObjectInWorldSpace
 {
+    public static EnemyAI instance;
     public int movementSpeed;
     public int barrageRange;
     public GameObject projectilePrefab;
@@ -13,6 +14,23 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private TurnManager turnManager;  // For accessing player controlled units
     private bool movementInProgress;
     private WorldTile tileUnderMe;
+
+    public void Awake()
+    {
+        CheckThatIamOnlyInstance();
+    }
+
+    private void CheckThatIamOnlyInstance()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
