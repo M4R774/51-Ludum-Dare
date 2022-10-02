@@ -9,6 +9,7 @@ public class ActionBarManager : MonoBehaviour
     public List<Image> actionPoints;
 
     public int savedState;
+
     public void Awake()
     {
         CheckThatIamOnlyInstance();
@@ -84,5 +85,27 @@ public class ActionBarManager : MonoBehaviour
                 actionPoints[greens[lastGreen]].color = Color.gray;
             }
         }
+    }
+
+    // Grants the player one action point more
+    public void AddActionPoint()
+    {
+        Debug.Log("I received an action point :-)");
+    }
+
+    // Removes one action point from the player
+    public void RemoveActionPoint()
+    {
+        Debug.Log("I lost an action point :-(");
+    }
+
+    private void OnEnable()
+    {
+        EventManager.OnTenSecondTimerEnded += RemoveActionPoint;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnTenSecondTimerEnded -= RemoveActionPoint;
     }
 }
