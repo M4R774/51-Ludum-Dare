@@ -22,8 +22,11 @@ public class CameraController : MonoBehaviour
 
     public void SetNewPosition(Transform targetTransform)
     {
-        newPosition = targetTransform.position;
-        newPosition.y = .5f;
+        if (targetTransform != null)
+        {
+            newPosition = targetTransform.position;
+            newPosition.y = .5f;
+        }
     }
 
     private void Start()
