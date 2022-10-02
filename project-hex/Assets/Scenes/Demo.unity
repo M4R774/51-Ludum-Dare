@@ -192,7 +192,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &84143375
 Rigidbody:
@@ -572,7 +572,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1340316140}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &406476944
 MonoBehaviour:
@@ -1159,8 +1159,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1416580376}
-  - {fileID: 2106538393}
   - {fileID: 406476943}
+  - {fileID: 2106538393}
   - {fileID: 714698636}
   - {fileID: 1357285102}
   - {fileID: 1932989408}

@@ -34,12 +34,12 @@ public class GameEnd : MonoBehaviour
             {
                 PlayerLost();
             }
-            else if (
+            /*else if (
                 AnyPlayerControlledUnitsAreInGoal()
             )
             {
                 PlayerWon();
-            }
+            }*/
         }
     }
 
@@ -69,5 +69,12 @@ public class GameEnd : MonoBehaviour
     {
         yield return new WaitForSeconds(delayInSeconds);
         SceneManager.LoadScene(endingScreenName);
+    }
+
+    // can be used for triggering either scenarion
+    public void TriggerGameEnd(bool condition)
+    {
+        if(condition) PlayerWon();
+        else PlayerLost();
     }
 }

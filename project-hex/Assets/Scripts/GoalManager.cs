@@ -72,4 +72,12 @@ public class GoalManager : MonoBehaviour
         WorldTile tileUnderMe = GameTiles.instance.GetTileByWorldPosition(transform.position);
         return tileUnderMe;
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            GameObject.Find("GameControllers").GetComponent<GameEnd>().TriggerGameEnd(true);
+        }
+    }
 }
