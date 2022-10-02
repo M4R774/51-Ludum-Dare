@@ -159,34 +159,11 @@ public class WorldTile
     {
         if (isVisible)
         {
-            GameObject instantiated = TilemapMember.GetInstantiatedObject(CellCoordinates);
-            if (instantiated != null)
-            {
-                if (instantiated.transform.childCount > 0)
-                {
-                    GameObject child = instantiated.transform.GetChild(0).gameObject;
-                    if (child != null)
-                    {
-                        child.GetComponent<MeshRenderer>().material.color = Color.white;
-                    }
-                }
-            }
+            SetColorForChildrenMeshes(Color.white);
         }
         else
         {
-            GameObject instantiated = TilemapMember.GetInstantiatedObject(CellCoordinates);
-            if (instantiated != null)
-            {
-                if (instantiated.transform.childCount > 0)
-                {
-                    GameObject child = instantiated.transform.GetChild(0).gameObject;
-                    if (child != null)
-                    {
-                        child.GetComponent<MeshRenderer>().material.color = Color.gray;
-                    }
-                }
-
-            }
+            SetColorForChildrenMeshes(Color.gray);
         }
 
         if (isInBarrageZone)
@@ -220,6 +197,22 @@ public class WorldTile
         {
             Color invisible = new(0,0,0,0);
             SetColor(invisible);
+        }
+    }
+
+    private void SetColorForChildrenMeshes(Color color)
+    {
+        GameObject instantiated = TilemapMember.GetInstantiatedObject(CellCoordinates);
+        if (instantiated != null)
+        {
+            for (int i = 0; i < instantiated.transform.childCount; i++)
+            {
+                GameObject child = instantiated.transform.GetChild(i).gameObject;
+                if (child.GetComponent<MeshRenderer>() != null)
+                {
+                    child.GetComponent<MeshRenderer>().material.color = color;
+                }
+            }
         }
     }
 
