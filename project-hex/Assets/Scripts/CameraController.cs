@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour
     public void SetNewPosition(Transform targetTransform)
     {
         newPosition = targetTransform.position;
+        newPosition.y = .5f;
     }
 
     private void Start()
@@ -79,7 +80,6 @@ public class CameraController : MonoBehaviour
         }
 
         // Position
-        newPosition.y = 0;
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * cameraSmoothing);
 
         // Rotation
