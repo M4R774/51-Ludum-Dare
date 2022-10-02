@@ -29,6 +29,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6676933808994204582}
+  - {fileID: 4438503574355310871}
   m_Father: {fileID: 6986820570470540444}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -103,6 +104,72 @@ MonoBehaviour:
   barrageRange: 10
   projectilePrefab: {fileID: 5264988255824722025, guid: 0d7e896b8faa81348a87cdf383898752, type: 3}
   bulletPrefab: {fileID: 9093912386689096819, guid: 1e4465643db0457499122a9b2ef84609, type: 3}
+--- !u!1001 &4184409208927723260
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5796578991159313363}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_Name
+      value: EnemyPirateShip
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297971367744290730, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 60979d4f92ab24a189d36cfb9f04c771, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+--- !u!4 &4438503574355310871 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fc710cd1afc4a444784f6db775137c0f, type: 3}
+  m_PrefabInstance: {fileID: 4184409208927723260}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6567236241444068429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165,6 +232,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f00459c249bba4a1b8e5465a0bd6e3e5, type: 3}
       propertyPath: m_Name
       value: PirateShip
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f00459c249bba4a1b8e5465a0bd6e3e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f00459c249bba4a1b8e5465a0bd6e3e5, type: 3}
