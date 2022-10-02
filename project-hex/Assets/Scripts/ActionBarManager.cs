@@ -7,6 +7,8 @@ public class ActionBarManager : MonoBehaviour
 {
     public static ActionBarManager instance;
     public List<Image> actionPoints;
+    List<Image> allChildren;
+    int currentPlannedMoves = 0; // the amount of hexes the player is planning to move
 
     public int savedState;
 
@@ -27,14 +29,13 @@ public class ActionBarManager : MonoBehaviour
         }
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         int children = gameObject.transform.childCount;
         for (int i = 0; i < children; ++i)
         {
             actionPoints.Add(gameObject.transform.GetChild(i).GetComponent<Image>());
+            allChildren = actionPoints; //.Add(gameObject.transform.GetChild(i).GetComponent<Image>());
         }
 
         for (int i = 0; i < actionPoints.Count; i++)
@@ -44,10 +45,9 @@ public class ActionBarManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.O)) AddActionPoint();
     }
 
     public void SetVisible(int movementPointsLeft)
@@ -63,10 +63,14 @@ public class ActionBarManager : MonoBehaviour
         savedState = movementPointsLeft;
     }
 
-    public void SetPlan(int plannedMoveCount) {
+    public void SetPlan(int plannedMoveCount)
+    {
         // Plan next move BUT
         // first return from previous plan:
         SetVisible(savedState);
+
+        // save plannedMoveCount so we can use it in updating the visuals
+        currentPlannedMoves = plannedMoveCount;
 
         var greens = new List<int>();
         for (int i = 0; i < actionPoints.Count; i++) {
@@ -90,13 +94,25 @@ public class ActionBarManager : MonoBehaviour
     // Grants the player one action point more
     public void AddActionPoint()
     {
-        Debug.Log("I received an action point :-)");
+        /*if(actionPoints.Count < allChildren.Count)
+        {
+            Debug.Log("I received an action point :-)");
+            allChildren[actionPoints.Count].enabled = true;
+            actionPoints.Add(gameObject.transform.GetChild(actionPoints.Count).GetComponent<Image>());
+            SetPlan(currentPlannedMoves);
+        }*/
     }
 
     // Removes one action point from the player
     public void RemoveActionPoint()
     {
-        Debug.Log("I lost an action point :-(");
+        /*if(actionPoints.Count > 1)
+        {
+            Debug.Log("I lost an action point :-(");
+            allChildren[actionPoints.Count - 1].enabled = false;
+            actionPoints.RemoveAt(actionPoints.Count - 1);
+            SetPlan(currentPlannedMoves);
+        }*/
     }
 
     private void OnEnable()
