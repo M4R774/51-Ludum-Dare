@@ -270,7 +270,8 @@ GameObject:
   - component: {fileID: 84143372}
   - component: {fileID: 84143370}
   - component: {fileID: 84143374}
-  m_Layer: 0
+  - component: {fileID: 84143375}
+  m_Layer: 2
   m_Name: Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,11 +366,23 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 84143368}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &84143375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84143368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0614359585e9a4e499675c14c61340d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &84761086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,6 +1536,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: WinningIsland
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 65c32b58256854a909a281fc59493cd5, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5208643325607198317, guid: 65c32b58256854a909a281fc59493cd5, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5323894933530819033, guid: 65c32b58256854a909a281fc59493cd5, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701136071485021909, guid: 65c32b58256854a909a281fc59493cd5, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65c32b58256854a909a281fc59493cd5, type: 3}
 --- !u!1001 &1082996079
@@ -2594,6 +2623,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1395886340
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395886328}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1572720450
 GameObject:
   m_ObjectHideFlags: 0
@@ -95095,6 +95140,9 @@ MonoBehaviour:
   rescuableCube: {fileID: 8320353224584023608, guid: 08109f143af2df64896ef95fe837cc98, type: 3}
   tileTypes:
   - {fileID: 11400000, guid: 1b4188d9dd41641fda3cea5098ef45a6, type: 2}
+  - {fileID: 11400000, guid: 4c633574173fa23409c131365fd7ad65, type: 2}
+  - {fileID: 11400000, guid: 8514a6295b83b814dac7df5e275d7166, type: 2}
+  - {fileID: 11400000, guid: fcc5fa11974c2a94e9ab6ed5f8af68ee, type: 2}
   middleTileOfIsland: {fileID: 11400000, guid: 4243e1fd5fbd9114cb5dc32eb35d71ee, type: 2}
   outerTileOfIsland: {fileID: 11400000, guid: fa6ceeed3a7b2204b8f2a7f7dad57397, type: 2}
   tileDatas:
