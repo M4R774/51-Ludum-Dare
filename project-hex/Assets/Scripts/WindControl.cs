@@ -13,12 +13,12 @@ public class WindControl : MonoBehaviour
     {
         CheckThatIamOnlyInstance();
         movementCostDirections = new();
-        movementCostDirections.Add(2);
+        movementCostDirections.Add(1);
         movementCostDirections.Add(1);
         movementCostDirections.Add(10);
-        movementCostDirections.Add(2);
         movementCostDirections.Add(1);
-        movementCostDirections.Add(2);
+        movementCostDirections.Add(1);
+        movementCostDirections.Add(1);
     }
 
     public int GetCostToDirection(int directionIndex)
@@ -30,7 +30,7 @@ public class WindControl : MonoBehaviour
 
     public int GetWindRotation()
     {
-        return windDirection * -60 + 30;
+        return windDirection * -60;
     }
 
     private void CheckThatIamOnlyInstance()
@@ -47,6 +47,9 @@ public class WindControl : MonoBehaviour
 
     public void ChangeWindDirection()
     {
-        windDirection = Random.Range(0, 6);
+        if (Random.Range(0,100) > 50)
+        {
+            windDirection = Random.Range(0, 6);
+        }
     }
 }
