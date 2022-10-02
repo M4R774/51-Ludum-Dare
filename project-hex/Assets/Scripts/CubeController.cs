@@ -146,9 +146,8 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
 
     public void ReCalculateVisibility()
     {
-        if (isPlayable) {
-            InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
-        }
+        InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), 10, false);
+        InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
     }
 
     public void ResetOnEndTurn()

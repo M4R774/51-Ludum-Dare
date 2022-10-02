@@ -31,7 +31,6 @@ public class DesertIsland : MonoBehaviour
             isVisited = true;
             actionBarManager.IncreaseMaxMovementPoints();
             actionBarManager.IncreaseMaxMovementPoints();
-            actionBarManager.IncreaseMaxMovementPoints();
         }
     }
 }
