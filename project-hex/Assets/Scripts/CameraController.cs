@@ -6,6 +6,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform cameraTransform;
+    public Transform objectForCameraToFollow;
 
     public bool mouseMoveEnabled;
     public float screenEdgeBorderThickness;
@@ -34,26 +35,8 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
         // WASD
-        if (Input.GetKey(KeyCode.W) ||
-            Input.mousePosition.y >= Screen.height - screenEdgeBorderThickness && mouseMoveEnabled)
-        {
-            newPosition += cameraSpeed * Time.deltaTime * Vector3.Normalize(new Vector3(transform.forward.x, 0, transform.forward.z));
-        }
-        if (Input.GetKey(KeyCode.A) ||
-            Input.mousePosition.x <= screenEdgeBorderThickness && mouseMoveEnabled)
-        {
-            newPosition -= cameraSpeed * Time.deltaTime * transform.right;
-        }
-        if (Input.GetKey(KeyCode.S) ||
-            Input.mousePosition.y <= screenEdgeBorderThickness && mouseMoveEnabled)
-        {
-            newPosition -= cameraSpeed * Time.deltaTime * Vector3.Normalize(new Vector3(transform.forward.x, 0, transform.forward.z));
-        }
-        if (Input.GetKey(KeyCode.D) ||
-            Input.mousePosition.x >= Screen.width - screenEdgeBorderThickness && mouseMoveEnabled)
-        {
-            newPosition += cameraSpeed * Time.deltaTime * transform.right;
-        }
+        //HandleWASD();
+        SetNewPosition(objectForCameraToFollow);
         
         // Rotation
         if (Input.GetKey(KeyCode.Q))
@@ -114,6 +97,30 @@ public class CameraController : MonoBehaviour
             cameraTransform.localPosition, 
             newZoom, 
             Time.deltaTime * cameraSmoothing);
+    }
+
+    private void HandleWASD()
+    {
+        if (Input.GetKey(KeyCode.W) ||
+            Input.mousePosition.y >= Screen.height - screenEdgeBorderThickness && mouseMoveEnabled)
+        {
+            newPosition += cameraSpeed * Time.deltaTime * Vector3.Normalize(new Vector3(transform.forward.x, 0, transform.forward.z));
+        }
+        if (Input.GetKey(KeyCode.A) ||
+            Input.mousePosition.x <= screenEdgeBorderThickness && mouseMoveEnabled)
+        {
+            newPosition -= cameraSpeed * Time.deltaTime * transform.right;
+        }
+        if (Input.GetKey(KeyCode.S) ||
+            Input.mousePosition.y <= screenEdgeBorderThickness && mouseMoveEnabled)
+        {
+            newPosition -= cameraSpeed * Time.deltaTime * Vector3.Normalize(new Vector3(transform.forward.x, 0, transform.forward.z));
+        }
+        if (Input.GetKey(KeyCode.D) ||
+            Input.mousePosition.x >= Screen.width - screenEdgeBorderThickness && mouseMoveEnabled)
+        {
+            newPosition += cameraSpeed * Time.deltaTime * transform.right;
+        }
     }
 }
 

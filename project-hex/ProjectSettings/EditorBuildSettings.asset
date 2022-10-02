@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 118a18a0e2725dc4da24e3bf3192bbd1
   - enabled: 1
-    path: Assets/Scenes/Demo.unity
+    path: Assets/Scenes/Kouvola.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/VictoryScreen.unity
