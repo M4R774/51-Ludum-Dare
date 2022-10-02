@@ -9,6 +9,8 @@ public class GameTiles : MonoBehaviour
 {
 	public GameObject rescuableCube;
 	public List<Tile> tileTypes;
+	public Tile middleTileOfIsland;
+	public Tile outerTileOfIsland;
 	public List<TileData> tileDatas;
 	public static GameTiles instance;
 	public Tilemap tilemap;
@@ -77,6 +79,12 @@ public class GameTiles : MonoBehaviour
 
 	private void GenerateMap()
 	{
+		FillMapWithRandomTiles();
+		AddIslandsToMap();
+	}
+
+	private void FillMapWithRandomTiles()
+    {
 		tiles = new Dictionary<Vector3Int, WorldTile>();
 		foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
 		{
@@ -88,7 +96,7 @@ public class GameTiles : MonoBehaviour
 			tilemap.SetTile(localPlace, randomizedTileType);
 
 			WorldTile tile = new()
-            {
+			{
 				CellCoordinates = localPlace,
 				WorldPosition = tilemap.CellToWorld(localPlace),
 				TileBase = tilemap.GetTile(localPlace),
@@ -101,12 +109,25 @@ public class GameTiles : MonoBehaviour
 			tiles.Add(localPlace, tile);
 			GameObject instantiatedObject = tile.TilemapMember.GetInstantiatedObject(localPlace);
 			if (instantiatedObject != null)
-            {
+			{
 				instantiatedObject.SetActive(false);
-            }
+			}
 		}
 	}
 
+	private void AddIslandsToMap()
+    {
+		foreach (WorldTile tile in tiles.Values)
+		{
+			if (UnityEngine.Random.Range(0, 200) < 1)
+            {
+				tilemap.SetTile(tile.CellCoordinates, middleTileOfIsland);
+				tiles[tile.CellCoordinates].IsExplored = false;
+			}
+		}
+	}
+
+	// TODO: Change this to the bananas or something like that?
 	private void GenerateInactiveCubes()
 	{
 		var rand = new System.Random();

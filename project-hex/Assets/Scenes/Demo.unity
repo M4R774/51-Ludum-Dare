@@ -41418,11 +41418,8 @@ MonoBehaviour:
   rescuableCube: {fileID: 8320353224584023608, guid: 08109f143af2df64896ef95fe837cc98, type: 3}
   tileTypes:
   - {fileID: 11400000, guid: 1b4188d9dd41641fda3cea5098ef45a6, type: 2}
-  - {fileID: 11400000, guid: 1b4188d9dd41641fda3cea5098ef45a6, type: 2}
-  - {fileID: 11400000, guid: 1b4188d9dd41641fda3cea5098ef45a6, type: 2}
-  - {fileID: 11400000, guid: 1b4188d9dd41641fda3cea5098ef45a6, type: 2}
-  - {fileID: 11400000, guid: 1b4188d9dd41641fda3cea5098ef45a6, type: 2}
-  - {fileID: 11400000, guid: 1b4188d9dd41641fda3cea5098ef45a6, type: 2}
+  middleTileOfIsland: {fileID: 11400000, guid: 4243e1fd5fbd9114cb5dc32eb35d71ee, type: 2}
+  outerTileOfIsland: {fileID: 11400000, guid: fa6ceeed3a7b2204b8f2a7f7dad57397, type: 2}
   tileDatas:
   - {fileID: 11400000, guid: cb42a72e5ec29415d931021a0cdffe0c, type: 2}
   - {fileID: 11400000, guid: fe4e7ebf8a4284262a9ac7926d40b393, type: 2}
