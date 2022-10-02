@@ -76,17 +76,9 @@ public class MouseController : MonoBehaviour
     {
         if (clickedSelectable != null)
         {
-            if (clickedSelectable.IsSelected())
-            {
-                clickedSelectable.Unselect();
-                selectedObject = null;
-            }
-            else
-            {
-                selectedObject?.Unselect();
-                clickedSelectable.Select();
-                selectedObject = clickedSelectable;
-            }
+            selectedObject?.Unselect();
+            clickedSelectable.Select();
+            selectedObject = clickedSelectable;
         }
     }
 
