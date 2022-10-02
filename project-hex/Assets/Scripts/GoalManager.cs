@@ -5,6 +5,7 @@ using UnityEngine;
 public class GoalManager : MonoBehaviour
 {
     public static GoalManager instance;
+    public int maxEnemyToGoal;
 
     public void Awake()
     {
@@ -24,7 +25,6 @@ public class GoalManager : MonoBehaviour
             TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>().GetTileUnderMyself(),
             GetTileUnderMyself()
         );
-        int maxEnemyToGoal = 4;
         int enemyToGoal = Mathf.Min(tilesBetweenPlayerAndGoalPath.Count - 1, maxEnemyToGoal);
         EnemyAI.instance.transform.position = tilesBetweenPlayerAndGoalPath[enemyToGoal].WorldPosition;
     }
