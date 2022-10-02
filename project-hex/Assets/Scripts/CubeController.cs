@@ -218,6 +218,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         }
 
         // Refresh vision and movement range highlighting
+        GetComponent<PlayerShipAudioManager>().PlayMovementSound();
         InformTilesIfTheyAreWithinMovementRange(startingTile, movementSpeed, false);
         InformTilesIfTheyAreWithinVisionRange(startingTile, visibilityRange, false);
         if (isSelected)

@@ -87,19 +87,23 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private IEnumerator LerpThroughPath(List<WorldTile> path)
     {
         tileUnderMe.GameObjectOnTheTile = null;
-        WorldTile endTile = path[^movementSpeed];
-        tileUnderMe = endTile;
-        endTile.GameObjectOnTheTile = transform.gameObject;
-
-        movementInProgress = true;
-        WorldTile startingTile = GetTileUnderMyself();
-        for (int i = 0; i < movementSpeed; i++)
+        if (path.Count > movementSpeed)
         {
-            yield return LerpToNextTile(path, i);
+            WorldTile endTile = path[^movementSpeed];
+            tileUnderMe = endTile;
+            endTile.GameObjectOnTheTile = transform.gameObject;
+
+            movementInProgress = true;
+            WorldTile startingTile = GetTileUnderMyself();
+            for (int i = 0; i < movementSpeed; i++)
+            {
+                yield return LerpToNextTile(path, i);
+            }
+
+            EventManager.VisibilityHasChanged();
+            movementInProgress = false;
         }
 
-        EventManager.VisibilityHasChanged();
-        movementInProgress = false;
     }
 
     private IEnumerator LerpToNextTile(List<WorldTile> path, int i)
