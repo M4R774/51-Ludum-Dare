@@ -24,6 +24,10 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
 
     public ActionBarManager actionBarManager;
 
+    void Awake()
+    {
+        if(actionBarManager == null) actionBarManager = GameObject.Find("ActionBar").GetComponent<ActionBarManager>();
+    }
     void Start()
     {
         movementInProgress = false;

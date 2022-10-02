@@ -21,6 +21,9 @@ public class GameEnd : MonoBehaviour
     private void Update()
     {
         CheckIfGameHasEnded();
+
+        // debugging purposes
+        if(Input.GetKeyDown(KeyCode.J)) PlayerWon();
     }
 
     private void CheckIfGameHasEnded()

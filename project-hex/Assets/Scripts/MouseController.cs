@@ -48,6 +48,8 @@ public class MouseController : MonoBehaviour
         HandleSelectable(initialSelectable);
         HandleTile(initialPlayerTile, initialSelectable);
         ResetLineRenderer();
+
+        if(actionBarManager == null) actionBarManager = GameObject.Find("ActionBar").GetComponent<ActionBarManager>();
     }
 
     private void CheckThatIamOnlyInstance()

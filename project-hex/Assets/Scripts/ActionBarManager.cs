@@ -19,6 +19,7 @@ public class ActionBarManager : MonoBehaviour
         {
             actionPoints.Add(gameObject.transform.GetChild(i).GetComponent<Image>());
             allChildren = actionPoints; //.Add(gameObject.transform.GetChild(i).GetComponent<Image>());
+            savedState = actionPoints.Count;
         }
 
         for (int i = 0; i < actionPoints.Count; i++)
