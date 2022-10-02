@@ -121,9 +121,45 @@ public class GameTiles : MonoBehaviour
 		{
 			if (UnityEngine.Random.Range(0, 200) < 1)
             {
-				tilemap.SetTile(tile.CellCoordinates, middleTileOfIsland);
-				tile.TileBase = middleTileOfIsland;
-				tiles[tile.CellCoordinates].IsExplored = false;
+				SetTileType(tile, middleTileOfIsland);
+				List<WorldTile> setTiles = SetTileTypeForNeighbours(tile, middleTileOfIsland);
+				CreateSandTiles(tile);
+				foreach (WorldTile setTile in setTiles)
+                {
+					CreateSandTiles(setTile);
+				}
+			}
+		}
+	}
+
+	private void SetTileType(WorldTile tile, Tile tileType)
+    {
+		tilemap.SetTile(tile.CellCoordinates, tileType);
+		tile.TileBase = tileType;
+		tiles[tile.CellCoordinates].IsExplored = false;
+	}
+
+	private List<WorldTile> SetTileTypeForNeighbours(WorldTile tile, Tile tiletype)
+    {
+		List<WorldTile> setTiles = new();
+		foreach (WorldTile neighbor in tile.Neighbors())
+        {
+			if (UnityEngine.Random.Range(0, 6) < 1)
+            {
+				setTiles.Add(neighbor);
+				SetTileType(neighbor, tiletype);
+			}
+        }
+		return setTiles;
+    }
+
+	private void CreateSandTiles(WorldTile tile)
+    {
+		foreach (WorldTile neighbor in tile.Neighbors())
+		{
+			if (tileTypes.Contains(neighbor.TileBase)) // If Sea tile
+			{
+				SetTileType(neighbor, outerTileOfIsland);
 			}
 		}
 	}
