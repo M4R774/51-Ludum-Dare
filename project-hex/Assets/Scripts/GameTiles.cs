@@ -122,6 +122,7 @@ public class GameTiles : MonoBehaviour
 			if (UnityEngine.Random.Range(0, 200) < 1)
             {
 				tilemap.SetTile(tile.CellCoordinates, middleTileOfIsland);
+				tile.TileBase = middleTileOfIsland;
 				tiles[tile.CellCoordinates].IsExplored = false;
 			}
 		}
