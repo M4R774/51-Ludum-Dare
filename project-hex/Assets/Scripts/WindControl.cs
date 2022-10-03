@@ -8,6 +8,7 @@ public class WindControl : MonoBehaviour
 
     private int windDirection;
     private List<int> movementCostDirections;
+    public AudioSource audioSource;
 
     public void Awake()
     {
@@ -49,6 +50,7 @@ public class WindControl : MonoBehaviour
     {
         if (Random.Range(0,100) > 50)
         {
+            audioSource.Play();
             windDirection = Random.Range(0, 6);
         }
     }

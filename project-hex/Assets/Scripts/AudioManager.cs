@@ -8,7 +8,6 @@ public class AudioManager : MonoBehaviour
     public AudioMixer audioMixer;
 
     private AudioSource audioSource;
-    private float oldVolume;
 
     public void Start()
     {
