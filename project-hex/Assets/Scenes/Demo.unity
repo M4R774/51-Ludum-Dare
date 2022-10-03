@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.23252985, g: 0.45990413, b: 0.8845892, a: 1}
+  m_IndirectSpecularColor: {r: 0.23253083, g: 0.45990473, b: 0.88458985, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1001,10 +1001,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1738854407}
     m_Modifications:
-    - target: {fileID: 6986820570470540423, guid: add2d0c25f30ac04a9ad6daf2680bd92, type: 3}
-      propertyPath: movementSpeed
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 6986820570470540444, guid: add2d0c25f30ac04a9ad6daf2680bd92, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1051,7 +1047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6986820570470540445, guid: add2d0c25f30ac04a9ad6daf2680bd92, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Boss
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: add2d0c25f30ac04a9ad6daf2680bd92, type: 3}
@@ -93835,6 +93831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f864cb00c4421d4697c186f62c82f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smallEnemyPrefab: {fileID: 6986820570470540445, guid: c954c35f782d81b48b7655524f63b67c, type: 3}
   rescuableCube: {fileID: 8320353224584023608, guid: 08109f143af2df64896ef95fe837cc98, type: 3}
   tileTypes:
   - {fileID: 11400000, guid: 1b4188d9dd41641fda3cea5098ef45a6, type: 2}

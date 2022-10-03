@@ -262,4 +262,10 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         }
         return null;
     }
+
+    public void SetMovementPointsLeft(int pointsLeft)
+    {
+        movementPointsLeft = pointsLeft;
+        actionBarManager.RefreshIndicatorColors();
+    }
 }

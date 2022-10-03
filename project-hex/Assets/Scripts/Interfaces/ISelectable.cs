@@ -9,6 +9,7 @@ public interface ISelectable
     public GameObject GetGameObject();
     int MovementSpeed { get; }
     int MovementPointsLeft();
+    public void SetMovementPointsLeft(int pointsLeft);
     public void Select();
     public void Unselect();
     public bool IsSelected();

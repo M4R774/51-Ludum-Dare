@@ -14,7 +14,7 @@ public class MouseController : MonoBehaviour
     public ISelectable selectedObject;
     private WorldTile oldTileUnderMouse;
     public ActionBarManager actionBarManager;
-    private int shootingRange = 5;
+    private int shootingRange = 10;
 
     public static MouseController instance;
 
@@ -120,6 +120,7 @@ public class MouseController : MonoBehaviour
 
     private void FireBarrage(Vector3 positionToFireUpon)
     {
+        selectedObject.SetMovementPointsLeft(selectedObject.MovementPointsLeft() - 1);
         GameObject projectile = Instantiate(projectilePrefab, transform, false);
         projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(
             selectedObject.GetTileUnderMyself().WorldPosition,
@@ -163,13 +164,11 @@ public class MouseController : MonoBehaviour
     {
         if (clickedTile != null &&
             clickedSelectable == null &&
-            selectedObject != null &&
             clickedTile.IsVisible &&
-            selectedObject.IsPlayable()
-        )
+            selectedObject.MovementPointsLeft() > 0)
         {
             WorldTile startTile = selectedObject.GetTileUnderMyself();
-            List<WorldTile> tilesWithinRange = Pathfinding.GetAllTilesWithingMovementRange(startTile, shootingRange);
+            List<WorldTile> tilesWithinRange = Pathfinding.GetAllVisibleTiles(startTile, shootingRange);
             if (tilesWithinRange.Contains(clickedTile))
             {
                 return true;

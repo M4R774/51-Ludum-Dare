@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class HideIfNotVisible : MonoBehaviour
 {
-    private GridLayout grid;
     private Transform meshChild;
 
     private void Start()
     {
-        grid = GameTiles.instance.grid;
         CheckIfVisible();
 
         WorldTile tileUnderMyself = GameTiles.instance.GetTileByWorldPosition(transform.position);
@@ -42,8 +40,8 @@ public class HideIfNotVisible : MonoBehaviour
 
     public Vector3Int GetTileCoordinates()
     {
-        Vector3 tilePosition = transform.position;
-        tilePosition.y = 0;
-        return GameTiles.instance.grid.WorldToCell(tilePosition);
+        Vector3 worldPosition = transform.position;
+        worldPosition.y = 0;
+        return GameTiles.instance.grid.WorldToCell(worldPosition);
     }
 }

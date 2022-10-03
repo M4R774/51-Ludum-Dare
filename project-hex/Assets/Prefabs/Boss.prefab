@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 6986820570470540443}
   - component: {fileID: 6986820570470540423}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 6986820570470540445}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 6.11, y: 0, z: 0.52}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5796578991159313363}
@@ -99,10 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 038185bd0fd00ef4e9e73bb57c9a82b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 3
+  movementSpeed: 1
   barrageRange: 10
   projectilePrefab: {fileID: 5264988255824722025, guid: 0d7e896b8faa81348a87cdf383898752, type: 3}
   bulletPrefab: {fileID: 9093912386689096819, guid: 1e4465643db0457499122a9b2ef84609, type: 3}
+  fireMGInsteadOfBarrage: 0
 --- !u!1001 &4184409208927723260
 PrefabInstance:
   m_ObjectHideFlags: 0

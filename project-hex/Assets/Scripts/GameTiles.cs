@@ -7,6 +7,7 @@ using System.Linq;
 // GameTiles is the World map, a collection of WorldTile objects
 public class GameTiles : MonoBehaviour
 {
+	public GameObject smallEnemyPrefab;
 	public GameObject rescuableCube;
 	public List<Tile> tileTypes;
 	public Tile middleTileOfIsland;
@@ -81,6 +82,7 @@ public class GameTiles : MonoBehaviour
 	{
 		FillMapWithRandomTiles();
 		AddIslandsToMap();
+		AddEnemiesToMap();
 	}
 
 	private void FillMapWithRandomTiles()
@@ -124,6 +126,18 @@ public class GameTiles : MonoBehaviour
                 {
 					CreateSandTiles(setTile);
 				}
+			}
+		}
+	}
+
+	private void AddEnemiesToMap()
+    {
+		foreach (WorldTile tile in tiles.Values)
+		{
+			if (tile.IsWalkable() && UnityEngine.Random.Range(0, 600) < 1)
+			{
+				GameObject newEnemy = Instantiate(smallEnemyPrefab);
+				newEnemy.transform.position = tile.WorldPosition;
 			}
 		}
 	}
