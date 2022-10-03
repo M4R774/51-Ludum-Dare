@@ -7,10 +7,14 @@ public class PauseMenuController : MonoBehaviour
 {
     public GameObject pauseMenuCanvas;
     public string nameOfMainMenuScene;
+    [SerializeField] GameObject quitButton;
 
     public void Start()
     {
         Continue();
+        #if UNITY_WEBGL
+        quitButton.SetActive(false);
+        #endif
     }
 
     public void Update()
@@ -50,5 +54,10 @@ public class PauseMenuController : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(nameOfMainMenuScene);
+    }
+
+    public void ExitToDesktop()
+    {
+        Application.Quit();
     }
 }
