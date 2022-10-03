@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: island-edge-hex-data
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: fa6ceeed3a7b2204b8f2a7f7dad57397, type: 2}
+  - {fileID: 11400000, guid: bf8c95f0e13cd4a50b424ee6ae69a504, type: 2}
   walkable: 0
   blocksVision: 0
   cost: 99

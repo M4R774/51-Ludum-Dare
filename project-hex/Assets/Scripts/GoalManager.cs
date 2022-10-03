@@ -7,6 +7,7 @@ public class GoalManager : MonoBehaviour
     public static GoalManager instance;
     public int goalDistanceFromStartingPosition;
     public GameObject boss;
+    [SerializeField] Animator animator;
 
     public void Awake()
     {
@@ -74,6 +75,7 @@ public class GoalManager : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
+            animator.SetTrigger("openLid");
             GameObject.Find("GameControllers").GetComponent<GameEnd>().TriggerGameEnd(true);
         }
     }
