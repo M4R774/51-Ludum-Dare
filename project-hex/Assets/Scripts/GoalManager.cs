@@ -29,7 +29,7 @@ public class GoalManager : MonoBehaviour
         // TODO: Some sporadic bug here
         ISelectable playerSelectable = TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>();
         List<WorldTile> pathToPlayer = Pathfinding.FindPath(GetTileUnderMyself(), playerSelectable.GetTileUnderMyself());
-        boss.transform.position = pathToPlayer[pathToPlayer.Count - 1].WorldPosition;
+        boss.transform.position = pathToPlayer[^1].WorldPosition;
     }
 
     private void CheckThatIamOnlyInstance()
