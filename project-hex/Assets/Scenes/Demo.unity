@@ -1718,6 +1718,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1518543502879206671, guid: b1e0ad378eb8e475f825a827cbd2b485, type: 3}
+      propertyPath: m_Value
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518543502879206671, guid: b1e0ad378eb8e475f825a827cbd2b485, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
@@ -119799,7 +119803,7 @@ AudioSource:
   m_GameObject: {fileID: 2064051296}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 02874963fd918084e8efeb8e5b6dd9b3, type: 2}
   m_audioClip: {fileID: 8300000, guid: 33deff6badb4dc6469ee83eb58825649, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
