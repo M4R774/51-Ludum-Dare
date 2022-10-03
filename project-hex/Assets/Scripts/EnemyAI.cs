@@ -65,7 +65,9 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private void FireMachineGun()
     {
         GameObject projectile = Instantiate(bulletPrefab, transform, false);
-        projectile.GetComponent<MGBulletLerp>().SlerpToTargetAndExplode(transform.position, player.transform.position);
+        projectile.GetComponent<MGBulletLerp>().SlerpToTargetAndExplode(
+            tileUnderMe.WorldPosition, 
+            player.transform.position);
     }
 
     private void MoveTowardsTarget(List<WorldTile> path)
@@ -98,7 +100,6 @@ public class EnemyAI : AbstractObjectInWorldSpace
         {
             List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), player.GetComponent<ISelectable>().GetTileUnderMyself());
             MoveTowardsTarget(pathToPlayerUnit);
-            Attack();
         }
     }
 
@@ -117,7 +118,7 @@ public class EnemyAI : AbstractObjectInWorldSpace
             {
                 yield return LerpToNextTile(path, i);
             }
-
+            Attack();
             EventManager.VisibilityHasChanged();
             movementInProgress = false;
         }
