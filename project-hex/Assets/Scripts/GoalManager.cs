@@ -5,8 +5,8 @@ using UnityEngine;
 public class GoalManager : MonoBehaviour
 {
     public static GoalManager instance;
-    public int maxEnemyToGoal;
     public int goalDistanceFromStartingPosition;
+    public GameObject boss;
 
     public void Awake()
     {
@@ -16,18 +16,16 @@ public class GoalManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnGoalAwayFromPlayer(goalDistanceFromStartingPosition);
-        MoveEnemyToMidway();
+        SpawnGoalAndBossAwayFromStart(goalDistanceFromStartingPosition);
+        MoveEnemyToGoal();
     }
 
-    private void MoveEnemyToMidway()
+    private void MoveEnemyToGoal()
     {
-        List<WorldTile> tilesBetweenPlayerAndGoalPath = Pathfinding.FindPath(
-            TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>().GetTileUnderMyself(),
-            GetTileUnderMyself()
-        );
-        int enemyToGoal = Mathf.Min(tilesBetweenPlayerAndGoalPath.Count - 1, maxEnemyToGoal);
-        EnemyAI.instance.transform.position = tilesBetweenPlayerAndGoalPath[enemyToGoal].WorldPosition;
+        ISelectable playerSelectable = TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>();
+        List<WorldTile> pathToPlayer = Pathfinding.FindPath(GetTileUnderMyself(), playerSelectable.GetTileUnderMyself());
+        boss.transform.position = pathToPlayer[pathToPlayer.Count - 1].WorldPosition;
+        return;
     }
 
     private void CheckThatIamOnlyInstance()
@@ -43,7 +41,7 @@ public class GoalManager : MonoBehaviour
     }
 
 
-    private void SpawnGoalAwayFromPlayer(int radius)
+    private void SpawnGoalAndBossAwayFromStart(int radius)
     {
         Vector3Int initialPlayerCellCoordinates = new(0, 0, 0);
         List<Vector3Int> outerEdge = Pathfinding.GetRingOfRadius(initialPlayerCellCoordinates, radius);
@@ -55,7 +53,6 @@ public class GoalManager : MonoBehaviour
             if (tileUnderPossibleSpawnPosition.IsWalkable()) 
             {
                 transform.position = spawnPositionCandidate;
-                return;
             }
         }
     }

@@ -171,8 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d65be55a4e706439ccd6c4c334c082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnemyToGoal: 4
   goalDistanceFromStartingPosition: 30
+  boss: {fileID: 2041220267}
 --- !u!33 &84143373
 MeshFilter:
   m_ObjectHideFlags: 0

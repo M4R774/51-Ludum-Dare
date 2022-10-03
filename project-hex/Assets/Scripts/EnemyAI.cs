@@ -5,52 +5,53 @@ using UnityEngine;
 
 public class EnemyAI : AbstractObjectInWorldSpace
 {
-    public static EnemyAI instance;
     public int movementSpeed;
     public int barrageRange;
     public GameObject projectilePrefab;
     public GameObject bulletPrefab;
+    public bool fireMGInsteadOfBarrage;
 
-    private TurnManager turnManager;  // For accessing player controlled units
+    protected GridLayout grid;
+    private GameObject player;
     private bool movementInProgress;
     private WorldTile tileUnderMe;
 
-    public void Awake()
-    {
-        CheckThatIamOnlyInstance();
-    }
-
-    private void CheckThatIamOnlyInstance()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-
     void Start()
     {
-        turnManager = TurnManager.instance;
         grid = GameTiles.instance.grid;
         tileUnderMe = GetTileUnderMyself();
+        player = GameObject.Find("Player");
+    }
+
+    private WorldTile GetTileUnderMyself()
+    {
+        if (transform != null)
+        {
+            WorldTile tileUnderCube = GameTiles.instance.GetTileByWorldPosition(transform.position);
+            return tileUnderCube;
+        }
+        return null;
     }
 
     private void AIMoveAndAttack()
     {
-        // Move 1 tile towards playerUnits[0]
-        if (turnManager.playerControlledUnits.Count > 0)
+        if (player != null)
         {
-            List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), turnManager.playerControlledUnits[0].GetComponent<ISelectable>().GetTileUnderMyself());
+            List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), player.GetComponent<ISelectable>().GetTileUnderMyself());
             MoveTowardsTarget(pathToPlayerUnit);
+            Attack();
+        }
+    }
 
-            // TODO: Intelligent (=closest playerUnit) target choosing
-
-            // Launch drone/barrage if in range
-            if (TargetIsInRange())
+    private void Attack()
+    {
+        if (TargetIsInRange())
+        {
+            if (fireMGInsteadOfBarrage)
+            {
+                FireMachineGun();
+            }
+            else
             {
                 FireBarrage();
             }
@@ -62,25 +63,17 @@ public class EnemyAI : AbstractObjectInWorldSpace
         GameObject projectile = Instantiate(projectilePrefab, transform, false);
         projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(
             tileUnderMe.WorldPosition,
-            turnManager.playerControlledUnits[0].transform.position
+            player.transform.position
         );
-    }
-
-    private void FireMG()
-    {
-        if (GetTileUnderMyself().IsVisible)
-        {
-            FireMachineGun();
-        }
     }
 
     private void FireMachineGun()
     {
         GameObject projectile = Instantiate(bulletPrefab, transform, false);
-        projectile.GetComponent<MGBulletLerp>().SlerpToTargetAndExplode(turnManager.playerControlledUnits[0].transform.position);
+        projectile.GetComponent<MGBulletLerp>().SlerpToTargetAndExplode(player.transform.position);
     }
 
-    public void MoveTowardsTarget(List<WorldTile> path)
+    private void MoveTowardsTarget(List<WorldTile> path)
     {
         if (movementInProgress) return;
         if (path != null)
@@ -89,9 +82,9 @@ public class EnemyAI : AbstractObjectInWorldSpace
         }
     }
 
-    public bool TargetIsInRange()
+    private bool TargetIsInRange()
     {
-        ISelectable target = turnManager.playerControlledUnits[0].GetComponent<ISelectable>();
+        ISelectable target = player.GetComponent<ISelectable>();
         int distanceToTarget = Pathfinding.GetDistanceInTiles(
             target.GetTileUnderMyself(), 
             GetTileUnderMyself());
@@ -121,7 +114,6 @@ public class EnemyAI : AbstractObjectInWorldSpace
             EventManager.VisibilityHasChanged();
             movementInProgress = false;
         }
-
     }
 
     private IEnumerator LerpToNextTile(List<WorldTile> path, int i)
@@ -138,6 +130,11 @@ public class EnemyAI : AbstractObjectInWorldSpace
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
             elapsedTime += Time.deltaTime;
 
+            // Rotation
+            Vector3 targetDirection = (targetPosition - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 4);
+
             yield return null;
         }
 
@@ -153,31 +150,10 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private void OnEnable()
     {
         EventManager.OnTenSecondTimerEnded += AIMoveAndAttack;
-        EventManager.OnShortTimerEnded += FireMG;
     }
 
     private void OnDisable()
     {
         EventManager.OnTenSecondTimerEnded -= AIMoveAndAttack;
-        EventManager.OnShortTimerEnded -= FireMG;
-    }
-
-    protected GridLayout grid;
-
-    public Vector3Int GetTileCoordinates()
-    {
-        Vector3 tilePosition = transform.position;
-        tilePosition.y = 0;
-        return grid.WorldToCell(tilePosition);
-    }
-
-    public WorldTile GetTileUnderMyself()
-    {
-        if (transform != null)
-        {
-            WorldTile tileUnderCube = GameTiles.instance.GetTileByWorldPosition(transform.position);
-            return tileUnderCube;
-        }
-        return null;
     }
 }

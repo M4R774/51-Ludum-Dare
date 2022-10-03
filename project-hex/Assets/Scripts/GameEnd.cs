@@ -34,12 +34,6 @@ public class GameEnd : MonoBehaviour
             {
                 PlayerLost();
             }
-            /*else if (
-                AnyPlayerControlledUnitsAreInGoal()
-            )
-            {
-                PlayerWon();
-            }*/
         }
     }
 
