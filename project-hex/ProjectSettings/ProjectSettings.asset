@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: Elite-Shift Entertainment
   productName: Ten Second Treasure
-  defaultCursor: {fileID: 2800000, guid: 78769194759b9854eb571c02bfd89719, type: 3}
+  defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.9245283, g: 0.3755491, b: 0, a: 1}
   m_ShowUnitySplashScreen: 1
