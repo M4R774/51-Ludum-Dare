@@ -183,15 +183,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: You were lost at sea
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 219a7b0ef8fb1884daab39c81098e17f, type: 2}
+  m_sharedMaterial: {fileID: -5208625504473947716, guid: 219a7b0ef8fb1884daab39c81098e17f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280029702
-  m_fontColor: {r: 0.023529414, g: 0.07058824, b: 0.10980393, a: 1}
+    rgba: 4281082645
+  m_fontColor: {r: 0.08235294, g: 0.13725491, b: 0.17254902, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.75
+  m_fontSize: 50.45
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
