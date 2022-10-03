@@ -9,9 +9,12 @@ public class GoalManager : MonoBehaviour
     public GameObject boss;
     [SerializeField] Animator animator;
 
+    private AudioSource audioSource;
+
     public void Awake()
     {
         CheckThatIamOnlyInstance();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -23,10 +26,10 @@ public class GoalManager : MonoBehaviour
 
     private void MoveEnemyToGoal()
     {
+        // TODO: Some sporadic bug here
         ISelectable playerSelectable = TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>();
         List<WorldTile> pathToPlayer = Pathfinding.FindPath(GetTileUnderMyself(), playerSelectable.GetTileUnderMyself());
         boss.transform.position = pathToPlayer[pathToPlayer.Count - 1].WorldPosition;
-        return;
     }
 
     private void CheckThatIamOnlyInstance()
@@ -75,6 +78,7 @@ public class GoalManager : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
+            audioSource.Play();
             animator.SetTrigger("openLid");
             GameObject.Find("GameControllers").GetComponent<GameEnd>().TriggerGameEnd(true);
         }
