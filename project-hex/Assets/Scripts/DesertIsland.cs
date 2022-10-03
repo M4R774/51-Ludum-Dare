@@ -12,11 +12,13 @@ public class DesertIsland : MonoBehaviour
     ActionBarManager actionBarManager;
     GameObject islandModel;
 
-    bool isVisited;
+    private AudioSource audioSource;
+    private bool isVisited;
     [SerializeField] List<GameObject> objectsToDisable = new List<GameObject>();
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         isVisited = false;
         islandModel = this.gameObject.transform.GetChild(0).gameObject;
         islandModel.transform.rotation = Random.rotation;
@@ -30,6 +32,7 @@ public class DesertIsland : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && !isVisited)
         {
             isVisited = true;
+            audioSource.Play();
             actionBarManager.IncreaseMaxMovementPoints();
             actionBarManager.IncreaseMaxMovementPoints();
             foreach (var item in objectsToDisable)
