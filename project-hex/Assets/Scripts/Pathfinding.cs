@@ -163,74 +163,83 @@ public static class Pathfinding
     // improve it marginally.
     public static List<WorldTile> FindPath(WorldTile startNode, WorldTile targetNode)
     {
-        var toSearch = new List<WorldTile>() { startNode };
-        var processed = new List<WorldTile>();
-
-        while (toSearch.Any())
+        try
         {
-            var current = toSearch[0];
-            foreach (WorldTile tile in toSearch)
-            {
-                if (tile.GetTotalPathCost() <= current.GetTotalPathCost() &&
-                    tile.DistanceToTarget < current.DistanceToTarget)
-                {
-                    current = tile;
-                }
-            }
-            processed.Add(current);
-            toSearch.Remove(current);
 
-            if (current == targetNode)
-            {
-                var currentPathTile = targetNode;
-                var path = new List<WorldTile>();
-                var count = 100;
-                while (currentPathTile != startNode)
-                {
-                    path.Add(currentPathTile);
-                    currentPathTile = currentPathTile.NextDestination;
-                    count--;
-                    if (count < 0) throw new Exception();
-                }
+            var toSearch = new List<WorldTile>() { startNode };
+            var processed = new List<WorldTile>();
 
-                WorldTile previousTile = null;
-                foreach (var tile in path)
+            while (toSearch.Any())
+            {
+                var current = toSearch[0];
+                foreach (WorldTile tile in toSearch)
                 {
-                    if (previousTile != null)
+                    if (tile.GetTotalPathCost() <= current.GetTotalPathCost() &&
+                        tile.DistanceToTarget < current.DistanceToTarget)
                     {
-                        Debug.DrawLine(previousTile.WorldPosition, tile.WorldPosition, Color.magenta, 1);
+                        current = tile;
                     }
-                    previousTile = tile;
                 }
-                return path;
-            }
-            List<WorldTile> neighbors = current.Neighbors();
-            for (int i = 0; i < neighbors.Count; i++)
-            {
-                WorldTile neighbor = neighbors[i];
-                if (!processed.Contains(neighbor) &&
-                    neighbor.IsWalkable() && 
-                    (neighbor.GameObjectOnTheTile == null ||
-                    neighbor.GameObjectOnTheTile.GetComponent<HideIfNotVisible>() == null))
+                processed.Add(current);
+                toSearch.Remove(current);
+
+                if (current == targetNode)
                 {
-                    var inSearch = toSearch.Contains(neighbor);
-
-                    int costToNeighbor = current.DistanceFromStart + WindControl.instance.GetCostToDirection(i); // + current.GetDistance(neighbor);
-
-                    if (!inSearch || costToNeighbor < neighbor.DistanceFromStart)
+                    var currentPathTile = targetNode;
+                    var path = new List<WorldTile>();
+                    var count = 100;
+                    while (currentPathTile != startNode)
                     {
-                        neighbor.DistanceFromStart = costToNeighbor;
-                        neighbor.NextDestination = current;
+                        path.Add(currentPathTile);
+                        currentPathTile = currentPathTile.NextDestination;
+                        count--;
+                        if (count < 0) throw new Exception();
+                    }
 
-                        if (!inSearch)
+                    WorldTile previousTile = null;
+                    foreach (var tile in path)
+                    {
+                        if (previousTile != null)
                         {
-                            neighbor.DistanceToTarget = GetDistanceInTiles(neighbor, targetNode);
-                            toSearch.Add(neighbor);
+                            Debug.DrawLine(previousTile.WorldPosition, tile.WorldPosition, Color.magenta, 1);
+                        }
+                        previousTile = tile;
+                    }
+                    return path;
+                }
+                List<WorldTile> neighbors = current.Neighbors();
+                for (int i = 0; i < neighbors.Count; i++)
+                {
+                    WorldTile neighbor = neighbors[i];
+                    if (!processed.Contains(neighbor) &&
+                        neighbor.IsWalkable() &&
+                        (neighbor.GameObjectOnTheTile == null ||
+                        neighbor.GameObjectOnTheTile.GetComponent<HideIfNotVisible>() == null))
+                    {
+                        var inSearch = toSearch.Contains(neighbor);
+
+                        int costToNeighbor = current.DistanceFromStart + WindControl.instance.GetCostToDirection(i); // + current.GetDistance(neighbor);
+
+                        if (!inSearch || costToNeighbor < neighbor.DistanceFromStart)
+                        {
+                            neighbor.DistanceFromStart = costToNeighbor;
+                            neighbor.NextDestination = current;
+
+                            if (!inSearch)
+                            {
+                                neighbor.DistanceToTarget = GetDistanceInTiles(neighbor, targetNode);
+                                toSearch.Add(neighbor);
+                            }
                         }
                     }
                 }
             }
         }
+        catch
+        {
+
+        }
+        Debug.Log("No path found");
         return null;
     }
 

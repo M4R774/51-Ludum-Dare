@@ -35,12 +35,7 @@ public class EnemyAI : AbstractObjectInWorldSpace
 
     private void AIMoveAndAttack()
     {
-        if (player != null)
-        {
-            List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), player.GetComponent<ISelectable>().GetTileUnderMyself());
-            MoveTowardsTarget(pathToPlayerUnit);
-            Attack();
-        }
+        StartCoroutine(AsyncAttack());
     }
 
     private void Attack()
@@ -93,6 +88,18 @@ public class EnemyAI : AbstractObjectInWorldSpace
             return true;
         }
         return false;
+    }
+
+    // Game stuttered every 10 seconds, wait for random time to fix
+    private IEnumerator AsyncAttack()
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.0f, 7.0f));
+        if (player != null)
+        {
+            List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), player.GetComponent<ISelectable>().GetTileUnderMyself());
+            MoveTowardsTarget(pathToPlayerUnit);
+            Attack();
+        }
     }
 
     private IEnumerator LerpThroughPath(List<WorldTile> path)
