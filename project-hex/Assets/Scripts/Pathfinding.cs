@@ -165,12 +165,12 @@ public static class Pathfinding
     {
         try
         {
-
             var toSearch = new List<WorldTile>() { startNode };
             var processed = new List<WorldTile>();
-
-            while (toSearch.Any())
+            int counter = 0;
+            while (toSearch.Any() && counter < 1000)
             {
+                counter++;
                 var current = toSearch[0];
                 foreach (WorldTile tile in toSearch)
                 {
@@ -239,7 +239,6 @@ public static class Pathfinding
         {
 
         }
-        Debug.Log("No path found");
         return null;
     }
 

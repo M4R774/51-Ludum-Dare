@@ -65,7 +65,7 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private void FireMachineGun()
     {
         GameObject projectile = Instantiate(bulletPrefab, transform, false);
-        projectile.GetComponent<MGBulletLerp>().SlerpToTargetAndExplode(player.transform.position);
+        projectile.GetComponent<MGBulletLerp>().SlerpToTargetAndExplode(transform.position, player.transform.position);
     }
 
     private void MoveTowardsTarget(List<WorldTile> path)
