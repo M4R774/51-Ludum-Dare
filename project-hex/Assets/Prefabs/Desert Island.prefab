@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2bb2eabda100485a801a6fcdd4a8bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectsToDisable:
+  - {fileID: 257757644897214108}
+  - {fileID: 2713476890198797961}
 --- !u!135 &5748586086395980226
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -149,6 +152,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faae7f84c8f164803a30913cac69f7d4, type: 3}
+--- !u!1 &257757644897214108 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4747526574715048100, guid: faae7f84c8f164803a30913cac69f7d4, type: 3}
+  m_PrefabInstance: {fileID: 4435720785362727360}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2713476890198797961 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1740338166123683657, guid: faae7f84c8f164803a30913cac69f7d4, type: 3}
+  m_PrefabInstance: {fileID: 4435720785362727360}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4180574041702258219 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: faae7f84c8f164803a30913cac69f7d4, type: 3}

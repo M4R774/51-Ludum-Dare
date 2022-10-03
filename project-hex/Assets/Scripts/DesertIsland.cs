@@ -13,6 +13,7 @@ public class DesertIsland : MonoBehaviour
     GameObject islandModel;
 
     bool isVisited;
+    [SerializeField] List<GameObject> objectsToDisable = new List<GameObject>();
 
     void Start()
     {
@@ -31,6 +32,10 @@ public class DesertIsland : MonoBehaviour
             isVisited = true;
             actionBarManager.IncreaseMaxMovementPoints();
             actionBarManager.IncreaseMaxMovementPoints();
+            foreach (var item in objectsToDisable)
+            {
+                item.SetActive(false);
+            }
         }
     }
 }
