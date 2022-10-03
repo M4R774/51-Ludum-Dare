@@ -122,7 +122,6 @@ public class MouseController : MonoBehaviour
     {
         selectedObject.SetMovementPointsLeft(selectedObject.MovementPointsLeft() - 1);
         GameObject projectile = Instantiate(projectilePrefab, transform, false);
-        projectile.transform.localScale = new Vector3(.2f, .2f, .2f);
         projectile.GetComponent<MGBulletLerp>().SlerpToTargetAndExplode(
             selectedObject.GetTileUnderMyself().WorldPosition,
             positionToFireUpon

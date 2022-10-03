@@ -55,7 +55,8 @@ public class EnemyAI : AbstractObjectInWorldSpace
 
     private void FireBarrage()
     {
-        GameObject projectile = Instantiate(projectilePrefab, transform, false);
+        GameObject projectile = Instantiate(projectilePrefab);
+        projectile.transform.position = transform.position;
         projectile.GetComponent<ProjectileSlerp>().SlerpToTargetAndExplode(
             tileUnderMe.WorldPosition,
             player.transform.position
@@ -64,7 +65,8 @@ public class EnemyAI : AbstractObjectInWorldSpace
 
     private void FireMachineGun()
     {
-        GameObject projectile = Instantiate(bulletPrefab, transform, false);
+        GameObject projectile = Instantiate(bulletPrefab);
+        projectile.transform.position = transform.position;
         projectile.GetComponent<MGBulletLerp>().SlerpToTargetAndExplode(
             tileUnderMe.WorldPosition, 
             player.transform.position);
