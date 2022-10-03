@@ -26,10 +26,7 @@ public class GoalManager : MonoBehaviour
 
     private void MoveEnemyToGoal()
     {
-        // TODO: Some sporadic bug here
-        ISelectable playerSelectable = TurnManager.instance.playerControlledUnits[0].GetComponent<ISelectable>();
-        List<WorldTile> pathToPlayer = Pathfinding.FindPath(GetTileUnderMyself(), playerSelectable.GetTileUnderMyself());
-        boss.transform.position = pathToPlayer[^1].WorldPosition;
+        boss.transform.position = transform.position;
     }
 
     private void CheckThatIamOnlyInstance()
