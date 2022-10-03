@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3
-  barrageRange: 8
+  barrageRange: 10
   projectilePrefab: {fileID: 5264988255824722025, guid: 0d7e896b8faa81348a87cdf383898752, type: 3}
   bulletPrefab: {fileID: 9093912386689096819, guid: 1e4465643db0457499122a9b2ef84609, type: 3}
   fireMGInsteadOfBarrage: 1
