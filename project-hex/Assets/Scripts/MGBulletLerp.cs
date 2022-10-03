@@ -16,7 +16,8 @@ public class MGBulletLerp : MonoBehaviour
     private IEnumerator SlerpToTarget(Vector3 startPosition, Vector3 targetPosition)
     {
         float timeElapsed = 0;
-        float slerpDuration = 5;
+        WorldTile startTile = GameTiles.instance.tiles[Pathfinding.gridLayout.WorldToCell(startPosition)];
+        float slerpDuration = Pathfinding.GetDistanceInTiles(startTile, barrageZone);
         DrawDangerZone(true);
         while (timeElapsed < slerpDuration)
         {
