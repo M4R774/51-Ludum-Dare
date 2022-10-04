@@ -13,6 +13,9 @@ public class GameEnd : MonoBehaviour
 
     private bool gameHasAlreadyEnded;
 
+    [Header("Debug")]
+    [SerializeField] bool isDebugMode;
+
     private void Awake()
     {
         gameHasAlreadyEnded = false;
@@ -23,7 +26,7 @@ public class GameEnd : MonoBehaviour
         CheckIfGameHasEnded();
 
         // debugging purposes
-        if(Input.GetKeyDown(KeyCode.J)) PlayerWon();
+        if(isDebugMode && Input.GetKeyDown(KeyCode.J)) PlayerWon();
     }
 
     private void CheckIfGameHasEnded()
