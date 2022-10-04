@@ -47,7 +47,8 @@ public class MGBulletLerp : MonoBehaviour
 
         if (barrageZone.GameObjectOnTheTile != null)
         {
-            Destroy(barrageZone.GameObjectOnTheTile);
+            //Destroy(barrageZone.GameObjectOnTheTile);
+            barrageZone.GameObjectOnTheTile.SendMessage("SinkShip");
             barrageZone.GameObjectOnTheTile = null;
         }
 

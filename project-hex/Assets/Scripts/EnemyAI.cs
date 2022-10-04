@@ -83,15 +83,21 @@ public class EnemyAI : AbstractObjectInWorldSpace
 
     private bool TargetIsInRange()
     {
-        ISelectable target = player.GetComponent<ISelectable>();
-        int distanceToTarget = Pathfinding.GetDistanceInTiles(
-            target.GetTileUnderMyself(), 
-            GetTileUnderMyself());
-        if (distanceToTarget < barrageRange)
+        // first let's make sure if player is not already dead
+        // this needs to be changed if we want enemies to destroy other ships than the player
+        if(player != null)
         {
-            return true;
+            ISelectable target = player.GetComponent<ISelectable>();
+            int distanceToTarget = Pathfinding.GetDistanceInTiles(
+                target.GetTileUnderMyself(), 
+                GetTileUnderMyself());
+            if (distanceToTarget < barrageRange)
+            {
+                return true;
+            }
+            return false;
         }
-        return false;
+        else return false;
     }
 
     // Game stuttered every 10 seconds, wait for random time to fix

@@ -303,6 +303,7 @@ MonoBehaviour:
   objectsToDisable:
   - {fileID: 257757644897214108}
   - {fileID: 2713476890198797961}
+  triggerVolume: {fileID: 5748586086395980226}
 --- !u!135 &5748586086395980226
 SphereCollider:
   m_ObjectHideFlags: 0

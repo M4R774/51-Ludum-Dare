@@ -12,6 +12,7 @@ public class MapIslandController : MonoBehaviour
     public GameObject treasuremapMesh;
 
     private AudioSource audioSource;
+    [SerializeField] Collider triggerVolume;
 
     private void Start()
     {
@@ -42,7 +43,9 @@ public class MapIslandController : MonoBehaviour
             audioSource.Play();
             treasuremapMesh.SetActive(false);
             treasureIsland.transform.GetChild(0).gameObject.SetActive(true);
+            treasureIsland.GetComponent<Collider>().enabled = true;
             guideArrow.target = treasureIsland;
+            triggerVolume.enabled = false;
         }
     }
 }

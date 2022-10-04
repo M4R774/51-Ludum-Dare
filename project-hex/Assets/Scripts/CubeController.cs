@@ -34,12 +34,12 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         grid = GameTiles.instance.grid;
         isSelected = false;
 
-
         InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
 
         tileUnderMe = GetTileUnderMyself();
         tileUnderMe.GameObjectOnTheTile = transform.gameObject;
 
+        visibilityRange = movementSpeed;
         movementPointsLeft = movementSpeed;
 
         if(playerModel == null) playerModel = this.gameObject;
@@ -152,9 +152,12 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
 
     public void ResetOnEndTurn()
     {
+        if(movementSpeed > 1) movementSpeed -= 1; // we want player to always have one action point
         movementPointsLeft = movementSpeed;
+        visibilityRange = movementSpeed;
         InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), 10, false);
         InformTilesIfTheyAreWithinMovementRange(GetTileUnderMyself(), movementPointsLeft, true);
+        ReCalculateVisibility();
         actionBarManager.RefreshIndicatorColors();
     }
 

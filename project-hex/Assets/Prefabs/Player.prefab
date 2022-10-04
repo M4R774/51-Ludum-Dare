@@ -5574,6 +5574,7 @@ GameObject:
   - component: {fileID: 5911262520453539668}
   - component: {fileID: 1395886340}
   - component: {fileID: 1395886339}
+  - component: {fileID: 5456246013258549112}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5768,6 +5769,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5456246013258549112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5602011779598788445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3266180a7f26841e99b80288f045fa8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 524060590927966986}
+  audioSource: {fileID: 8799305123840182343}
+  sinkingSound: {fileID: 8300000, guid: 4121a667a56414fb5b8f2e13e3e168ea, type: 3}
+  godMode: 0
 --- !u!1 &5736397747850326091
 GameObject:
   m_ObjectHideFlags: 0
@@ -6009,7 +6026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 182281547335720659, guid: 5b0180a7309a042129b093caa56955ef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.013125999
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 182281547335720659, guid: 5b0180a7309a042129b093caa56955ef, type: 3}
       propertyPath: m_LocalPosition.z

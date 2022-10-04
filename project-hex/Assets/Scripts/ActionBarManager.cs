@@ -18,6 +18,11 @@ public class ActionBarManager : MonoBehaviour
         playerController = player.GetComponent<CubeController>();
     }
 
+    void Update()
+    {
+        RefreshIndicatorColors();
+    }
+
     public void RefreshIndicatorColors()
     {
         for (int i = 0; i < indicatorImages.Count; i++)
@@ -29,7 +34,8 @@ public class ActionBarManager : MonoBehaviour
             }
             else if (i < playerController.movementPointsLeft)
             {
-                //indicatorImages[i].color = Color.grey;
+                // This has to be white, otherwise last orange in the list will be faded out
+                indicatorImages[i].color = Color.white;
             }
             else if (i < playerController.movementSpeed)
             {
@@ -66,9 +72,10 @@ public class ActionBarManager : MonoBehaviour
     {
         if(playerController.movementSpeed > 1)
         {
-            playerController.movementSpeed -= 1;
-            playerController.visibilityRange = playerController.movementSpeed;
-            EventManager.VisibilityHasChanged();
+            //playerController.movementSpeed -= 1;
+            //playerController.visibilityRange = playerController.movementSpeed;
+            //EventManager.VisibilityHasChanged();
+            // Moved these to CubeController to fix bug with movementspeed and available movement points being out of sync
             SetPlan(currentPlannedMoves);
         }
     }

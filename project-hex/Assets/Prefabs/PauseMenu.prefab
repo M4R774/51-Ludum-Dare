@@ -1158,7 +1158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuCanvas: {fileID: 1518543503676686354}
   nameOfMainMenuScene: Main Menu
-  quitButton: {fileID: 0}
+  quitButton: {fileID: 9190180648268622330}
 --- !u!1 &1518543502999480844
 GameObject:
   m_ObjectHideFlags: 0
