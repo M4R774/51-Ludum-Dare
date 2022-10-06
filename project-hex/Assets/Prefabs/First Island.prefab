@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 7730999392961005752}
   - component: {fileID: 9094220411492274140}
   - component: {fileID: 5263921664205889046}
+  - component: {fileID: 8371958272926923779}
   m_Layer: 2
   m_Name: First Island
   m_TagString: Untagged
@@ -245,6 +246,22 @@ MonoBehaviour:
   treasureIsland: {fileID: 0}
   treasuremapMesh: {fileID: 5822936135999978072}
   triggerVolume: {fileID: 7730999392961005752}
+--- !u!114 &8371958272926923779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822936137748099251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2bb2eabda100485a801a6fcdd4a8bc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToDisable:
+  - {fileID: 1027917394340364881}
+  - {fileID: 7094878096596950459}
+  triggerVolume: {fileID: 7730999392961005752}
 --- !u!1001 &5822936136306611131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -302,8 +319,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbdbda27daf70488195c2e35d451504e, type: 3}
+--- !u!1 &1027917394340364881 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6813063311702954474, guid: fbdbda27daf70488195c2e35d451504e, type: 3}
+  m_PrefabInstance: {fileID: 5822936136306611131}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6288574214063141968 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fbdbda27daf70488195c2e35d451504e, type: 3}
+  m_PrefabInstance: {fileID: 5822936136306611131}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7094878096596950459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5568371526223589888, guid: fbdbda27daf70488195c2e35d451504e, type: 3}
   m_PrefabInstance: {fileID: 5822936136306611131}
   m_PrefabAsset: {fileID: 0}

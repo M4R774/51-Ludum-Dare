@@ -45,8 +45,8 @@ GameObject:
   - component: {fileID: 6986820570470540443}
   - component: {fileID: 6986820570470540423}
   - component: {fileID: 3842951566984007772}
-  - component: {fileID: 8607391206387698988}
   - component: {fileID: 2966612629755187145}
+  - component: {fileID: 5114177131144611374}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -127,21 +127,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8607391206387698988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6986820570470540445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b84f784e73ca49bea4d5ee2f6d082eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 3842951566984007772}
-  audioSource: {fileID: 2966612629755187145}
-  sinkingSound: {fileID: 8300000, guid: 4121a667a56414fb5b8f2e13e3e168ea, type: 3}
 --- !u!82 &2966612629755187145
 AudioSource:
   m_ObjectHideFlags: 0
@@ -238,6 +223,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5114177131144611374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6986820570470540445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 941886ff969bf44d085e98cbb770909c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3842951566984007772}
+  audioSource: {fileID: 2966612629755187145}
+  sinkingSound: {fileID: 8300000, guid: 4121a667a56414fb5b8f2e13e3e168ea, type: 3}
+  aiComponent: {fileID: 6986820570470540423}
 --- !u!1001 &4184409208927723260
 PrefabInstance:
   m_ObjectHideFlags: 0

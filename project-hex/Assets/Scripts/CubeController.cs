@@ -37,7 +37,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         InformTilesIfTheyAreWithinVisionRange(GetTileUnderMyself(), visibilityRange, true);
 
         tileUnderMe = GetTileUnderMyself();
-        tileUnderMe.GameObjectOnTheTile = transform.gameObject;
+        tileUnderMe.GameObjectOnTheTile = this.gameObject;
 
         visibilityRange = movementSpeed;
         movementPointsLeft = movementSpeed;
@@ -181,7 +181,7 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
         tileUnderMe.GameObjectOnTheTile = null;
         WorldTile endTile = path[^numberOfTilesToLerp];
         tileUnderMe = endTile;
-        endTile.GameObjectOnTheTile = transform.gameObject;
+        endTile.GameObjectOnTheTile = this.gameObject;
 
         movementInProgress = true;
         WorldTile startingTile = GetTileUnderMyself();

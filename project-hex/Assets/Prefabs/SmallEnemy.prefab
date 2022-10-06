@@ -45,8 +45,8 @@ GameObject:
   - component: {fileID: 6986820570470540443}
   - component: {fileID: 6986820570470540423}
   - component: {fileID: 2029277553116161660}
-  - component: {fileID: 7263119846794280790}
   - component: {fileID: 5380971743383444546}
+  - component: {fileID: 1916113960463127275}
   m_Layer: 0
   m_Name: SmallEnemy
   m_TagString: Untagged
@@ -127,21 +127,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7263119846794280790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6986820570470540445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b84f784e73ca49bea4d5ee2f6d082eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 2029277553116161660}
-  audioSource: {fileID: 5380971743383444546}
-  sinkingSound: {fileID: 8300000, guid: 4121a667a56414fb5b8f2e13e3e168ea, type: 3}
 --- !u!82 &5380971743383444546
 AudioSource:
   m_ObjectHideFlags: 0
@@ -238,6 +223,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1916113960463127275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6986820570470540445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 941886ff969bf44d085e98cbb770909c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2029277553116161660}
+  audioSource: {fileID: 5380971743383444546}
+  sinkingSound: {fileID: 8300000, guid: 4121a667a56414fb5b8f2e13e3e168ea, type: 3}
+  aiComponent: {fileID: 6986820570470540423}
 --- !u!1001 &4184409208927723260
 PrefabInstance:
   m_ObjectHideFlags: 0

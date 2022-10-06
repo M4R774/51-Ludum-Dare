@@ -1471,6 +1471,7 @@ MonoBehaviour:
   endingDelayInSeconds: 5
   victoryScreenName: VictoryScreen
   losingScreenName: LosingScreen
+  isDebugMode: 0
 --- !u!114 &1340316146
 MonoBehaviour:
   m_ObjectHideFlags: 0

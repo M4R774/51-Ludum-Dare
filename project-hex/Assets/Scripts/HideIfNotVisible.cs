@@ -11,7 +11,7 @@ public class HideIfNotVisible : MonoBehaviour
         CheckIfVisible();
 
         WorldTile tileUnderMyself = GameTiles.instance.GetTileByWorldPosition(transform.position);
-        tileUnderMyself.GameObjectOnTheTile = transform.gameObject;
+        tileUnderMyself.GameObjectOnTheTile = this.gameObject;
     }
 
     private void OnEnable()

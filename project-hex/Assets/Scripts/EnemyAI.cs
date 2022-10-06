@@ -16,6 +16,10 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private bool movementInProgress;
     private WorldTile tileUnderMe;
 
+    public bool isAlive = true; // used to check that the enemy can move and shoot
+
+    private Coroutine movementCoroutine;
+
     void Start()
     {
         grid = GameTiles.instance.grid;
@@ -35,7 +39,16 @@ public class EnemyAI : AbstractObjectInWorldSpace
 
     private void AIMoveAndAttack()
     {
-        StartCoroutine(AsyncAttack());
+        if(movementCoroutine == null)
+        {
+            movementCoroutine = StartCoroutine(AsyncAttack());
+        }
+        else
+        {
+            StopCoroutine(movementCoroutine); // making sure the coroutine isn't still running
+            movementCoroutine = null;
+            movementCoroutine = StartCoroutine(AsyncAttack());
+        }
     }
 
     private void Attack()
@@ -103,12 +116,21 @@ public class EnemyAI : AbstractObjectInWorldSpace
     // Game stuttered every 10 seconds, wait for random time to fix
     private IEnumerator AsyncAttack()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(0.0f, 7.0f));
-        if (player != null)
+        if(isAlive) // Is the AI even alive?
         {
-            List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), player.GetComponent<ISelectable>().GetTileUnderMyself());
-            MoveTowardsTarget(pathToPlayerUnit);
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0.0f, 7.0f));
+            if (player != null)
+            {
+                List<WorldTile> pathToPlayerUnit = Pathfinding.FindPath(GetTileUnderMyself(), player.GetComponent<ISelectable>().GetTileUnderMyself());
+                MoveTowardsTarget(pathToPlayerUnit);
+            }
         }
+        else // if not, stop the coroutine and leave
+        {
+            StopCoroutine(movementCoroutine);
+            movementCoroutine = null;
+            yield return null;
+        }  
     }
 
     private IEnumerator LerpThroughPath(List<WorldTile> path)
@@ -117,8 +139,8 @@ public class EnemyAI : AbstractObjectInWorldSpace
         if (path.Count > movementSpeed)
         {
             WorldTile endTile = path[^movementSpeed];
+            endTile.GameObjectOnTheTile = this.gameObject;
             tileUnderMe = endTile;
-            endTile.GameObjectOnTheTile = transform.gameObject;
 
             movementInProgress = true;
             WorldTile startingTile = GetTileUnderMyself();
@@ -130,6 +152,7 @@ public class EnemyAI : AbstractObjectInWorldSpace
             EventManager.VisibilityHasChanged();
             movementInProgress = false;
         }
+        movementCoroutine = null;
     }
 
     private IEnumerator LerpToNextTile(List<WorldTile> path, int i)
