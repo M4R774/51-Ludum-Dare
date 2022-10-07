@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameEnd : MonoBehaviour
 {
     public GameObject enemyTank;
-    public float endingDelayInSeconds;
+    public float winningDelayInSeconds = 5f;
+    public float losingDelayInSeconds = 1f;
     public String victoryScreenName;
     public String losingScreenName;
 
@@ -54,12 +55,12 @@ public class GameEnd : MonoBehaviour
 
     private void PlayerWon()
     {
-        StartCoroutine(LoadEndingScreenAfterDelay(endingDelayInSeconds, victoryScreenName));
+        StartCoroutine(LoadEndingScreenAfterDelay(winningDelayInSeconds, victoryScreenName));
     }
 
     private void PlayerLost()
     {
-        StartCoroutine(LoadEndingScreenAfterDelay(endingDelayInSeconds, losingScreenName));
+        StartCoroutine(LoadEndingScreenAfterDelay(losingDelayInSeconds, losingScreenName));
     }
 
     private IEnumerator LoadEndingScreenAfterDelay(float delayInSeconds, String endingScreenName)

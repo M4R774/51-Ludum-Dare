@@ -88,7 +88,7 @@ public class EnemyAI : AbstractObjectInWorldSpace
     private void MoveTowardsTarget(List<WorldTile> path)
     {
         if (movementInProgress) return;
-        if (path != null)
+        if (path != null && isAlive)
         {
             StartCoroutine(LerpThroughPath(path));
         }
@@ -127,8 +127,11 @@ public class EnemyAI : AbstractObjectInWorldSpace
         }
         else // if not, stop the coroutine and leave
         {
-            StopCoroutine(movementCoroutine);
-            movementCoroutine = null;
+            if(movementCoroutine != null)
+            {
+                StopCoroutine(movementCoroutine);
+                movementCoroutine = null;
+            }
             yield return null;
         }  
     }

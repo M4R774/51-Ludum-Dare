@@ -232,12 +232,14 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     {
         EventManager.OnVisibilityChange += ReCalculateVisibility;
         EventManager.OnTenSecondTimerEnded += ResetOnEndTurn;
+        EventManager.OnTenSecondTimerEnded += StopCurrentTurn;
     }
 
     private void OnDisable()
     {
         EventManager.OnVisibilityChange -= ReCalculateVisibility;
         EventManager.OnTenSecondTimerEnded -= ResetOnEndTurn;
+        EventManager.OnTenSecondTimerEnded -= StopCurrentTurn;
     }
 
     private void OnDestroy()
@@ -270,5 +272,18 @@ public class CubeController : AbstractObjectInWorldSpace, ISelectable, IHighligh
     {
         movementPointsLeft = pointsLeft;
         actionBarManager.RefreshIndicatorColors();
+    }
+
+    // motion set in previous turn shouldn't continue and use points from the next one
+    // or should it?
+    public void StopCurrentTurn() 
+    {
+        StopAllCoroutines();
+        // Refresh vision and movement range highlighting
+        GetComponent<PlayerShipAudioManager>().PlayMovementSound();
+        EventManager.VisibilityHasChanged();
+        EventManager.MaybeTurnHasEnded();
+        movementInProgress = false;
+        ActivateSurroundingCubes();
     }
 }

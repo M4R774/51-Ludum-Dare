@@ -1468,7 +1468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTank: {fileID: 2041220267}
-  endingDelayInSeconds: 5
+  endingDelayInSeconds: 1
   victoryScreenName: VictoryScreen
   losingScreenName: LosingScreen
   isDebugMode: 0
