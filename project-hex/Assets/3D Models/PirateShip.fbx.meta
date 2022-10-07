@@ -3,7 +3,12 @@ guid: f00459c249bba4a1b8e5465a0bd6e3e5
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pirate ship, side view
+    second: {fileID: 2100000, guid: b05fc4cf68ced4a8f917f1813c02ac6a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
